@@ -5,176 +5,150 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tending Sands</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Inter:wght@300;400;600&display=swap');
-
     body {
       margin: 0;
-      background: #0a0a0f;
-      color: #f2f2f2;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Arial', sans-serif;
+      background: #0a0a0a;
+      color: #f0f0f0;
       overflow-x: hidden;
+      line-height: 1.7;
     }
-
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      display: flex;
-      justify-content: space-between;
-      padding: 1rem 2rem;
-      background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(8px);
-      z-index: 10;
-    }
-
-    nav a {
-      color: #f2f2f2;
-      text-decoration: none;
-      margin-left: 1rem;
-      font-weight: 600;
-      transition: color 0.3s ease;
-    }
-
-    nav a:hover {
-      color: #e63946;
-    }
-
     header {
       height: 100vh;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      text-align: center;
-      background: linear-gradient(135deg, #0a0a0f, #1a1a2e);
+      flex-direction: column;
+      background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
       position: relative;
       overflow: hidden;
     }
-
-    header h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 4rem;
-      z-index: 1;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      animation: glitch 2s infinite;
+    h1.glitch {
+      font-size: 3.5rem;
+      position: relative;
+      color: white;
+      animation: glitch 1s infinite;
+      text-align: center;
+      padding: 0 1rem;
     }
-
-    header p {
-      z-index: 1;
-      font-size: 1.2rem;
-      margin-top: 1rem;
-      color: #ccc;
-      animation: fadeInUp 2s ease;
-    }
-
-    /* Glitch effect */
     @keyframes glitch {
-      0% { text-shadow: 2px 2px #e63946, -2px -2px #1d3557; }
-      20% { text-shadow: -2px 2px #457b9d, 2px -2px #e63946; }
-      40% { text-shadow: 2px -2px #a8dadc, -2px 2px #f1faee; }
-      60% { text-shadow: -2px -2px #e63946, 2px 2px #1d3557; }
-      80% { text-shadow: 2px 2px #f1faee, -2px -2px #457b9d; }
-      100% { text-shadow: none; }
+      0% { text-shadow: 2px 2px red; }
+      20% { text-shadow: -2px -2px blue; }
+      40% { text-shadow: 2px -2px lime; }
+      60% { text-shadow: -2px 2px magenta; }
+      80% { text-shadow: 2px 2px yellow; }
+      100% { text-shadow: -2px -2px cyan; }
     }
-
-    @keyframes fadeInUp {
-      0% { opacity: 0; transform: translateY(40px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Animated background shapes */
     .shape {
       position: absolute;
       border-radius: 50%;
-      background: rgba(230, 57, 70, 0.3);
-      animation: float 12s infinite;
+      background: rgba(255,255,255,0.05);
+      animation: float 20s infinite;
     }
-
-    .shape:nth-child(1) { width: 200px; height: 200px; top: 10%; left: 15%; animation-delay: 0s; }
-    .shape:nth-child(2) { width: 300px; height: 300px; top: 60%; left: 70%; animation-delay: 2s; background: rgba(69,123,157,0.3); }
-    .shape:nth-child(3) { width: 150px; height: 150px; top: 40%; left: 40%; animation-delay: 4s; background: rgba(168,218,220,0.3); }
-
+    .shape:nth-child(1) { width: 200px; height: 200px; top: 10%; left: 20%; }
+    .shape:nth-child(2) { width: 300px; height: 300px; bottom: 15%; right: 15%; }
+    .shape:nth-child(3) { width: 150px; height: 150px; top: 40%; right: 30%; }
     @keyframes float {
-      0% { transform: translateY(0) scale(1); opacity: 0.6; }
-      50% { transform: translateY(-40px) scale(1.2); opacity: 0.3; }
-      100% { transform: translateY(0) scale(1); opacity: 0.6; }
+      0%, 100% { transform: translateY(0) rotate(0); }
+      50% { transform: translateY(-20px) rotate(45deg); }
     }
-
     section {
-      padding: 6rem 2rem;
+      padding: 4rem 2rem;
       max-width: 900px;
       margin: auto;
-      text-align: center;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 1s forwards;
+    }
+    section#about { animation-delay: 0.2s; }
+    section#music { animation-delay: 0.6s; }
+    section#guild { animation-delay: 1s; }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #f0f0f0;
+      display: inline-block;
+      padding-bottom: .25rem;
+      transition: all 0.3s ease;
+    }
+    h2:hover {
+      color: #ffcc66;
+      text-shadow: 0 0 10px #ffcc66, 0 0 20px #ff9966;
+      border-color: #ffcc66;
     }
 
-    .music iframe {
-      border-radius: 12px;
-      margin-top: 2rem;
+    p {
+      margin-bottom: 1.5rem;
+    }
+    em {
+      color: #c0a0ff;
+      font-style: italic;
+    }
+    strong {
+      color: #ffcc66;
+    }
+    iframe {
       width: 100%;
-      height: 380px;
+      height: 450px;
+      border: none;
+      margin-top: 1rem;
+      background: #111;
+      border-radius: 10px;
+      transition: all 0.4s ease;
+      box-shadow: 0 0 0 transparent;
     }
-
-    .socials a {
-      margin: 0 10px;
-      font-size: 1.5rem;
-      text-decoration: none;
-      color: #f2f2f2;
-      transition: color 0.3s;
+    iframe:hover {
+      box-shadow: 0 0 20px #ffcc66, 0 0 40px #ff9966;
+      transform: scale(1.02);
     }
-
-    .socials a:hover {
-      color: #e63946;
-    }
-
     footer {
-      padding: 2rem;
       text-align: center;
+      padding: 2rem;
       font-size: 0.9rem;
-      color: #999;
+      background: #111;
+    }
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
 <body>
-  <nav>
-    <div class="logo">Tending Sands</div>
-    <div class="links">
-      <a href="#about">About</a>
-      <a href="#music">Music</a>
-      <a href="#connect">Connect</a>
-    </div>
-  </nav>
-
   <header>
+    <h1 class="glitch">Tending Sands</h1>
     <div class="shape"></div>
     <div class="shape"></div>
     <div class="shape"></div>
-    <h1>Tending Sands</h1>
-    <p>Sonic landscapes. Prophetic echoes. Independent truth.</p>
   </header>
 
   <section id="about">
     <h2>About</h2>
-    <p>Tending Sands carves out soundscapes that merge prophetic vision with experimental textures. Music that resists silence, challenges systems, and breathes with rebellion.</p>
+    <p><strong>Emerging from the arid landscapes</strong> of Apple Valley, California, Tending Sands—born Jeramy Kendell Hoffman on January 8, 1989—crafts music that mirrors the shifting sands of his environment. His compositions blend <em>ambient textures</em>, <em>industrial rhythms</em>, and <em>experimental soundscapes</em>, creating a genre-defying auditory experience.</p>
+
+    <p>Tending Sands’ discography is a testament to his prolific nature and thematic depth. Albums like <em>Taking Shape</em> (2024) and <em>Making Illusions (War Is Not Real / Reality of War Is)</em> (2024) delve into existential themes, while tracks such as <strong>“Drop Another Bomb on a City”</strong> and <strong>“Tear Myself Down”</strong> showcase his ability to intertwine political commentary with personal introspection.</p>
+
+    <p>His music is available across various platforms, including <strong>Apple Music</strong>, <strong>Amazon Music</strong>, and <strong>Qobuz</strong>, offering listeners a chance to explore his evolving soundscape.</p>
+
+    <p>Beyond his musical endeavors, Hoffman operates under the label <strong>Shattered Hourglass LLC</strong>, further emphasizing his commitment to producing and distributing his unique sound independently.</p>
+
+    <p>For those seeking a musical journey that challenges conventions and evokes the ephemeral nature of existence, <strong>Tending Sands</strong> offers a compelling and thought-provoking experience.</p>
   </section>
 
-  <section id="music" class="music">
-    <h2>Listen</h2>
-    <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/artist/4QbBTb0VwYLaKI7fjIeCPr?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+  <section id="music">
+    <h2>Music</h2>
+    <iframe src="https://open.spotify.com/embed/artist/your-spotify-id" allowtransparency="true" allow="encrypted-media"></iframe>
   </section>
 
-  <section id="connect">
-    <h2>Connect</h2>
-    <p>Follow, support, and join the movement.</p>
-    <div class="socials">
-      <a href="#">🎵 Spotify</a>
-      <a href="#">📺 YouTube</a>
-      <a href="#">🐦 Twitter</a>
-      <a href="#">📸 Instagram</a>
-    </div>
+  <section id="guild">
+    <h2>Guild Access</h2>
+    <iframe src="https://guild.xyz/tendingsands" width="100%" height="600" frameborder="0"></iframe>
   </section>
 
   <footer>
-    © 2025 Tending Sands · Shattered Hourglass LLC
+    <p>© 2025 Tending Sands. All rights reserved.</p>
   </footer>
 </body>
 </html>
