@@ -64,7 +64,7 @@
     }
     section#about { animation-delay: 0.2s; }
     section#music { animation-delay: 0.6s; }
-    section#merch { animation-delay: 1s; }
+    section#shop { animation-delay: 1s; }
 
     h2 {
       font-size: 1.5rem;
@@ -123,22 +123,25 @@
       transform: scale(1.01);
     }
 
-    /* PayPal Cart Button styling */
-    paypal-cart-button {
+    /* PayPal button style */
+    .paypal-button {
       display: inline-block;
-      margin-top: 1.5rem;
-      background: #000;
-      border: 2px solid #00ccff;
-      padding: 12px 24px;
-      color: #fff;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    paypal-cart-button:hover {
+      margin-top: 2rem;
+      padding: 1rem 2rem;
       background: #00ccff;
       color: #000;
-      box-shadow: 0 0 18px #00ccff, 0 0 30px #0099ff;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 0 10px #00ccff, 0 0 20px #0099ff;
+    }
+    .paypal-button:hover {
+      background: #0099ff;
+      color: #fff;
+      box-shadow: 0 0 20px #00ccff, 0 0 40px #0099ff;
     }
 
     footer {
@@ -156,7 +159,6 @@
       }
     }
   </style>
-<script src="https://www.paypalobjects.com/ncp/cart/cart.js" data-merchant-id="F5CD6CGRXHRH8"></script>
 </head>
 <body>
   <header>
@@ -165,7 +167,7 @@
 
   <section id="about">
     <h2>About</h2>
-    <p><strong>Emerging from the arid landscapes</strong> of Apple Valley, California, Tending Sands—born Jeramy Kendell Hoffman on January 8, 1989—crafts music that mirrors the shifting sands of his environment. His compositions blend <em>ambient textures</em>, <em>industrial rhythms</em>, and <em>experimental soundscapes</em>, creating a genre-defying auditory experience.</p>
+    <p><strong>Emerging from the the arid landscapes</strong> of Apple Valley, California, Tending Sands—born Jeramy Kendell Hoffman on January 8, 1989—crafts music that mirrors the shifting sands of his environment. His compositions blend <em>ambient textures</em>, <em>industrial rhythms</em>, and <em>experimental soundscapes</em>, creating a genre-defying auditory experience.</p>
 
     <p>Tending Sands’ discography is a testament to his prolific nature and thematic depth. Albums like <em>Taking Shape</em> (2024) and <em>Making Illusions (War Is Not Real / Reality of War Is)</em> (2024) delve into existential themes, while tracks such as <strong>“Drop Another Bomb on a City”</strong> and <strong>“Tear Myself Down”</strong> showcase his ability to intertwine political commentary with personal introspection.</p>
 
@@ -178,22 +180,17 @@
 
   <section id="music">
     <h2>Music</h2>
-    <iframe src="https://audiomack.com/embed/_tendingsands/album/fickle-little-beasts" scrolling="no" title="The Prophecy of an Atom and the Absence of Humanity"></iframe>
+    <iframe src="https://audiomack.com/embed/_tendingsands/album/fickle-little-beasts" scrolling="no" width="100%" height="400" frameborder="0" title="Fickle Little Beasts"></iframe>
   </section>
 
-  <section id="merch">
-    <h2>Merch</h2>
-    <p>Support directly and grab official items:</p>
-    <paypal-cart-button data-id="pp-view-cart"></paypal-cart-button>
+  <section id="shop">
+    <h2>Shop</h2>
+    <p>Purchase my latest release directly through PayPal:</p>
+    <a class="paypal-button" href="https://www.paypal.com/ncp/payment/MQGWPJHQSXND4" target="_blank">Buy Now</a>
   </section>
 
   <footer>
     <p>© 2025 Tending Sands. All rights reserved.</p>
   </footer>
-
-  <paypal-cart-button data-id="pp-view-cart"></paypal-cart-button>
-<script>
-  cartPaypal.Cart({ id: "pp-view-cart" })
-</script>
 </body>
 </html>
