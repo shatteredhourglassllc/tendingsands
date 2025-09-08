@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <meta name="facebook-domain-verification" content="s8d4q14ugyfdfweul1t2rtxom650ek" />
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tending Sands</title>
@@ -10,139 +8,178 @@
     body {
       margin: 0;
       font-family: 'Arial', sans-serif;
-      background: #0a0a0a;
-      color: #f0f0f0;
-      overflow-x: hidden;
-      line-height: 1.7;
-    }
-    header {
-      height: 100vh;
+      background-color: #000;
+      color: #fff;
       display: flex;
-      justify-content: center;
-      align-items: center;
       flex-direction: column;
-      background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
-      position: relative;
-      overflow: hidden;
-    }
-    h1.glitch {
-      font-size: 3.5rem;
-      position: relative;
-      color: white;
-      animation: glitch 1s infinite;
+      align-items: center;
+      min-height: 100vh;
       text-align: center;
-      padding: 0 1rem;
+      overflow-x: hidden;
+      position: relative;
     }
-    @keyframes glitch {
-      0% { text-shadow: 2px 2px red; }
-      20% { text-shadow: -2px -2px blue; }
-      40% { text-shadow: 2px -2px lime; }
-      60% { text-shadow: -2px 2px magenta; }
-      80% { text-shadow: 2px 2px yellow; }
-      100% { text-shadow: -2px -2px cyan; }
-    }
+
+    /* Background chaos shapes with parallax */
     .shape {
       position: absolute;
       border-radius: 50%;
-      background: rgba(255,255,255,0.05);
-      animation: float 20s infinite;
+      background: rgba(0, 0, 255, 0.2);
+      animation: float 8s infinite linear;
+      pointer-events: none;
+      transition: transform 0.2s ease;
     }
-    .shape:nth-child(1) { width: 200px; height: 200px; top: 10%; left: 20%; }
-    .shape:nth-child(2) { width: 300px; height: 300px; bottom: 15%; right: 15%; }
-    .shape:nth-child(3) { width: 150px; height: 150px; top: 40%; right: 30%; }
-    @keyframes float {
-      0%, 100% { transform: translateY(0) rotate(0); }
-      50% { transform: translateY(-20px) rotate(45deg); }
-    }
-    section {
-      padding: 4rem 2rem;
-      max-width: 900px;
-      margin: auto;
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeInUp 1s forwards;
-    }
-    section#about { animation-delay: 0.2s; }
-    section#music { animation-delay: 0.6s; }
-    section#guild { animation-delay: 1s; }
 
-    h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      border-bottom: 2px solid #f0f0f0;
-      display: inline-block;
-      padding-bottom: .25rem;
-      transition: all 0.3s ease;
+    @keyframes float {
+      0% { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 0.3; }
+      50% { opacity: 0.6; }
+      100% { transform: translateY(-20vh) translateX(100vw) rotate(360deg); opacity: 0.3; }
     }
-    h2:hover {
-      color: #ffcc66;
-      text-shadow: 0 0 10px #ffcc66, 0 0 20px #ff9966;
-      border-color: #ffcc66;
+
+    /* Title with flicker and slight skew on hover */
+    h1 {
+      font-size: 3rem;
+      margin: 1rem 0;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #00f;
+      text-shadow: 0 0 5px #00f, 0 0 10px #00f, 0 0 20px #0ff;
+      animation: flicker 1.5s infinite alternate;
+      z-index: 2;
+      position: relative;
+      transition: transform 0.2s ease;
+    }
+
+    h1:hover {
+      transform: skew(-5deg, 3deg) rotate(-1deg);
+    }
+
+    @keyframes flicker {
+      0% { text-shadow: 0 0 5px #00f, 0 0 10px #00f, 0 0 20px #0ff; }
+      25% { text-shadow: 0 0 10px #00f, 0 0 20px #00f, 0 0 30px #0ff; }
+      50% { text-shadow: 0 0 5px #0ff, 0 0 15px #00f, 0 0 25px #00f; }
+      75% { text-shadow: 0 0 15px #00f, 0 0 25px #00f, 0 0 35px #0ff; }
+      100% { text-shadow: 0 0 5px #00f, 0 0 10px #00f, 0 0 20px #00f; }
     }
 
     p {
-      margin-bottom: 1.5rem;
+      font-size: 1.2rem;
+      margin: 0.5rem 0 2rem 0;
+      color: #ccc;
+      animation: pulseText 2s infinite alternate;
+      z-index: 2;
+      position: relative;
+      transition: transform 0.2s ease;
     }
-    em {
-      color: #c0a0ff;
-      font-style: italic;
+
+    p:hover {
+      transform: skew(3deg, -2deg) rotate(0.5deg);
     }
-    strong {
-      color: #ffcc66;
+
+    @keyframes pulseText {
+      0% { color: #ccc; }
+      50% { color: #00f; }
+      100% { color: #ccc; }
     }
-    iframe {
-      width: 100%;
-      height: 450px;
+
+    .music-embed {
+      width: 90%;
+      max-width: 800px;
+      margin-bottom: 3rem;
       border: none;
-      margin-top: 1rem;
-      background: #111;
-      border-radius: 10px;
-      transition: all 0.4s ease;
-      box-shadow: 0 0 0 transparent;
+      box-shadow: 0 0 15px #00f;
+      transition: box-shadow 0.3s ease, transform 0.2s ease;
+      animation: embedPulse 3s infinite alternate;
+      z-index: 2;
+      position: relative;
     }
-    iframe:hover {
-      box-shadow: 0 0 20px #ffcc66, 0 0 40px #ff9966;
-      transform: scale(1.02);
+
+    .music-embed:hover {
+      box-shadow: 0 0 40px #0ff;
+      transform: rotate(-0.5deg) scale(1.02);
     }
+
+    @keyframes embedPulse {
+      0% { box-shadow: 0 0 15px #00f; transform: rotate(0deg); }
+      50% { box-shadow: 0 0 30px #0ff; transform: rotate(0.5deg); }
+      100% { box-shadow: 0 0 15px #00f; transform: rotate(-0.5deg); }
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 1.5rem;
+      margin: 0.5rem;
+      color: #fff;
+      text-decoration: none;
+      text-transform: uppercase;
+      border: 2px solid #00f;
+      border-radius: 5px;
+      transition: all 0.3s ease, transform 0.2s ease;
+      font-weight: bold;
+      text-shadow: 0 0 3px #00f;
+      animation: btnGlow 2s infinite alternate;
+      z-index: 2;
+      position: relative;
+    }
+
+    .btn:hover {
+      background-color: #00f;
+      color: #000;
+      box-shadow: 0 0 25px #0ff;
+      transform: scale(1.05) skew(2deg, -1deg);
+    }
+
+    @keyframes btnGlow {
+      0% { box-shadow: 0 0 5px #00f; }
+      50% { box-shadow: 0 0 15px #0ff; }
+      100% { box-shadow: 0 0 5px #00f; }
+    }
+
     footer {
-      text-align: center;
-      padding: 2rem;
+      margin-top: auto;
+      padding: 2rem 0;
       font-size: 0.9rem;
-      background: #111;
+      color: #555;
+      z-index: 2;
+      position: relative;
     }
-    @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 2rem; }
+      p { font-size: 1rem; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1 class="glitch">Tending Sands</h1>
-    <div class="shape"></div>
-    <div class="shape"></div>
-    <div class="shape"></div>
-  </header>
-<iframe src="https://www.minds.com/embed/1810870644997365760" width="640" height="320" frameborder="0" allowfullscreen="1"></iframe>
-  <section id="about">
-    <h2>About</h2>
-    <p><strong>Emerging from the arid landscapes</strong> of Apple Valley, California, Tending Sands—born Jeramy Kendell Hoffman on January 8, 1989—crafts music that mirrors the shifting sands of his environment. His compositions blend <em>ambient textures</em>, <em>industrial rhythms</em>, and <em>experimental soundscapes</em>, creating a genre-defying auditory experience.</p>
+  <!-- Background shapes -->
+  <div class="shape" style="width:50px; height:50px; left:10%; animation-duration: 10s;"></div>
+  <div class="shape" style="width:70px; height:70px; left:30%; animation-duration: 12s;"></div>
+  <div class="shape" style="width:30px; height:30px; left:50%; animation-duration: 8s;"></div>
+  <div class="shape" style="width:60px; height:60px; left:70%; animation-duration: 11s;"></div>
+  <div class="shape" style="width:40px; height:40px; left:85%; animation-duration: 9s;"></div>
 
-    <p>Tending Sands’ discography is a testament to his prolific nature and thematic depth. Albums like <em>Taking Shape</em> (2024) and <em>Making Illusions (War Is Not Real / Reality of War Is)</em> (2024) delve into existential themes, while tracks such as <strong>“Drop Another Bomb on a City”</strong> and <strong>“Tear Myself Down”</strong> showcase his ability to intertwine political commentary with personal introspection.</p>
+  <h1>Tending Sands</h1>
+  <p>Edgy, chaotic, and unapologetic music</p>
 
-    <p>His music is available across various platforms, including <strong>Apple Music</strong>, <strong>Amazon Music</strong>, and <strong>Qobuz</strong>, offering listeners a chance to explore his evolving soundscape.</p>
+  <iframe class="music-embed" src="https://audiomack.com/embed/_tendingsands/album/fickle-little-beasts" scrolling="no" width="100%" height="400" frameborder="0" allow="autoplay; encrypted-media"></iframe>
 
-    <p>Beyond his musical endeavors, Hoffman operates under the label <strong>Shattered Hourglass LLC</strong>, further emphasizing his commitment to producing and distributing his unique sound independently.</p>
+  <div>
+    <a class="btn" href="https://audiomack.com/_tendingsands" target="_blank">Listen on Audiomack</a>
+    <a class="btn" href="https://music.apple.com/us/artist/tending-sands/1623597740" target="_blank">Listen on Apple Music</a>
+  </div>
 
-    <p>For those seeking a musical journey that challenges conventions and evokes the ephemeral nature of existence, <strong>Tending Sands</strong> offers a compelling and thought-provoking experience.</p>
-  </section>
-
-<iframe src="https://audiomack.com/embed/_tendingsands/album/fickle-little-beasts" scrolling="no" width="100%" height="100%" frameborder="0" title="The Prophecy of an Atom and the Absence of Humanity"></iframe>
-  
   <footer>
-    <p>© 2025 Tending Sands. All rights reserved.</p>
+    &copy; 2025 Shattered Hourglass LLC | All Rights Reserved
   </footer>
+
+  <script>
+    // Simple parallax for background shapes on scroll
+    const shapes = document.querySelectorAll('.shape');
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      shapes.forEach((shape, i) => {
+        shape.style.transform = `translateY(${scrollY * (0.1 + i*0.05)}px)`;
+      });
+    });
+  </script>
 </body>
 </html>
