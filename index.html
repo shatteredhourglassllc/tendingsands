@@ -1,161 +1,267 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tending Sands</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tending Sands</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #000;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Background shapes */
+  .shape {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    transition: transform 0.2s ease;
+  }
+
+  .full-chaos .shape {
+    background: rgba(0, 0, 255, 0.2);
+    animation: float 8s infinite linear;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 0.3; }
+    50% { opacity: 0.6; }
+    100% { transform: translateY(-20vh) translateX(100vw) rotate(360deg); opacity: 0.3; }
+  }
+
+  /* Text styles */
+  h1 {
+    font-size: 3rem;
+    margin: 1rem 0;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 0 0 5px #00f, 0 0 10px #00f, 0 0 20px #0ff;
+    z-index: 2;
+    position: relative;
+    transition: transform 0.2s ease;
+  }
+
+  .full-chaos h1 { animation: flicker 1.5s infinite alternate, glitch 0.5s infinite; color: #00f; }
+  .performance h1 { color: #00f; text-shadow: 0 0 5px #00f; }
+
+  @keyframes flicker {
+    0% { text-shadow: 0 0 5px #00f, 0 0 10px #00f, 0 0 20px #0ff; }
+    25% { text-shadow: 0 0 10px #00f, 0 0 20px #00f, 0 0 30px #0ff; }
+    50% { text-shadow: 0 0 5px #0ff, 0 0 15px #00f, 0 0 25px #00f; }
+    75% { text-shadow: 0 0 15px #00f, 0 0 25px #00f, 0 0 35px #0ff; }
+    100% { text-shadow: 0 0 5px #00f, 0 0 10px #00f, 0 0 20px #0ff; }
+  }
+
+  @keyframes glitch {
+    0%,100% { transform:none; opacity:1; }
+    50% { transform:translateX(-1px); opacity:0.95; }
+  }
+
+  p {
+    font-size: 1.2rem;
+    margin: 0.5rem 0 2rem 0;
+    z-index: 2;
+    position: relative;
+  }
+
+  .full-chaos p { animation: pulseText 2s infinite alternate, glitch 1s infinite; color: #ccc; }
+  .performance p { color: #ccc; }
+
+  @keyframes pulseText {
+    0% { color: #ccc; }
+    50% { color: #00f; }
+    100% { color: #ccc; }
+  }
+
+  .music-embed {
+    width: 90%;
+    max-width: 800px;
+    margin-bottom: 2rem;
+    border: none;
+    z-index: 2;
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+  }
+
+  .full-chaos .music-embed { box-shadow: 0 0 15px #00f; animation: embedPulse 3s infinite alternate; }
+  .performance .music-embed { box-shadow: 0 0 10px #00f; }
+
+  @keyframes embedPulse {
+    0% { box-shadow: 0 0 15px #00f; transform: rotate(0deg); }
+    50% { box-shadow: 0 0 30px #0ff; transform: rotate(0.5deg); }
+    100% { box-shadow: 0 0 15px #00f; transform: rotate(-0.5deg); }
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    margin: 0.5rem;
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    border: 2px solid #00f;
+    border-radius: 5px;
+    font-weight: bold;
+    z-index: 2;
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .full-chaos .btn { animation: btnGlow 2s infinite alternate, glitch 1.5s infinite; }
+  .performance .btn { }
+
+  @keyframes btnGlow {
+    0% { box-shadow: 0 0 5px #00f; }
+    50% { box-shadow: 0 0 15px #0ff; }
+    100% { box-shadow: 0 0 5px #00f; }
+  }
+
+  footer {
+    margin-top: auto;
+    padding: 2rem 0;
+    font-size: 0.9rem;
+    color: #555;
+    z-index: 2;
+    position: relative;
+  }
+
+  /* Toggle button */
+  #toggle-btn {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: #00f;
+    color: #000;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    z-index: 999;
+    border-radius: 5px;
+    animation: toggleGlow 2s infinite alternate, toggleJitter 1.5s infinite, toggleTextGlitch 1s infinite;
+    transition: transform 0.2s ease;
+  }
+
+  #toggle-btn:hover {
+    transform: scale(1.05) skew(2deg, -1deg);
+  }
+
+  @keyframes toggleGlow {
+    0% { box-shadow: 0 0 5px #00f; }
+    50% { box-shadow: 0 0 20px #0ff; }
+    100% { box-shadow: 0 0 5px #00f; }
+  }
+
+  @keyframes toggleJitter {
+    0%,100% { transform: none; }
+    25% { transform: translate(-1px, 1px); }
+    50% { transform: translate(1px, -1px); }
+    75% { transform: translate(-1px, -1px); }
+  }
+
+  @keyframes toggleTextGlitch {
+    0% { color: #000; text-shadow: 0 0 2px #00f; }
+    20% { color: #0ff; text-shadow: 0 0 5px #0ff, -1px 0 #00f; }
+    40% { color: #000; text-shadow: 1px 0 #00f, 0 0 4px #0ff; }
+    60% { color: #0ff; text-shadow: -1px 1px #00f, 0 0 6px #0ff; }
+    80% { color: #000; text-shadow: 0 0 3px #00f; }
+    100% { color: #0ff; text-shadow: 0 0 2px #0ff; }
+  }
+
+  /* Particle */
+  .particle {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: #0ff;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0.8;
+    animation: particleMove 0.8s forwards;
+    z-index: 1000;
+  }
+
+  @keyframes particleMove {
+    0% { transform: translate(0, 0) scale(1); opacity: 1; }
+    100% { transform: translate(var(--x), var(--y)) scale(0.3); opacity: 0; }
+  }
+
+  @media (max-width: 600px) {
+    h1 { font-size: 2rem; }
+    p { font-size: 0.9rem; }
+    .music-embed { height: 300px; }
+  }
   <style>
-    body {
-      margin: 0;
-      font-family: 'Arial', sans-serif;
-      background-color: #000;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      text-align: center;
-      overflow-x: hidden;
-      position: relative;
-    }
+  /* Floating glitch lines */
+  .glitch-line {
+    position: absolute;
+    width: 2px;
+    height: 50px;
+    background: #0ff;
+    opacity: 0.1;
+    animation: floatLine linear infinite;
+    pointer-events: none;
+    z-index: 1;
+  }
 
-    /* Background chaos shapes with parallax */
-    .shape {
-      position: absolute;
-      border-radius: 50%;
-      background: rgba(0, 0, 255, 0.2);
-      animation: float 8s infinite linear;
-      pointer-events: none;
-      transition: transform 0.2s ease;
-    }
+  @keyframes floatLine {
+    0% { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 0.1; }
+    50% { opacity: 0.2; }
+    100% { transform: translateY(-10vh) translateX(20px) rotate(45deg); opacity: 0.1; }
+  }
 
-    @keyframes float {
-      0% { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 0.3; }
-      50% { opacity: 0.6; }
-      100% { transform: translateY(-20vh) translateX(100vw) rotate(360deg); opacity: 0.3; }
-    }
+  /* Noise overlay */
+  .noise-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: url('https://i.imgur.com/6q1LpR7.png'); /* subtle static texture */
+    opacity: 0.05;
+    z-index: 0;
+    animation: noiseMove 1s infinite;
+  }
 
-    /* Title with flicker and slight skew on hover */
-    h1 {
-      font-size: 3rem;
-      margin: 1rem 0;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      color: #00f;
-      text-shadow: 0 0 5px #00f, 0 0 10px #00f, 0 0 20px #0ff;
-      animation: flicker 1.5s infinite alternate;
-      z-index: 2;
-      position: relative;
-      transition: transform 0.2s ease;
-    }
+  @keyframes noiseMove {
+    0% { background-position: 0 0; }
+    100% { background-position: 100px 100px; }
+  }
+</style>
 
-    h1:hover {
-      transform: skew(-5deg, 3deg) rotate(-1deg);
-    }
-
-    @keyframes flicker {
-      0% { text-shadow: 0 0 5px #00f, 0 0 10px #00f, 0 0 20px #0ff; }
-      25% { text-shadow: 0 0 10px #00f, 0 0 20px #00f, 0 0 30px #0ff; }
-      50% { text-shadow: 0 0 5px #0ff, 0 0 15px #00f, 0 0 25px #00f; }
-      75% { text-shadow: 0 0 15px #00f, 0 0 25px #00f, 0 0 35px #0ff; }
-      100% { text-shadow: 0 0 5px #00f, 0 0 10px #00f, 0 0 20px #00f; }
-    }
-
-    p {
-      font-size: 1.2rem;
-      margin: 0.5rem 0 2rem 0;
-      color: #ccc;
-      animation: pulseText 2s infinite alternate;
-      z-index: 2;
-      position: relative;
-      transition: transform 0.2s ease;
-    }
-
-    p:hover {
-      transform: skew(3deg, -2deg) rotate(0.5deg);
-    }
-
-    @keyframes pulseText {
-      0% { color: #ccc; }
-      50% { color: #00f; }
-      100% { color: #ccc; }
-    }
-
-    .music-embed {
-      width: 90%;
-      max-width: 800px;
-      margin-bottom: 3rem;
-      border: none;
-      box-shadow: 0 0 15px #00f;
-      transition: box-shadow 0.3s ease, transform 0.2s ease;
-      animation: embedPulse 3s infinite alternate;
-      z-index: 2;
-      position: relative;
-    }
-
-    .music-embed:hover {
-      box-shadow: 0 0 40px #0ff;
-      transform: rotate(-0.5deg) scale(1.02);
-    }
-
-    @keyframes embedPulse {
-      0% { box-shadow: 0 0 15px #00f; transform: rotate(0deg); }
-      50% { box-shadow: 0 0 30px #0ff; transform: rotate(0.5deg); }
-      100% { box-shadow: 0 0 15px #00f; transform: rotate(-0.5deg); }
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 0.8rem 1.5rem;
-      margin: 0.5rem;
-      color: #fff;
-      text-decoration: none;
-      text-transform: uppercase;
-      border: 2px solid #00f;
-      border-radius: 5px;
-      transition: all 0.3s ease, transform 0.2s ease;
-      font-weight: bold;
-      text-shadow: 0 0 3px #00f;
-      animation: btnGlow 2s infinite alternate;
-      z-index: 2;
-      position: relative;
-    }
-
-    .btn:hover {
-      background-color: #00f;
-      color: #000;
-      box-shadow: 0 0 25px #0ff;
-      transform: scale(1.05) skew(2deg, -1deg);
-    }
-
-    @keyframes btnGlow {
-      0% { box-shadow: 0 0 5px #00f; }
-      50% { box-shadow: 0 0 15px #0ff; }
-      100% { box-shadow: 0 0 5px #00f; }
-    }
-
-    footer {
-      margin-top: auto;
-      padding: 2rem 0;
-      font-size: 0.9rem;
-      color: #555;
-      z-index: 2;
-      position: relative;
-    }
-
-    @media (max-width: 600px) {
-      h1 { font-size: 2rem; }
-      p { font-size: 1rem; }
-    }
-  </style>
+</style>
 </head>
 <body>
+  <div class="noise-overlay"></div>
+<!-- Generate 10 floating glitch lines -->
+<div class="glitch-line" style="left:10%; height:40px; animation-duration:6s;"></div>
+<div class="glitch-line" style="left:25%; height:60px; animation-duration:8s;"></div>
+<div class="glitch-line" style="left:40%; height:50px; animation-duration:7s;"></div>
+<div class="glitch-line" style="left:55%; height:70px; animation-duration:9s;"></div>
+<div class="glitch-line" style="left:70%; height:45px; animation-duration:5s;"></div>
+<div class="glitch-line" style="left:15%; height:55px; animation-duration:8.5s;"></div>
+<div class="glitch-line" style="left:35%; height:65px; animation-duration:7.5s;"></div>
+<div class="glitch-line" style="left:50%; height:60px; animation-duration:6.5s;"></div>
+<div class="glitch-line" style="left:75%; height:50px; animation-duration:8s;"></div>
+<div class="glitch-line" style="left:85%; height:45px; animation-duration:7s;"></div>
+
+<div id="page-container">
   <!-- Background shapes -->
-  <div class="shape" style="width:50px; height:50px; left:10%; animation-duration: 10s;"></div>
-  <div class="shape" style="width:70px; height:70px; left:30%; animation-duration: 12s;"></div>
-  <div class="shape" style="width:30px; height:30px; left:50%; animation-duration: 8s;"></div>
-  <div class="shape" style="width:60px; height:60px; left:70%; animation-duration: 11s;"></div>
-  <div class="shape" style="width:40px; height:40px; left:85%; animation-duration: 9s;"></div>
+  <div class="shape" style="width:50px; height:50px; left:10%;"></div>
+  <div class="shape" style="width:70px; height:70px; left:30%;"></div>
+  <div class="shape" style="width:30px; height:30px; left:50%;"></div>
+  <div class="shape" style="width:60px; height:60px; left:70%;"></div>
+  <div class="shape" style="width:40px; height:40px; left:85%;"></div>
 
   <h1>Tending Sands</h1>
   <p>Edgy, chaotic, and unapologetic music</p>
@@ -167,19 +273,60 @@
     <a class="btn" href="https://music.apple.com/us/artist/tending-sands/1623597740" target="_blank">Listen on Apple Music</a>
   </div>
 
-  <footer>
-    &copy; 2025 Shattered Hourglass LLC | All Rights Reserved
-  </footer>
+  <footer>&copy; 2025 Shattered Hourglass LLC | All Rights Reserved</footer>
+</div>
 
-  <script>
-    // Simple parallax for background shapes on scroll
-    const shapes = document.querySelectorAll('.shape');
-    window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
-      shapes.forEach((shape, i) => {
-        shape.style.transform = `translateY(${scrollY * (0.1 + i*0.05)}px)`;
-      });
+<button id="toggle-btn">Toggle Chaos</button>
+
+<script>
+  const container = document.getElementById('page-container');
+  const shapes = document.querySelectorAll('.shape');
+  const toggleBtn = document.getElementById('toggle-btn');
+
+  // Detect mobile on load
+  const isMobile = window.innerWidth <= 600;
+  if (isMobile) container.classList.add('performance');
+  else container.classList.add('full-chaos');
+
+  // Parallax effect
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    shapes.forEach((shape, i) => {
+      shape.style.transform = `translateY(${scrollY * (0.05 + i*0.03)}px)`;
     });
-  </script>
+  });
+
+  // Create particles
+  function createParticles(x, y) {
+    for (let i = 0; i < 8; i++) {
+      const particle = document.createElement('div');
+      particle.classList.add('particle');
+      const offsetX = (Math.random() - 0.5) * 100 + 'px';
+      const offsetY = (Math.random() - 0.5) * 100 + 'px';
+      particle.style.setProperty('--x', offsetX);
+      particle.style.setProperty('--y', offsetY);
+      particle.style.left = x + 'px';
+      particle.style.top = y + 'px';
+      document.body.appendChild(particle);
+      setTimeout(() => particle.remove(), 800);
+    }
+  }
+
+  // Toggle chaos button
+  toggleBtn.addEventListener('click', () => {
+    if (container.classList.contains('full-chaos')) {
+      container.classList.remove('full-chaos');
+      container.classList.add('performance');
+    } else {
+      container.classList.remove('performance');
+      container.classList.add('full-chaos');
+    }
+
+    const rect = toggleBtn.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    createParticles(centerX, centerY);
+  });
+</script>
 </body>
 </html>
