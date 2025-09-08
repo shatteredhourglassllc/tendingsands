@@ -156,6 +156,7 @@
       }
     }
   </style>
+<script src="https://www.paypalobjects.com/ncp/cart/cart.js" data-merchant-id="F5CD6CGRXHRH8"></script>
 </head>
 <body>
   <header>
@@ -190,10 +191,9 @@
     <p>© 2025 Tending Sands. All rights reserved.</p>
   </footer>
 
-  <!-- PayPal Cart Integration -->
-  <script src="https://www.paypalobjects.com/ncp/cart/cart.js" data-merchant-id="F5CD6CGRXHRH8"></script>
-  <script>
-    cartPaypal.Cart({ id: "pp-view-cart" });
-  </script>
+  <paypal-cart-button data-id="pp-view-cart"></paypal-cart-button>
+<script>
+  cartPaypal.Cart({ id: "pp-view-cart" })
+</script>
 </body>
 </html>
