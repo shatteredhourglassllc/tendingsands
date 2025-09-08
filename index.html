@@ -5,150 +5,192 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tending Sands</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap');
+
     body {
       margin: 0;
-      font-family: 'Courier New', monospace;
+      font-family: 'Roboto Mono', monospace;
       background: #000;
       color: #fff;
       overflow-x: hidden;
+      line-height: 1.8;
     }
-
     header {
-      text-align: center;
-      padding: 100px 20px 50px;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background: #000;
+      border-bottom: 1px solid #222;
     }
-
-    .glitch {
-      font-size: 4rem;
-      font-weight: bold;
+    h1.glitch {
+      font-size: 3.5rem;
       position: relative;
-      color: #fff;
+      color: white;
       text-transform: uppercase;
-      animation: glitchPulse 3s infinite;
+      letter-spacing: 2px;
+      animation: glitch 2s infinite;
     }
-
-    @keyframes glitchPulse {
-      0%, 100% { text-shadow: 2px 2px #00f, -2px -2px #fff; }
-      50% { text-shadow: -2px -2px #00f, 2px 2px #fff; }
+    @keyframes glitch {
+      0% { text-shadow: 2px 0 #00ccff; color: #fff; }
+      20% { text-shadow: -2px 0 #0099ff; color: #00ccff; }
+      40% { text-shadow: 2px -2px #00e6ff; color: #fff; }
+      60% { text-shadow: -2px 2px #00ccff; color: #00ccff; }
+      80% { text-shadow: 2px 2px #0099ff; color: #fff; }
+      100% { text-shadow: -2px -2px #00e6ff; color: #00ccff; }
     }
-
     section {
-      padding: 80px 20px;
+      padding: 4rem 2rem;
       max-width: 900px;
       margin: auto;
-      text-align: center;
       opacity: 0;
-      transform: translateY(40px);
-      animation: fadeIn 1s forwards;
-    }
-
-    section h2 {
-      font-size: 2rem;
-      margin-bottom: 20px;
+      transform: translateY(30px);
+      animation: fadeInUp 1s forwards;
       position: relative;
-      display: inline-block;
     }
-
-    section h2::after {
-      content: '';
-      display: block;
-      width: 100%;
-      height: 3px;
-      background: #00f;
-      margin-top: 5px;
-      animation: pulseGlow 2s infinite;
-    }
-
-    @keyframes pulseGlow {
-      0%, 100% { box-shadow: 0 0 5px #00f, 0 0 15px #00f; }
-      50% { box-shadow: 0 0 20px #00f, 0 0 40px #00f; }
-    }
-
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    iframe {
-      border: none;
-      width: 100%;
-      max-width: 800px;
-      height: 400px;
-      margin-top: 20px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    iframe:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 20px #00f, 0 0 40px #00f;
-    }
-
-    /* Screen-edge flash effect */
-    .flash {
-      pointer-events: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      box-shadow: inset 0 0 100px #00f;
+    section::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -10px;
+      height: 2px;
+      background: radial-gradient(circle, rgba(0,204,255,0.6) 0%, transparent 70%);
       opacity: 0;
-      animation: flashEffect 3s infinite;
+      transform: scaleX(0.5);
+      animation: glowTrail 1.5s forwards;
+      animation-delay: 0.8s;
+    }
+    section#about { animation-delay: 0.2s; }
+    section#music { animation-delay: 0.6s; }
+    section#merch { animation-delay: 1s; }
+
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #444;
+      display: inline-block;
+      padding-bottom: .25rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      opacity: 0;
+      animation: flashBlue 1s forwards;
+    }
+    h2:hover {
+      color: #fff;
+      text-shadow: 0 0 8px #00ccff;
+      border-color: #00ccff;
     }
 
-    @keyframes flashEffect {
-      0%, 90%, 100% { opacity: 0; }
-      50% { opacity: 0.5; }
+    @keyframes flashBlue {
+      0% { color: #00ccff; text-shadow: 0 0 15px #00ccff; opacity: 0; }
+      50% { opacity: 1; }
+      100% { color: #fff; text-shadow: none; opacity: 1; }
+    }
+
+    @keyframes glowTrail {
+      0% { opacity: 0; transform: scaleX(0.5); }
+      50% { opacity: 1; transform: scaleX(1); }
+      100% { opacity: 0; transform: scaleX(1.2); }
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      color: #ccc;
+    }
+    em {
+      color: #999;
+      font-style: italic;
+    }
+    strong {
+      color: #fff;
+      font-weight: 700;
+    }
+    iframe {
+      width: 100%;
+      height: 450px;
+      border: none;
+      margin-top: 1rem;
+      background: #111;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 0 transparent;
+    }
+    iframe:hover {
+      box-shadow: 0 0 18px #00ccff, 0 0 30px #0099ff;
+      transform: scale(1.01);
     }
 
     /* PayPal Cart Button styling */
-    .cart-section {
-      margin-top: 40px;
-    }
-
     paypal-cart-button {
       display: inline-block;
+      margin-top: 1.5rem;
       background: #000;
-      border: 2px solid #00f;
+      border: 2px solid #00ccff;
       padding: 12px 24px;
       color: #fff;
       font-size: 1rem;
       cursor: pointer;
       transition: all 0.3s ease;
     }
-
     paypal-cart-button:hover {
-      background: #00f;
+      background: #00ccff;
       color: #000;
-      box-shadow: 0 0 20px #00f, 0 0 40px #00f;
+      box-shadow: 0 0 18px #00ccff, 0 0 30px #0099ff;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.9rem;
+      background: #000;
+      border-top: 1px solid #222;
+      color: #555;
+    }
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
 <body>
-  <div class="flash"></div>
   <header>
     <h1 class="glitch">Tending Sands</h1>
   </header>
 
-  <section>
+  <section id="about">
     <h2>About</h2>
-    <p><strong>Tending Sands</strong> is an artist who blurs...</p>
-    <!-- (your full bio text goes here, already styled earlier) -->
+    <p><strong>Emerging from the arid landscapes</strong> of Apple Valley, California, Tending Sands—born Jeramy Kendell Hoffman on January 8, 1989—crafts music that mirrors the shifting sands of his environment. His compositions blend <em>ambient textures</em>, <em>industrial rhythms</em>, and <em>experimental soundscapes</em>, creating a genre-defying auditory experience.</p>
+
+    <p>Tending Sands’ discography is a testament to his prolific nature and thematic depth. Albums like <em>Taking Shape</em> (2024) and <em>Making Illusions (War Is Not Real / Reality of War Is)</em> (2024) delve into existential themes, while tracks such as <strong>“Drop Another Bomb on a City”</strong> and <strong>“Tear Myself Down”</strong> showcase his ability to intertwine political commentary with personal introspection.</p>
+
+    <p>His music is available across various platforms, including <strong>Apple Music</strong>, <strong>Amazon Music</strong>, and <strong>Qobuz</strong>, offering listeners a chance to explore his evolving soundscape.</p>
+
+    <p>Beyond his musical endeavors, Hoffman operates under the label <strong>Shattered Hourglass LLC</strong>, further emphasizing his commitment to producing and distributing his unique sound independently.</p>
+
+    <p>For those seeking a musical journey that challenges conventions and evokes the ephemeral nature of existence, <strong>Tending Sands</strong> offers a compelling and thought-provoking experience.</p>
   </section>
 
-  <section>
+  <section id="music">
     <h2>Music</h2>
-    <iframe src="https://audiomack.com/embed/_tendingsands/album/fickle-little-beasts"
-      scrolling="no" frameborder="0"
-      title="The Prophecy of an Atom and the Absence of Humanity"></iframe>
+    <iframe src="https://audiomack.com/embed/_tendingsands/album/fickle-little-beasts" scrolling="no" title="The Prophecy of an Atom and the Absence of Humanity"></iframe>
   </section>
 
-  <section class="cart-section">
+  <section id="merch">
     <h2>Merch</h2>
     <p>Support directly and grab official items:</p>
     <paypal-cart-button data-id="pp-view-cart"></paypal-cart-button>
   </section>
 
+  <footer>
+    <p>© 2025 Tending Sands. All rights reserved.</p>
+  </footer>
+
+  <!-- PayPal Cart Integration -->
   <script src="https://www.paypalobjects.com/ncp/cart/cart.js" data-merchant-id="F5CD6CGRXHRH8"></script>
   <script>
     cartPaypal.Cart({ id: "pp-view-cart" });
