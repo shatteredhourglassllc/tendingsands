@@ -13,7 +13,6 @@
       --glowX: 50vw;
       --glowY: 50vh;
     }
-
     html,body{
       height: 100%;
       margin: 0;
@@ -24,8 +23,6 @@
       -webkit-font-smoothing:antialiased;
       text-transform: lowercase;
     }
-
-    /* background layer that we move on pointer/tilt */
     #bg {
       position: fixed;
       inset: 0;
@@ -43,8 +40,6 @@
       filter: saturate(1.1) contrast(1.05);
       opacity: 1;
     }
-
-    /* dynamic pointer-following glow */
     #glow {
       position: fixed;
       pointer-events: none;
@@ -56,8 +51,6 @@
       transition: background 0.13s;
       will-change: background;
     }
-
-    /* scanline / noise overlay */
     body::after{
       content: "";
       position: fixed;
@@ -77,19 +70,16 @@
       will-change: transform, opacity;
       animation: noiseMove 0.45s linear infinite;
     }
-
     @keyframes noiseMove {
       from { transform: translate(0,0); }
       to   { transform: translate(-9px,-9px); }
     }
-
     header, section, footer {
       position: relative;
       z-index: 4;
       padding: clamp(28px,6vw,64px) 2rem;
       text-align: center;
     }
-
     header h1{
       margin: 0;
       font-size: clamp(28px,6vw,56px);
@@ -130,7 +120,6 @@
     h2:hover {
       text-shadow: 0 0 12px #0ff, 0 0 26px #f0f6;
     }
-
     p {
       margin: 0 auto 1.35rem auto;
       max-width: 720px;
@@ -144,12 +133,10 @@
       transition: color 0.22s;
       color: #0ff;
     }
-
     .reactive {
       transition: transform 120ms linear, box-shadow 120ms linear, text-shadow 120ms linear;
       will-change: transform, box-shadow, text-shadow;
     }
-
     iframe.embed {
       width: 100%;
       max-width: 840px;
@@ -172,7 +159,6 @@
         0 0 80px #f0f6;
       filter: brightness(1.1) blur(0.5px);
     }
-
     .platforms {
       display:flex;
       gap: 0.6rem;
@@ -181,7 +167,6 @@
       flex-wrap: wrap;
       margin-top: 1rem;
     }
-
     .platforms a{
       display:inline-block;
       padding: 0.45rem 0.85rem;
@@ -201,7 +186,6 @@
       transform-origin: center center;
       cursor: pointer;
     }
-
     .platforms a:hover, .platforms a:focus {
       transform: translateY(-2px) scale(1.04) rotate(-1.2deg);
       background: linear-gradient(90deg, rgba(0,255,255,0.95), rgba(255,0,255,0.85));
@@ -210,11 +194,9 @@
       filter: brightness(1.08);
       outline: none;
     }
-
     .merch {
       margin-top: 12px;
     }
-
     .merch a {
       display:inline-block;
       padding: 0.9rem 1.9rem;
@@ -231,7 +213,6 @@
       transform-origin: center center;
       cursor: pointer;
     }
-
     .merch a:hover, .merch a:focus {
       transform: scale(1.055) rotate(1deg);
       filter: brightness(1.09) contrast(1.08);
@@ -240,12 +221,10 @@
         0 0 56px #f0f7;
       outline: none;
     }
-
     .merch a:active {
       filter: brightness(0.96) contrast(1.18);
       transform: scale(0.98);
     }
-
     footer {
       padding: clamp(18px,4vw,36px) 2rem;
       color: #9a9a9a;
@@ -257,8 +236,6 @@
       transition: opacity 0.16s;
     }
     footer:hover { opacity: 1; }
-
-    /* floating sparkles */
     .sparkle {
       position: fixed;
       pointer-events: none;
@@ -276,8 +253,6 @@
       60% { opacity: 1; }
       to   { opacity: 0; transform: scale(0.6) translateY(-32px); }
     }
-
-    /* reduced motion safety */
     @media (prefers-reduced-motion: reduce) {
       * { animation: none !important; transition: none !important; }
       #glow, .sparkle { display:none !important; }
@@ -287,11 +262,9 @@
 <body>
   <div id="bg" aria-hidden="true"></div>
   <div id="glow" aria-hidden="true"></div>
-
   <header>
     <h1 class="reactive" tabindex="0">_tending sands</h1>
   </header>
-
   <section id="music">
     <h2 tabindex="0">music</h2>
     <iframe class="embed reactive"
@@ -299,7 +272,6 @@
       scrolling="no"
       frameborder="0"
       title="fickle little beasts"></iframe>
-
     <div class="platforms">
       <p style="margin:0 0 0.2rem 0; color:#b7b7b7; font-size:0.9rem; padding-right:0.6rem">listen on:</p>
       <a href="https://music.apple.com/us/artist/tending-sands/1623597740" target="_blank" rel="noopener" tabindex="0">apple music</a>
@@ -308,7 +280,6 @@
       <a href="https://www.qobuz.com/us-en/interpreter/tending-sands/14089052" target="_blank" rel="noopener" tabindex="0">qobuz</a>
     </div>
   </section>
-
   <section id="merch">
     <h2 tabindex="0">merch</h2>
     <p class="merchdesc">limited pieces available now.</p>
@@ -316,11 +287,9 @@
       <a class="reactive" href="https://www.paypal.com/ncp/payment/MQGWPJHQSXND4" target="_blank" rel="noopener" tabindex="0">buy now</a>
     </div>
   </section>
-
   <footer>
     <p>&copy; 2025 _tending sands. all rights reserved.</p>
   </footer>
-
   <script>
     (function(){
       const root = document.documentElement;
@@ -332,19 +301,15 @@
       const headerTitle = document.querySelector('header h1');
       const h2s = document.querySelectorAll('h2');
       const merchDesc = document.querySelector('.merchdesc');
-
       // pointer / tilt reactive background
       let targetX = 0, targetY = 0, curX = 0, curY = 0;
       function setBGTransform(x,y,scale=1){
         bg.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${scale})`;
       }
-
-      // Glow effect
       function setGlow(x, y) {
         root.style.setProperty('--glowX', `${x}px`);
         root.style.setProperty('--glowY', `${y}px`);
       }
-
       // mouse
       window.addEventListener('mousemove', (e) => {
         const rx = (e.clientX / window.innerWidth - 0.5) * 24;
@@ -352,11 +317,8 @@
         targetX = rx;
         targetY = ry;
         setGlow(e.clientX, e.clientY);
-
-        // sparkle!
         if(Math.random() < 0.18) spawnSparkle(e.clientX, e.clientY);
       }, {passive:true});
-
       // touch fallback: drag to move, tap for sparkles
       let lastTouch = null;
       window.addEventListener('touchstart', (e)=>{
@@ -376,20 +338,65 @@
         setGlow(t.clientX, t.clientY);
       }, {passive:true});
       window.addEventListener('touchend', ()=> lastTouch = null, {passive:true});
-
-      // device tilt for mobiles (if available)
+      // ---- ENHANCED MOBILE REACTIVITY ----
+      // Stronger, more sensitive device tilt for mobile
+      let tiltIntensity = 1.7; // Increase for more movement
+      let tiltSmoothing = 0.18; // Lower for more snappy
+      let mobileTiltActive = false;
+      // Ask for permission if needed (iOS 13+)
+      function enableTilt(){
+        if(window.DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission === 'function'){
+          DeviceOrientationEvent.requestPermission().then(function(response){
+            if(response === 'granted') {
+              window.addEventListener('deviceorientation', handleOrientation, true);
+              mobileTiltActive = true;
+            }
+          });
+        } else if(window.DeviceOrientationEvent){
+          window.addEventListener('deviceorientation', handleOrientation, true);
+          mobileTiltActive = true;
+        }
+      }
+      // Show a tap-to-enable overlay on mobile if needed
+      function isMobile(){
+        return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+      }
+      if(isMobile()){
+        setTimeout(()=>{
+          if(!mobileTiltActive){
+            let ov = document.createElement('div');
+            ov.style = "position:fixed;z-index:9999;inset:0;background:rgba(0,0,0,0.72);display:flex;align-items:center;justify-content:center;flex-direction:column;color:#fff;font-size:1.2rem;backdrop-filter:blur(3px);text-align:center;transition:opacity 0.2s";
+            ov.innerHTML = "<div style='padding:2em;'><b>🌗</b><br>Tap to enable<br>reactive movement</div>";
+            ov.addEventListener('click', function(){
+              enableTilt();
+              ov.style.opacity = 0;
+              setTimeout(()=>document.body.removeChild(ov), 300);
+            });
+            document.body.appendChild(ov);
+          }
+        }, 700);
+      } else {
+        enableTilt();
+      }
+      // Device Orientation handler
       function handleOrientation(e){
         if(e.gamma === null || e.beta === null) return;
-        const gx = Math.max(-30, Math.min(30, e.gamma));
-        const by = Math.max(-30, Math.min(30, e.beta));
-        targetX = (gx / 30) * 18;
-        targetY = (by / 30) * 12;
+        // gamma: left-right [-90,90], beta: front-back [-180,180]
+        const gx = Math.max(-60, Math.min(60, e.gamma)); // clamp for more drama
+        const by = Math.max(-70, Math.min(70, e.beta));
+        // react more dramatically to tilting
+        targetX = (gx / 60) * 18 * tiltIntensity;
+        targetY = (by / 70) * 12 * tiltIntensity;
+        // also shift glow
+        let centerX = window.innerWidth/2 + (gx/60)*window.innerWidth*0.33;
+        let centerY = window.innerHeight/2 + (by/70)*window.innerHeight*0.28;
+        setGlow(centerX, centerY);
+        // sparkle on rapid tilt
+        if(Math.abs(gx) > 30 || Math.abs(by) > 45){
+          if(Math.random()<0.20) spawnSparkle(centerX, centerY);
+        }
       }
-      if(window.DeviceOrientationEvent){
-        window.addEventListener('deviceorientation', handleOrientation, true);
-      }
-
-      // sparkle spawner
+      // Sparkle spawner
       function spawnSparkle(x, y) {
         const s = document.createElement('div');
         s.className = 'sparkle';
@@ -399,7 +406,6 @@
         document.body.appendChild(s);
         setTimeout(()=>{ s.remove(); }, 1250);
       }
-
       // Simulated audio-reactive pulse (visual only)
       let lastSpike = 0;
       let nextSpike = 4000 + Math.random()*4000;
@@ -414,37 +420,27 @@
         const spike = Math.max(0, 1.2 * Math.exp(-sinceSpike/650));
         return Math.max(0.7, Math.min(1.6, base + spike));
       }
-
       function lerp(a,b,t){ return a + (b-a)*t; }
-
       // main loop
       let last = performance.now();
       let curIntensity = 1;
       function raf(now){
         last = now;
-
-        // spring/lerp background position
-        curX = lerp(curX, targetX, 0.12);
-        curY = lerp(curY, targetY, 0.12);
-
-        // intensity
+        // Use stronger smoothing for tilt on mobile
+        let lerpAmt = (mobileTiltActive ? tiltSmoothing : 0.12);
+        curX = lerp(curX, targetX, lerpAmt);
+        curY = lerp(curY, targetY, lerpAmt);
         const targetIntensity = simulateIntensity(now);
         curIntensity = lerp(curIntensity, targetIntensity, 0.14);
-
         root.style.setProperty('--reactive-intensity', curIntensity.toFixed(3));
-
         const hazeScale = 1 + (curIntensity - 1) * 0.06;
         const hazeOpacity = 0.08 + Math.min(0.35, (curIntensity - 0.85) * 0.25);
         root.style.setProperty('--haze-scale', hazeScale.toFixed(3));
         root.style.setProperty('--haze-opacity', hazeOpacity.toFixed(3));
-
         setBGTransform(curX, curY, hazeScale);
-
         // header title
         const titleScale = 1 + (curIntensity - 1) * 0.02;
         headerTitle.style.transform = `scale(${titleScale}) translateZ(0)`;
-
-        // iframe reacts more
         if(iframe){
           const ifScale = 1 + (curIntensity - 1) * 0.025;
           iframe.style.transform = `scale(${ifScale})`;
@@ -453,8 +449,6 @@
             0 0 ${28 * curIntensity}px rgba(255,0,255,0.08)
           `;
         }
-
-        // merch button punch
         if(merchBtn){
           const mScale = 1 + (curIntensity - 1) * 0.035;
           merchBtn.style.transform = `scale(${mScale})`;
@@ -463,18 +457,13 @@
             0 0 ${30 * curIntensity}px rgba(255,0,255,0.12)
           `;
         }
-
-        // small parallax on platform links
         document.querySelectorAll('.platforms a').forEach((a, i) => {
           const wobble = Math.sin((now/3000) + i) * 0.4 * (curIntensity - 0.9);
           a.style.transform = `translateY(${wobble}px)`;
         });
-
         requestAnimationFrame(raf);
       }
-
       requestAnimationFrame(raf);
-
       // Heading focus/keyboard interactivity
       headerTitle.addEventListener('focus', ()=>headerTitle.classList.add('active'));
       headerTitle.addEventListener('blur', ()=>headerTitle.classList.remove('active'));
@@ -486,7 +475,6 @@
       headerTitle.addEventListener('pointerdown', (e)=>{
         spawnSparkle(e.clientX, e.clientY);
       });
-
       h2s.forEach(h2=>{
         h2.addEventListener('pointerdown', (e)=>spawnSparkle(e.clientX, e.clientY));
         h2.addEventListener('focus', ()=>h2.classList.add('active'));
@@ -497,13 +485,10 @@
           }
         });
       });
-
-      // subtle text color flash on hover/focus for merchdesc
       merchDesc.addEventListener('pointerover', ()=>merchDesc.classList.add('interactive'));
       merchDesc.addEventListener('pointerout', ()=>merchDesc.classList.remove('interactive'));
       merchDesc.addEventListener('focus', ()=>merchDesc.classList.add('interactive'));
       merchDesc.addEventListener('blur', ()=>merchDesc.classList.remove('interactive'));
-
       // accessibility: stop heavy motion if user prefers reduced motion
       const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
       if(mq && mq.matches){
