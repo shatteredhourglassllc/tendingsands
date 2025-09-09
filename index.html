@@ -4,16 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>_tending sands</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", sans-serif;
+      font-family: 'Inter', sans-serif;
       background: #000;
       color: #fff;
       overflow-x: hidden;
       line-height: 1.8;
       position: relative;
-      text-transform: lowercase;
     }
 
     body::before {
@@ -48,30 +48,19 @@
       text-align: center;
     }
 
-    header h1 {
+    h1, h2, a {
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      text-transform: lowercase;
+    }
+
+    h1 {
       font-size: 3.5rem;
       font-weight: bold;
       color: #fff;
-      text-shadow:
-        0 0 10px #00f,
-        0 0 30px #00f,
-        0 0 60px #00f;
-      animation: pulseGlow 1.2s infinite alternate;
-    }
-
-    @keyframes pulseGlow {
-      from {
-        text-shadow:
-          0 0 5px #00f,
-          0 0 15px #00f,
-          0 0 30px #00f;
-      }
-      to {
-        text-shadow:
-          0 0 20px #00f,
-          0 0 60px #00f,
-          0 0 100px #00f;
-      }
+      text-shadow: 0 0 10px #00f, 0 0 30px #00f, 0 0 60px #00f;
+      animation: pulseGlow 1.2s infinite alternate, glitch 10s infinite;
     }
 
     h2 {
@@ -79,7 +68,12 @@
       margin-bottom: 1rem;
       color: #00f;
       text-shadow: 0 0 10px #00f, 0 0 20px #00f;
-      animation: flashBlue 2s infinite;
+      animation: flashBlue 2s infinite, glitch 12s infinite;
+    }
+
+    @keyframes pulseGlow {
+      from { text-shadow: 0 0 5px #00f, 0 0 15px #00f, 0 0 30px #00f; }
+      to { text-shadow: 0 0 20px #00f, 0 0 60px #00f, 0 0 100px #00f; }
     }
 
     @keyframes flashBlue {
@@ -87,11 +81,45 @@
       50% { opacity: 0.7; text-shadow: 0 0 5px #00f; }
     }
 
+    h1::after, h2::after, a::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      width: 0%;
+      height: 2px;
+      background: #00f;
+      transform: translateX(-50%);
+      animation: ripple 5s infinite;
+    }
+
+    @keyframes ripple {
+      0% { width: 0%; opacity: 0.2; }
+      50% { width: 100%; opacity: 1; }
+      100% { width: 0%; opacity: 0.2; }
+    }
+
+    a:hover, h1:hover, h2:hover {
+      color: #00f;
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px #00f, 0 0 20px #00f;
+      transition: 0.25s ease-in-out;
+    }
+
+    @keyframes glitch {
+      0%, 90%, 100% { opacity: 1; transform: none; }
+      92% { opacity: 0.7; transform: translateX(-2px) skewX(-5deg); }
+      94% { opacity: 1; transform: translateX(2px) skewX(5deg); }
+      96% { opacity: 0.6; transform: translateY(-2px); }
+      98% { opacity: 1; transform: none; }
+    }
+
     p {
       max-width: 700px;
       margin: 0 auto 2rem auto;
       font-size: 1.1rem;
       color: #ccc;
+      text-transform: lowercase;
     }
 
     iframe {
@@ -103,91 +131,79 @@
       box-shadow: 0 0 20px #00f, 0 0 40px #00f;
     }
 
+    .platforms {
+      margin-top: 1.5rem;
+    }
+
+    .platforms p {
+      margin-bottom: 0.5rem;
+      color: #888;
+      font-size: 0.95rem;
+    }
+
+    .platforms a {
+      display: inline-block;
+      margin: 0.3rem 0.6rem;
+      padding: 0.4rem 0.9rem;
+      border: 1px solid #00f;
+      border-radius: 4px;
+      color: #00f;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.2s ease-in-out;
+      box-shadow: 0 0 10px #00f, 0 0 20px #00f;
+      text-transform: lowercase;
+      animation: glitch 10s infinite;
+    }
+
+    .platforms a:hover {
+      background: #00f;
+      color: #000;
+      box-shadow: 0 0 20px #00f, 0 0 40px #00f;
+    }
+
     .merch a {
       display: inline-block;
-      padding: 1rem 2.5rem;
-      background: #000;
-      color: #00f;
-      border: 2px solid #00f;
+      padding: 1rem 2rem;
+      background: #00f;
+      color: #000;
       text-decoration: none;
       font-weight: bold;
       border-radius: 6px;
+      transition: 0.3s;
       font-size: 1.2rem;
-      position: relative;
-      overflow: hidden;
-      text-shadow: 0 0 5px #00f, 0 0 10px #00f;
+      text-transform: lowercase;
       box-shadow: 0 0 20px #00f, 0 0 40px #00f;
-      transition: all 0.2s ease-in-out;
-    }
-
-    .merch a::before, .merch a::after {
-      content: "buy now";
-      position: absolute;
-      left: 0;
-      width: 100%;
-      text-align: center;
-      opacity: 0.6;
-      clip: rect(0, 900px, 0, 0);
-    }
-
-    .merch a::before {
-      top: 0;
-      color: #f0f;
-      animation: glitchTop 2s infinite linear alternate-reverse;
-    }
-
-    .merch a::after {
-      top: 0;
-      color: #0ff;
-      animation: glitchBottom 2s infinite linear alternate-reverse;
-    }
-
-    @keyframes glitchTop {
-      0% { clip: rect(0, 9999px, 0, 0); }
-      5% { clip: rect(0, 9999px, 100%, 0); transform: translate(-2px, -2px); }
-      10% { clip: rect(0, 9999px, 0, 0); transform: translate(0, 0); }
-    }
-
-    @keyframes glitchBottom {
-      0% { clip: rect(0, 9999px, 0, 0); }
-      5% { clip: rect(0, 9999px, 100%, 0); transform: translate(2px, 2px); }
-      10% { clip: rect(0, 9999px, 0, 0); transform: translate(0, 0); }
+      animation: pulseBox 3s infinite alternate, glitch 8s infinite;
     }
 
     .merch a:hover {
-      background: #00f;
-      color: #000;
-      text-shadow: none;
+      background: #fff;
+      color: #00f;
       box-shadow: 0 0 40px #00f, 0 0 80px #00f;
+    }
+
+    @keyframes pulseBox {
+      from { box-shadow: 0 0 10px #00f, 0 0 20px #00f; }
+      to   { box-shadow: 0 0 30px #00f, 0 0 60px #00f; }
     }
 
     footer {
       padding: 2rem;
       font-size: 0.9rem;
       color: #888;
+      text-transform: lowercase;
     }
 
-    body::after {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle, rgba(0,0,255,0.5) 0%, transparent 70%);
-      mix-blend-mode: screen;
-      opacity: 0;
-      animation: flicker 7s infinite;
-      pointer-events: none;
-      z-index: 2;
+    footer p {
+      animation: footerGlitch 12s infinite;
     }
 
-    @keyframes flicker {
-      0%, 95%, 100% { opacity: 0; }
-      10% { opacity: 0.8; }
-      11% { opacity: 0; }
-      50% { opacity: 0.4; }
-      51% { opacity: 0; }
+    @keyframes footerGlitch {
+      0%, 100% { opacity: 1; }
+      40% { opacity: 0.7; }
+      42% { opacity: 0.3; transform: skewX(-3deg); }
+      45% { opacity: 1; transform: none; }
     }
   </style>
 </head>
@@ -198,17 +214,20 @@
 
   <section id="about">
     <h2>about</h2>
-    <p>_tending sands is a prophetic music project weaving together raw sound, layered textures, and defiant truth. carving out space in a digital world bent on distortion, it resists silence with sharp edges, honest reflection, and sonic rebellion. every track is both exile and return — a voice cutting through static.
-    Emerging from the the arid landscapes of Apple Valley, California, Tending Sands—born Jeramy Kendell Hoffman on January 8, 1989—crafts music that mirrors the shifting sands of his environment. His compositions blend ambient textures, industrial rhythms, and experimental soundscapes, creating a genre-defying auditory experience.
-Tending Sands’ discography is a testament to his prolific nature and thematic depth. Albums like Taking Shape (2024) and Making Illusions (War Is Not Real / Reality of War Is) (2024) delve into existential themes, while tracks such as “Drop Another Bomb on a City” and “Tear Myself Down” showcase his ability to intertwine political commentary with personal introspection.
-His music is available across various platforms, including Apple Music, Amazon Music, and Qobuz, offering listeners a chance to explore his evolving soundscape.
-Beyond his musical endeavors, Hoffman operates under the label Shattered Hourglass LLC, further emphasizing his commitment to producing and distributing his unique sound independently.
-For those seeking a musical journey that challenges conventions and evokes the ephemeral nature of existence, Tending Sands offers a compelling and thought-provoking experience.</p>
+    <p>_tending sands is a  music project weaving together raw sound, layered textures, and defiant truth. carving out space in a digital world bent on distortion, it resists silence with sharp edges, honest reflection, and sonic rebellion. every track is both exile and return — a voice cutting through static.</p>
   </section>
 
   <section id="music">
     <h2>music</h2>
     <iframe src="https://audiomack.com/embed/_tendingsands/album/fickle-little-beasts" scrolling="no" frameborder="0" title="the prophecy of an atom and the absence of humanity"></iframe>
+
+    <div class="platforms">
+      <p>listen on:</p>
+      <a href="https://music.apple.com/us/artist/tending-sands/1623597740" target="_blank">apple music</a>
+      <a href="https://tidal.com/browse/artist/38490196" target="_blank">tidal</a>
+      <a href="https://music.amazon.com/artists/B0B5LZFL4C/tending-sands" target="_blank">amazon</a>
+      <a href="https://www.qobuz.com/us-en/interpreter/tending-sands/11876252" target="_blank">qobuz</a>
+    </div>
   </section>
 
   <section id="merch" class="merch">
