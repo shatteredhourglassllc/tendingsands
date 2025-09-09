@@ -9,13 +9,104 @@
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
-      background: #000;
+      background: linear-gradient(135deg, #000 0%, #111 50%, #000 100%);
+      background-size: 200% 200%;
+      animation: bgShift 15s infinite alternate;
       color: #fff;
       overflow-x: hidden;
       line-height: 1.8;
       position: relative;
     }
 
+    @keyframes bgShift {
+      from { background-position: 0% 50%; }
+      to { background-position: 100% 50%; }
+    }
+
+    header, section, footer {
+      position: relative;
+      z-index: 1;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 3.5rem;
+      font-weight: bold;
+      letter-spacing: 0.05em;
+      text-transform: lowercase;
+      color: #fff;
+      text-shadow: 
+        0 0 10px #0ff,
+        0 0 20px #f0f,
+        0 0 40px #0ff;
+      animation: pulse 2s infinite alternate;
+    }
+
+    @keyframes pulse {
+      from { text-shadow: 0 0 5px #0ff, 0 0 15px #f0f; }
+      to { text-shadow: 0 0 20px #0ff, 0 0 50px #f0f; }
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      text-transform: lowercase;
+      color: #0ff;
+      text-shadow: 0 0 15px #0ff;
+    }
+
+    p {
+      max-width: 700px;
+      margin: 0 auto 2rem auto;
+      font-size: 1.1rem;
+      color: #bbb;
+    }
+
+    iframe {
+      border: none;
+      width: 100%;
+      max-width: 800px;
+      height: 400px;
+      margin-bottom: 2rem;
+      box-shadow: 0 0 20px #0ff, 0 0 40px #f0f;
+      border-radius: 10px;
+    }
+
+    .links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .links a {
+      display: inline-block;
+      padding: 0.8rem 1.5rem;
+      background: #0ff;
+      color: #000;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 6px;
+      transition: 0.3s;
+      font-size: 1rem;
+      box-shadow: 0 0 15px #0ff, 0 0 25px #f0f;
+    }
+
+    .links a:hover {
+      background: #fff;
+      color: #0ff;
+      box-shadow: 0 0 25px #0ff, 0 0 50px #f0f;
+    }
+
+    footer {
+      padding: 2rem;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    /* ⚡ Ambient glowing noise layer */
     body::before {
       content: "";
       position: fixed;
@@ -26,184 +117,19 @@
       background: repeating-linear-gradient(
         0deg,
         rgba(255,255,255,0.05) 0px,
-        rgba(255,255,255,0.05) 2px,
-        transparent 2px,
-        transparent 4px
+        rgba(255,255,255,0.05) 1px,
+        transparent 1px,
+        transparent 3px
       );
-      animation: noiseMove 0.4s infinite;
-      opacity: 0.15;
+      animation: scan 6s linear infinite;
+      opacity: 0.1;
       pointer-events: none;
       z-index: 0;
     }
 
-    @keyframes noiseMove {
-      from { transform: translate(0,0); }
-      to { transform: translate(-10px,-10px); }
-    }
-
-    header, section, footer {
-      position: relative;
-      z-index: 1;
-      padding: 4rem 2rem;
-      text-align: center;
-    }
-
-    h1, h2, a {
-      position: relative;
-      overflow: hidden;
-      text-decoration: none;
-      text-transform: lowercase;
-    }
-
-    h1 {
-      font-size: 3.5rem;
-      font-weight: bold;
-      color: #fff;
-      text-shadow: 0 0 10px #00f, 0 0 30px #00f, 0 0 60px #00f;
-      animation: pulseGlow 1.2s infinite alternate, glitch 10s infinite;
-    }
-
-    h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      color: #00f;
-      text-shadow: 0 0 10px #00f, 0 0 20px #00f;
-      animation: flashBlue 2s infinite, glitch 12s infinite;
-    }
-
-    @keyframes pulseGlow {
-      from { text-shadow: 0 0 5px #00f, 0 0 15px #00f, 0 0 30px #00f; }
-      to { text-shadow: 0 0 20px #00f, 0 0 60px #00f, 0 0 100px #00f; }
-    }
-
-    @keyframes flashBlue {
-      0%, 100% { opacity: 1; text-shadow: 0 0 20px #00f, 0 0 40px #00f; }
-      50% { opacity: 0.7; text-shadow: 0 0 5px #00f; }
-    }
-
-    h1::after, h2::after, a::after {
-      content: "";
-      position: absolute;
-      bottom: -4px;
-      left: 50%;
-      width: 0%;
-      height: 2px;
-      background: #00f;
-      transform: translateX(-50%);
-      animation: ripple 5s infinite;
-    }
-
-    @keyframes ripple {
-      0% { width: 0%; opacity: 0.2; }
-      50% { width: 100%; opacity: 1; }
-      100% { width: 0%; opacity: 0.2; }
-    }
-
-    a:hover, h1:hover, h2:hover {
-      color: #00f;
-      letter-spacing: 2px;
-      text-shadow: 0 0 10px #00f, 0 0 20px #00f;
-      transition: 0.25s ease-in-out;
-    }
-
-    @keyframes glitch {
-      0%, 90%, 100% { opacity: 1; transform: none; }
-      92% { opacity: 0.7; transform: translateX(-2px) skewX(-5deg); }
-      94% { opacity: 1; transform: translateX(2px) skewX(5deg); }
-      96% { opacity: 0.6; transform: translateY(-2px); }
-      98% { opacity: 1; transform: none; }
-    }
-
-    p {
-      max-width: 700px;
-      margin: 0 auto 2rem auto;
-      font-size: 1.1rem;
-      color: #ccc;
-      text-transform: lowercase;
-    }
-
-    iframe {
-      border: none;
-      width: 100%;
-      max-width: 800px;
-      height: 400px;
-      margin-bottom: 2rem;
-      box-shadow: 0 0 20px #00f, 0 0 40px #00f;
-    }
-
-    .platforms {
-      margin-top: 1.5rem;
-    }
-
-    .platforms p {
-      margin-bottom: 0.5rem;
-      color: #888;
-      font-size: 0.95rem;
-    }
-
-    .platforms a {
-      display: inline-block;
-      margin: 0.3rem 0.6rem;
-      padding: 0.4rem 0.9rem;
-      border: 1px solid #00f;
-      border-radius: 4px;
-      color: #00f;
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: all 0.2s ease-in-out;
-      box-shadow: 0 0 10px #00f, 0 0 20px #00f;
-      text-transform: lowercase;
-      animation: glitch 10s infinite;
-    }
-
-    .platforms a:hover {
-      background: #00f;
-      color: #000;
-      box-shadow: 0 0 20px #00f, 0 0 40px #00f;
-    }
-
-    .merch a {
-      display: inline-block;
-      padding: 1rem 2rem;
-      background: #00f;
-      color: #000;
-      text-decoration: none;
-      font-weight: bold;
-      border-radius: 6px;
-      transition: 0.3s;
-      font-size: 1.2rem;
-      text-transform: lowercase;
-      box-shadow: 0 0 20px #00f, 0 0 40px #00f;
-      animation: pulseBox 3s infinite alternate, glitch 8s infinite;
-    }
-
-    .merch a:hover {
-      background: #fff;
-      color: #00f;
-      box-shadow: 0 0 40px #00f, 0 0 80px #00f;
-    }
-
-    @keyframes pulseBox {
-      from { box-shadow: 0 0 10px #00f, 0 0 20px #00f; }
-      to   { box-shadow: 0 0 30px #00f, 0 0 60px #00f; }
-    }
-
-    footer {
-      padding: 2rem;
-      font-size: 0.9rem;
-      color: #888;
-      text-transform: lowercase;
-    }
-
-    footer p {
-      animation: footerGlitch 12s infinite;
-    }
-
-    @keyframes footerGlitch {
-      0%, 100% { opacity: 1; }
-      40% { opacity: 0.7; }
-      42% { opacity: 0.3; transform: skewX(-3deg); }
-      45% { opacity: 1; transform: none; }
+    @keyframes scan {
+      from { transform: translateY(0); }
+      to { transform: translateY(20px); }
     }
   </style>
 </head>
@@ -212,27 +138,18 @@
     <h1>_tending sands</h1>
   </header>
 
-  <section id="about">
-    <h2>about</h2>
-    <p>_tending sands is a  music project weaving together raw sound, layered textures, and defiant truth. carving out space in a digital world bent on distortion, it resists silence with sharp edges, honest reflection, and sonic rebellion. every track is both exile and return — a voice cutting through static.</p>
-  </section>
-
   <section id="music">
     <h2>music</h2>
-    <iframe src="https://audiomack.com/embed/_tendingsands/album/fickle-little-beasts" scrolling="no" frameborder="0" title="the prophecy of an atom and the absence of humanity"></iframe>
-
-    <div class="platforms">
-      <p>listen on:</p>
+    <iframe src="https://music.apple.com/us/artist/tending-sands/1623597740" allow="autoplay; encrypted-media"></iframe>
+    <div class="links">
+      <a href="https://listen.tidal.com/artist/30997788" target="_blank">tidal</a>
       <a href="https://music.apple.com/us/artist/tending-sands/1623597740" target="_blank">apple music</a>
-      <a href="https://tidal.com/browse/artist/38458482" target="_blank">tidal</a>
-      <a href="https://music.amazon.com/artists/B0B132B2TR/tending-sands?marketplaceId=ATVPDKIKX0DER&musicTerritory=US&ref=dm_sh_2CaF9IEp4lXKItAwSuUXv3pjV" target="_blank">amazon</a>
-      <a href="https://www.qobuz.com/us-en/interpreter/tending-sands/14089052" target="_blank">qobuz</a>
     </div>
   </section>
 
-  <section id="merch" class="merch">
+  <section id="merch">
     <h2>merch</h2>
-    <p>support the movement — limited items available.</p>
+    <p>limited pieces available now.</p>
     <a href="https://www.paypal.com/ncp/payment/MQGWPJHQSXND4" target="_blank">buy now</a>
   </section>
 
