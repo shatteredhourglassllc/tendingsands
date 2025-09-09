@@ -6,18 +6,17 @@
   <title>Tending Sands</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* Base styles */
     body {
       margin: 0;
       font-family: 'Roboto Mono', monospace;
-      background: linear-gradient(180deg, #000 0%, #111 100%);
+      background: #000;
       color: #fff;
       overflow-x: hidden;
       line-height: 1.8;
       position: relative;
     }
 
-    /* Noise overlay with animation */
+    /* 🔥 Procedural static background */
     body::before {
       content: "";
       position: fixed;
@@ -25,25 +24,24 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: url("data:image/svg+xml;utf8,
-        <svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'>
-          <filter id='noiseFilter'>
-            <feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/>
-          </filter>
-          <rect width='100%' height='100%' filter='url(%23noiseFilter)'/>
-        </svg>") repeat;
-      opacity: 0.07;
-      animation: noiseMove 2s infinite linear;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(255,255,255,0.05) 0px,
+        rgba(255,255,255,0.05) 2px,
+        transparent 2px,
+        transparent 4px
+      );
+      animation: noiseMove 0.4s infinite;
+      opacity: 0.15;
       pointer-events: none;
       z-index: 0;
     }
 
     @keyframes noiseMove {
-      0% { transform: translate(0,0); }
-      100% { transform: translate(-10px,-10px); }
+      from { transform: translate(0,0); }
+      to { transform: translate(-10px,-10px); }
     }
 
-    /* Sections */
     header, section, footer {
       position: relative;
       z-index: 1;
@@ -51,18 +49,32 @@
       text-align: center;
     }
 
+    /* ⚡ Neon glitch glow */
     header h1 {
-      font-size: 3rem;
+      font-size: 3.5rem;
       text-transform: uppercase;
       font-weight: bold;
       color: #fff;
-      text-shadow: 0 0 15px #00f, 0 0 30px #00f;
-      animation: pulseGlow 2s infinite alternate;
+      text-shadow:
+        0 0 10px #00f,
+        0 0 30px #00f,
+        0 0 60px #00f;
+      animation: pulseGlow 1.2s infinite alternate;
     }
 
     @keyframes pulseGlow {
-      from { text-shadow: 0 0 10px #00f, 0 0 20px #00f; }
-      to { text-shadow: 0 0 20px #00f, 0 0 40px #00f; }
+      from {
+        text-shadow:
+          0 0 5px #00f,
+          0 0 15px #00f,
+          0 0 30px #00f;
+      }
+      to {
+        text-shadow:
+          0 0 20px #00f,
+          0 0 60px #00f,
+          0 0 100px #00f;
+      }
     }
 
     h2 {
@@ -70,12 +82,20 @@
       margin-bottom: 1rem;
       text-transform: uppercase;
       color: #00f;
-      text-shadow: 0 0 10px #00f;
+      text-shadow: 0 0 10px #00f, 0 0 20px #00f;
+      animation: flashBlue 2s infinite;
+    }
+
+    @keyframes flashBlue {
+      0%, 100% { opacity: 1; text-shadow: 0 0 20px #00f, 0 0 40px #00f; }
+      50% { opacity: 0.7; text-shadow: 0 0 5px #00f; }
     }
 
     p {
       max-width: 700px;
       margin: 0 auto 2rem auto;
+      font-size: 1.1rem;
+      color: #ccc;
     }
 
     iframe {
@@ -83,8 +103,8 @@
       width: 100%;
       max-width: 800px;
       height: 400px;
-      box-shadow: 0 0 20px #00f;
       margin-bottom: 2rem;
+      box-shadow: 0 0 20px #00f, 0 0 40px #00f;
     }
 
     .merch a {
@@ -96,19 +116,44 @@
       font-weight: bold;
       border-radius: 6px;
       transition: 0.3s;
-      box-shadow: 0 0 10px #00f, 0 0 20px #00f;
+      font-size: 1.2rem;
+      box-shadow: 0 0 20px #00f, 0 0 40px #00f;
     }
 
     .merch a:hover {
       background: #fff;
       color: #00f;
-      box-shadow: 0 0 20px #00f, 0 0 40px #00f;
+      box-shadow: 0 0 40px #00f, 0 0 80px #00f;
     }
 
     footer {
       padding: 2rem;
       font-size: 0.9rem;
-      color: #777;
+      color: #888;
+    }
+
+    /* ⚡ Lightning edge flicker */
+    body::after {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(0,0,255,0.5) 0%, transparent 70%);
+      mix-blend-mode: screen;
+      opacity: 0;
+      animation: flicker 7s infinite;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    @keyframes flicker {
+      0%, 95%, 100% { opacity: 0; }
+      10% { opacity: 0.8; }
+      11% { opacity: 0; }
+      50% { opacity: 0.4; }
+      51% { opacity: 0; }
     }
   </style>
 </head>
