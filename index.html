@@ -10,6 +10,8 @@
       --haze-opacity: 0.12;
       --haze-scale: 1;
       --reactive-intensity: 1;
+      --glowX: 50vw;
+      --glowY: 50vh;
     }
 
     html,body{
@@ -42,12 +44,25 @@
       opacity: 1;
     }
 
+    /* dynamic pointer-following glow */
+    #glow {
+      position: fixed;
+      pointer-events: none;
+      left: 0; top: 0; width: 100vw; height: 100vh;
+      z-index: 2;
+      mix-blend-mode: lighten;
+      background: radial-gradient(circle at var(--glowX,50vw) var(--glowY,50vh), rgba(0,255,255,0.08) 0%, rgba(255,0,255,0.05) 40%, transparent 70%);
+      opacity: 0.95;
+      transition: background 0.13s;
+      will-change: background;
+    }
+
     /* scanline / noise overlay */
     body::after{
       content: "";
       position: fixed;
       inset: 0;
-      z-index: 1;
+      z-index: 3;
       pointer-events: none;
       background: repeating-linear-gradient(
         0deg,
@@ -70,7 +85,7 @@
 
     header, section, footer {
       position: relative;
-      z-index: 2;
+      z-index: 4;
       padding: clamp(28px,6vw,64px) 2rem;
       text-align: center;
     }
@@ -87,14 +102,33 @@
         0 0 calc(32px * var(--reactive-intensity)) rgba(0,255,128,0.18);
       transform-origin: center center;
       transition: transform 160ms linear, text-shadow 160ms linear;
+      cursor: pointer;
+      user-select: none;
+      filter: drop-shadow(0 0 12px rgba(255,255,255,0.15));
     }
-
+    header h1:hover {
+      filter: drop-shadow(0 0 24px rgba(255,255,255,0.22));
+      text-shadow:
+        0 0 9px #0ff,
+        0 0 22px #f0f,
+        0 0 34px #0f8;
+      animation: h1Pulse 0.7s linear infinite alternate;
+    }
+    @keyframes h1Pulse {
+      from { filter: drop-shadow(0 0 14px #0ff6) drop-shadow(0 0 6px #f0f2); }
+      to   { filter: drop-shadow(0 0 30px #0ffb) drop-shadow(0 0 22px #f0f9); }
+    }
     h2{
       margin: 0 0 12px 0;
       font-size: clamp(18px,3.2vw,28px);
       color: rgba(0,255,255,0.95);
       text-shadow: 0 0 calc(8px * var(--reactive-intensity)) rgba(0,255,255,0.7);
       transform-origin: center center;
+      transition: text-shadow 0.18s;
+      cursor: pointer;
+    }
+    h2:hover {
+      text-shadow: 0 0 12px #0ff, 0 0 26px #f0f6;
     }
 
     p {
@@ -103,9 +137,14 @@
       color: #cfcfcf;
       font-size: clamp(14px, 1.9vw, 18px);
       line-height: 1.6;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.11));
+      transition: color 0.13s;
+    }
+    p.interactive {
+      transition: color 0.22s;
+      color: #0ff;
     }
 
-    /* audio-simulated reactive elements */
     .reactive {
       transition: transform 120ms linear, box-shadow 120ms linear, text-shadow 120ms linear;
       will-change: transform, box-shadow, text-shadow;
@@ -122,6 +161,16 @@
         0 0 calc(12px * var(--reactive-intensity)) rgba(0,255,255,0.15),
         0 0 calc(28px * var(--reactive-intensity)) rgba(255,0,255,0.08);
       transform-origin: center center;
+      backdrop-filter: blur(1.5px);
+      background: rgba(0,0,0,0.12);
+      transition: box-shadow 160ms, filter 180ms;
+    }
+    iframe.embed:focus-within,
+    iframe.embed:active {
+      box-shadow:
+        0 0 44px #0ff8,
+        0 0 80px #f0f6;
+      filter: brightness(1.1) blur(0.5px);
     }
 
     .platforms {
@@ -143,15 +192,23 @@
       border-radius: 6px;
       background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent 60%);
       box-shadow: 0 0 8px rgba(0,255,255,0.12);
-      transition: transform 160ms ease, background 200ms ease, box-shadow 200ms ease, color 180ms ease;
+      transition: 
+        transform 160ms ease, 
+        background 200ms ease, 
+        box-shadow 200ms ease, 
+        color 180ms ease,
+        filter 0.19s;
       transform-origin: center center;
+      cursor: pointer;
     }
 
-    .platforms a:hover{
-      transform: translateY(-2px) scale(1.02);
+    .platforms a:hover, .platforms a:focus {
+      transform: translateY(-2px) scale(1.04) rotate(-1.2deg);
       background: linear-gradient(90deg, rgba(0,255,255,0.95), rgba(255,0,255,0.85));
       color: #000;
       box-shadow: 0 0 26px rgba(0,255,255,0.28), 0 0 48px rgba(255,0,255,0.14);
+      filter: brightness(1.08);
+      outline: none;
     }
 
     .merch {
@@ -172,11 +229,21 @@
         0 0 calc(30px * var(--reactive-intensity)) rgba(255,0,255,0.18);
       transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease;
       transform-origin: center center;
+      cursor: pointer;
     }
 
-    .merch a:hover {
-      transform: scale(1.03);
-      filter: brightness(1.05);
+    .merch a:hover, .merch a:focus {
+      transform: scale(1.055) rotate(1deg);
+      filter: brightness(1.09) contrast(1.08);
+      box-shadow:
+        0 0 38px #0ff9,
+        0 0 56px #f0f7;
+      outline: none;
+    }
+
+    .merch a:active {
+      filter: brightness(0.96) contrast(1.18);
+      transform: scale(0.98);
     }
 
     footer {
@@ -184,23 +251,49 @@
       color: #9a9a9a;
       font-size: 0.9rem;
       text-align:center;
+      opacity: 0.75;
+      letter-spacing: 0.01em;
+      user-select: none;
+      transition: opacity 0.16s;
+    }
+    footer:hover { opacity: 1; }
+
+    /* floating sparkles */
+    .sparkle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 10;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fffb 0%, #0ff6 70%, transparent 100%);
+      opacity: 0.7;
+      will-change: transform, opacity;
+      animation: sparkleAnim 1.2s linear forwards;
+      filter: blur(0.5px);
+    }
+    @keyframes sparkleAnim {
+      from { opacity: 0.9; transform: scale(1) translateY(0); }
+      60% { opacity: 1; }
+      to   { opacity: 0; transform: scale(0.6) translateY(-32px); }
     }
 
     /* reduced motion safety */
     @media (prefers-reduced-motion: reduce) {
       * { animation: none !important; transition: none !important; }
+      #glow, .sparkle { display:none !important; }
     }
   </style>
 </head>
 <body>
   <div id="bg" aria-hidden="true"></div>
+  <div id="glow" aria-hidden="true"></div>
 
   <header>
-    <h1 class="reactive">_tending sands</h1>
+    <h1 class="reactive" tabindex="0">_tending sands</h1>
   </header>
 
   <section id="music">
-    <h2>music</h2>
+    <h2 tabindex="0">music</h2>
     <iframe class="embed reactive"
       src="https://audiomack.com/embed/_tendingsands/album/fickle-little-beasts"
       scrolling="no"
@@ -209,18 +302,18 @@
 
     <div class="platforms">
       <p style="margin:0 0 0.2rem 0; color:#b7b7b7; font-size:0.9rem; padding-right:0.6rem">listen on:</p>
-      <a href="https://music.apple.com/us/artist/tending-sands/1623597740" target="_blank" rel="noopener">apple music</a>
-      <a href="https://tidal.com/browse/artist/38458482" target="_blank" rel="noopener">tidal</a>
-      <a href="https://music.amazon.com/artists/B0B132B2TR/tending-sands?marketplaceId=ATVPDKIKX0DER&musicTerritory=US&ref=dm_sh_2CaF9IEp4lXKItAwSuUXv3pjV" target="_blank" rel="noopener">amazon</a>
-      <a href="https://www.qobuz.com/us-en/interpreter/tending-sands/14089052" target="_blank" rel="noopener">qobuz</a>
+      <a href="https://music.apple.com/us/artist/tending-sands/1623597740" target="_blank" rel="noopener" tabindex="0">apple music</a>
+      <a href="https://tidal.com/browse/artist/38458482" target="_blank" rel="noopener" tabindex="0">tidal</a>
+      <a href="https://music.amazon.com/artists/B0B132B2TR/tending-sands?marketplaceId=ATVPDKIKX0DER&musicTerritory=US&ref=dm_sh_2CaF9IEp4lXKItAwSuUXv3pjV" target="_blank" rel="noopener" tabindex="0">amazon</a>
+      <a href="https://www.qobuz.com/us-en/interpreter/tending-sands/14089052" target="_blank" rel="noopener" tabindex="0">qobuz</a>
     </div>
   </section>
 
   <section id="merch">
-    <h2>merch</h2>
-    <p>limited pieces available now.</p>
+    <h2 tabindex="0">merch</h2>
+    <p class="merchdesc">limited pieces available now.</p>
     <div class="merch">
-      <a class="reactive" href="https://www.paypal.com/ncp/payment/MQGWPJHQSXND4" target="_blank" rel="noopener">buy now</a>
+      <a class="reactive" href="https://www.paypal.com/ncp/payment/MQGWPJHQSXND4" target="_blank" rel="noopener" tabindex="0">buy now</a>
     </div>
   </section>
 
@@ -232,15 +325,24 @@
     (function(){
       const root = document.documentElement;
       const bg = document.getElementById('bg');
+      const glow = document.getElementById('glow');
       const reactiveEls = Array.from(document.querySelectorAll('.reactive'));
       const merchBtn = document.querySelector('.merch a');
       const iframe = document.querySelector('iframe.embed');
       const headerTitle = document.querySelector('header h1');
+      const h2s = document.querySelectorAll('h2');
+      const merchDesc = document.querySelector('.merchdesc');
 
       // pointer / tilt reactive background
       let targetX = 0, targetY = 0, curX = 0, curY = 0;
       function setBGTransform(x,y,scale=1){
         bg.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${scale})`;
+      }
+
+      // Glow effect
+      function setGlow(x, y) {
+        root.style.setProperty('--glowX', `${x}px`);
+        root.style.setProperty('--glowY', `${y}px`);
       }
 
       // mouse
@@ -249,12 +351,20 @@
         const ry = (e.clientY / window.innerHeight - 0.5) * 18;
         targetX = rx;
         targetY = ry;
+        setGlow(e.clientX, e.clientY);
+
+        // sparkle!
+        if(Math.random() < 0.18) spawnSparkle(e.clientX, e.clientY);
       }, {passive:true});
 
-      // touch fallback: drag to move
+      // touch fallback: drag to move, tap for sparkles
       let lastTouch = null;
       window.addEventListener('touchstart', (e)=>{
         if(e.touches && e.touches[0]) lastTouch = e.touches[0];
+        if(e.touches && e.touches[0]) {
+          setGlow(e.touches[0].clientX, e.touches[0].clientY);
+          spawnSparkle(e.touches[0].clientX, e.touches[0].clientY);
+        }
       }, {passive:true});
       window.addEventListener('touchmove', (e)=>{
         if(!e.touches || !e.touches[0]) return;
@@ -263,14 +373,14 @@
         const dy = (t.clientY - (lastTouch ? lastTouch.clientY : t.clientY)) * 0.2;
         targetX = dx;
         targetY = dy;
+        setGlow(t.clientX, t.clientY);
       }, {passive:true});
       window.addEventListener('touchend', ()=> lastTouch = null, {passive:true});
 
       // device tilt for mobiles (if available)
       function handleOrientation(e){
-        // gamma: left-right, beta: front-back
         if(e.gamma === null || e.beta === null) return;
-        const gx = Math.max(-30, Math.min(30, e.gamma)); // clamp
+        const gx = Math.max(-30, Math.min(30, e.gamma));
         const by = Math.max(-30, Math.min(30, e.beta));
         targetX = (gx / 30) * 18;
         targetY = (by / 30) * 12;
@@ -279,56 +389,58 @@
         window.addEventListener('deviceorientation', handleOrientation, true);
       }
 
-      // simulated audio-reactive pulse (visual only)
+      // sparkle spawner
+      function spawnSparkle(x, y) {
+        const s = document.createElement('div');
+        s.className = 'sparkle';
+        s.style.left = (x-5) + 'px';
+        s.style.top = (y-5) + 'px';
+        s.style.background = `radial-gradient(circle, rgba(255,255,255,0.8), rgba(0,255,255,0.65) 55%, rgba(255,0,255,0.25) 95%, transparent 100%)`;
+        document.body.appendChild(s);
+        setTimeout(()=>{ s.remove(); }, 1250);
+      }
+
+      // Simulated audio-reactive pulse (visual only)
       let lastSpike = 0;
       let nextSpike = 4000 + Math.random()*4000;
-
       function simulateIntensity(now){
-        // base slow breathing
-        const base = 0.9 + 0.15 * Math.sin(now * 0.0022 * Math.PI * 2); // ~0.7-1.1 rhythm
-        // occasional spikes
+        const base = 0.9 + 0.15 * Math.sin(now * 0.0022 * Math.PI * 2);
         if(now - lastSpike > nextSpike){
           lastSpike = now;
           nextSpike = 3000 + Math.random()*6000;
-          return base + 0.9; // immediate spike
+          return base + 0.9;
         }
-        // soft decay if recently spiked:
         const sinceSpike = now - lastSpike;
-        const spike = Math.max(0, 1.2 * Math.exp(-sinceSpike/650)); // decaying spike
+        const spike = Math.max(0, 1.2 * Math.exp(-sinceSpike/650));
         return Math.max(0.7, Math.min(1.6, base + spike));
       }
 
-      // lerp helper
       function lerp(a,b,t){ return a + (b-a)*t; }
 
       // main loop
       let last = performance.now();
       let curIntensity = 1;
       function raf(now){
-        const dt = now - last;
         last = now;
 
         // spring/lerp background position
         curX = lerp(curX, targetX, 0.12);
         curY = lerp(curY, targetY, 0.12);
 
-        // simulated reactive intensity
+        // intensity
         const targetIntensity = simulateIntensity(now);
         curIntensity = lerp(curIntensity, targetIntensity, 0.14);
 
-        // update CSS var for other CSS to use
         root.style.setProperty('--reactive-intensity', curIntensity.toFixed(3));
 
-        // update haze scale and opacity subtly
         const hazeScale = 1 + (curIntensity - 1) * 0.06;
         const hazeOpacity = 0.08 + Math.min(0.35, (curIntensity - 0.85) * 0.25);
         root.style.setProperty('--haze-scale', hazeScale.toFixed(3));
         root.style.setProperty('--haze-opacity', hazeOpacity.toFixed(3));
 
-        // apply bg transform
         setBGTransform(curX, curY, hazeScale);
 
-        // apply subtle transforms to reactive elements
+        // header title
         const titleScale = 1 + (curIntensity - 1) * 0.02;
         headerTitle.style.transform = `scale(${titleScale}) translateZ(0)`;
 
@@ -363,15 +475,43 @@
 
       requestAnimationFrame(raf);
 
+      // Heading focus/keyboard interactivity
+      headerTitle.addEventListener('focus', ()=>headerTitle.classList.add('active'));
+      headerTitle.addEventListener('blur', ()=>headerTitle.classList.remove('active'));
+      headerTitle.addEventListener('keydown', (e)=>{
+        if (e.key === ' ' || e.key === 'Enter') {
+          spawnSparkle(window.innerWidth/2, 70+Math.random()*20);
+        }
+      });
+      headerTitle.addEventListener('pointerdown', (e)=>{
+        spawnSparkle(e.clientX, e.clientY);
+      });
+
+      h2s.forEach(h2=>{
+        h2.addEventListener('pointerdown', (e)=>spawnSparkle(e.clientX, e.clientY));
+        h2.addEventListener('focus', ()=>h2.classList.add('active'));
+        h2.addEventListener('blur', ()=>h2.classList.remove('active'));
+        h2.addEventListener('keydown', (e)=>{
+          if (e.key === ' ' || e.key === 'Enter') {
+            spawnSparkle(window.innerWidth/2, h2.getBoundingClientRect().top + 12);
+          }
+        });
+      });
+
+      // subtle text color flash on hover/focus for merchdesc
+      merchDesc.addEventListener('pointerover', ()=>merchDesc.classList.add('interactive'));
+      merchDesc.addEventListener('pointerout', ()=>merchDesc.classList.remove('interactive'));
+      merchDesc.addEventListener('focus', ()=>merchDesc.classList.add('interactive'));
+      merchDesc.addEventListener('blur', ()=>merchDesc.classList.remove('interactive'));
+
       // accessibility: stop heavy motion if user prefers reduced motion
       const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
       if(mq && mq.matches){
-        // disable dynamic updates
         root.style.setProperty('--reactive-intensity', '1');
         root.style.setProperty('--haze-opacity', '0.10');
         bg.style.transition = 'none';
+        if(glow) glow.style.display = 'none';
         window.removeEventListener('mousemove',()=>{});
-        // keep a minimal static feel
       }
     })();
   </script>
