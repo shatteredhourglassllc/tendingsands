@@ -25,7 +25,7 @@
 
     header, section, footer {
       position: relative;
-      z-index: 2;
+      z-index: 3;
       padding: 4rem 2rem;
       text-align: center;
     }
@@ -127,7 +127,7 @@
       animation: scan 6s linear infinite;
       opacity: 0.1;
       pointer-events: none;
-      z-index: 1;
+      z-index: 2;
     }
 
     @keyframes scan {
@@ -143,7 +143,7 @@
       opacity: 0.25;
       animation: float 12s infinite ease-in-out;
       pointer-events: none;
-      z-index: 0;
+      z-index: 1;
     }
     .orb:nth-child(1) { width: 150px; height: 150px; top: 10%; left: 15%; animation-delay: 0s; }
     .orb:nth-child(2) { width: 200px; height: 200px; bottom: 15%; right: 10%; animation-delay: 4s; }
@@ -154,7 +154,7 @@
       50% { transform: translateY(-30px) scale(1.1); }
     }
 
-    /* 🔥 Glitch background layer */
+    /* 🔥 Glitch background layer with RGB split */
     .glitch-bg {
       position: fixed;
       top: 0;
@@ -162,8 +162,9 @@
       width: 100vw;
       height: 100vh;
       pointer-events: none;
-      z-index: 1; /* behind content but above main gradient */
+      z-index: 1; /* behind content but above base gradient */
       overflow: hidden;
+      mix-blend-mode: screen;
     }
 
     .glitch-line {
@@ -171,20 +172,26 @@
       width: 200%;
       height: 2px;
       background: rgba(255,0,255,0.15);
-      animation: glitchMove 0.3s infinite;
+      animation: glitchMove 0.3s infinite linear alternate;
     }
 
-    .glitch-line:nth-child(2) { top: 20%; background: rgba(0,255,255,0.15); animation-delay: 0.1s; }
-    .glitch-line:nth-child(3) { top: 40%; background: rgba(255,255,0,0.15); animation-delay: 0.2s; }
-    .glitch-line:nth-child(4) { top: 60%; background: rgba(0,255,0,0.15); animation-delay: 0.3s; }
-    .glitch-line:nth-child(5) { top: 80%; background: rgba(255,0,0,0.15); animation-delay: 0.4s; }
+    .glitch-line:nth-child(2) { top: 20%; background: rgba(0,255,255,0.15); animation-delay: 0.05s; }
+    .glitch-line:nth-child(3) { top: 40%; background: rgba(255,255,0,0.15); animation-delay: 0.1s; }
+    .glitch-line:nth-child(4) { top: 60%; background: rgba(0,255,0,0.15); animation-delay: 0.15s; }
+    .glitch-line:nth-child(5) { top: 80%; background: rgba(255,0,0,0.15); animation-delay: 0.2s; }
 
     @keyframes glitchMove {
-      0%   { transform: translateX(0); }
-      25%  { transform: translateX(-10px); }
-      50%  { transform: translateX(10px); }
-      75%  { transform: translateX(-5px); }
-      100% { transform: translateX(0); }
+      0%   { transform: translate(0,0) skewX(0deg); opacity: 0.1; }
+      10%  { transform: translate(-20px,5px) skewX(5deg); opacity: 0.3; }
+      20%  { transform: translate(15px,-10px) skewX(-5deg); opacity: 0.25; }
+      30%  { transform: translate(-10px,8px) skewX(3deg); opacity: 0.35; }
+      40%  { transform: translate(10px,-6px) skewX(-3deg); opacity: 0.2; }
+      50%  { transform: translate(-5px,5px) skewX(2deg); opacity: 0.3; }
+      60%  { transform: translate(8px,-4px) skewX(-2deg); opacity: 0.25; }
+      70%  { transform: translate(-12px,7px) skewX(4deg); opacity: 0.35; }
+      80%  { transform: translate(5px,-3px) skewX(-4deg); opacity: 0.2; }
+      90%  { transform: translate(-8px,4px) skewX(1deg); opacity: 0.3; }
+      100% { transform: translate(0,0) skewX(0deg); opacity: 0.1; }
     }
 
   </style>
