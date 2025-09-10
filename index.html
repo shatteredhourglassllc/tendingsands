@@ -25,7 +25,7 @@
 
     header, section, footer {
       position: relative;
-      z-index: 1;
+      z-index: 2;
       padding: 4rem 2rem;
       text-align: center;
     }
@@ -64,7 +64,7 @@
       border: none;
       width: 100%;
       max-width: 800px;
-      height: 400px;
+      height: 600px;
       margin-bottom: 2rem;
       box-shadow: 0 0 20px #0ff, 0 0 40px #f0f;
       border-radius: 10px;
@@ -127,7 +127,7 @@
       animation: scan 6s linear infinite;
       opacity: 0.1;
       pointer-events: none;
-      z-index: 0;
+      z-index: 1;
     }
 
     @keyframes scan {
@@ -154,131 +154,51 @@
       50% { transform: translateY(-30px) scale(1.1); }
     }
 
-    /* 🔊 Simulated audio-reactive glow */
-@keyframes audioPulse {
-  0%, 100% { box-shadow: 0 0 10px #0ff, 0 0 25px #f0f; }
-  50% { box-shadow: 0 0 30px #0ff, 0 0 60px #f0f; }
-}
+    /* 🔥 Glitch background layer */
+    .glitch-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1; /* behind content but above main gradient */
+      overflow: hidden;
+    }
 
-iframe {
-  animation: audioPulse 2s infinite ease-in-out;
-}
+    .glitch-line {
+      position: absolute;
+      width: 200%;
+      height: 2px;
+      background: rgba(255,0,255,0.15);
+      animation: glitchMove 0.3s infinite;
+    }
 
-/* Headline throb */
-header h1 {
-  animation: pulse 2s infinite alternate, audioPulse 3s infinite ease-in-out;
-}
+    .glitch-line:nth-child(2) { top: 20%; background: rgba(0,255,255,0.15); animation-delay: 0.1s; }
+    .glitch-line:nth-child(3) { top: 40%; background: rgba(255,255,0,0.15); animation-delay: 0.2s; }
+    .glitch-line:nth-child(4) { top: 60%; background: rgba(0,255,0,0.15); animation-delay: 0.3s; }
+    .glitch-line:nth-child(5) { top: 80%; background: rgba(255,0,0,0.15); animation-delay: 0.4s; }
 
-/* Orbs react as if bass hits them */
-@keyframes orbBeat {
-  0%, 100% { transform: scale(1); opacity: 0.25; }
-  50% { transform: scale(1.3); opacity: 0.4; }
-}
+    @keyframes glitchMove {
+      0%   { transform: translateX(0); }
+      25%  { transform: translateX(-10px); }
+      50%  { transform: translateX(10px); }
+      75%  { transform: translateX(-5px); }
+      100% { transform: translateX(0); }
+    }
 
-.orb {
-  animation: orbBeat 1.8s infinite ease-in-out;
-}
-
-/* Ambient wave ripples across background */
-@keyframes bgWave {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 50% 50%; }
-  100% { background-position: 100% 50%; }
-}
-
-body {
-  animation: bgWave 6s infinite linear;
-}
-
-    /* ⚡ Glitch overlay effect */
-body::after {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: repeating-linear-gradient(
-    0deg,
-    rgba(255, 255, 255, 0.04) 0px,
-    rgba(255, 255, 255, 0.04) 2px,
-    transparent 2px,
-    transparent 4px
-  );
-  mix-blend-mode: overlay;
-  pointer-events: none;
-  z-index: 2;
-  animation: glitchMove 2s infinite;
-}
-
-@keyframes glitchMove {
-  0% { transform: translate(0,0); opacity: 0.1; }
-  20% { transform: translate(-5px,2px); opacity: 0.25; }
-  40% { transform: translate(5px,-2px); opacity: 0.2; }
-  60% { transform: translate(-3px,1px); opacity: 0.3; }
-  80% { transform: translate(3px,-1px); opacity: 0
-
-       /* ⚡ Stronger glitch overlay */
-body::after {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    to bottom,
-    rgba(255,0,0,0.1) 0%,
-    rgba(0,255,255,0.08) 50%,
-    rgba(255,0,255,0.1) 100%
-  );
-  mix-blend-mode: screen;
-  pointer-events: none;
-  z-index: 0; /* sit behind content but above body gradient */
-  animation: glitchShift 1.2s infinite;
-}
-
-@keyframes glitchShift {
-  0%   { transform: translate(0,0); opacity: 0.05; }
-  10%  { transform: translate(-3px,2px); opacity: 0.3; }
-  20%  { transform: translate(3px,-2px); opacity: 0.25; }
-  30%  { transform: translate(-2px,1px); opacity: 0.2; }
-  40%  { transform: translate(2px,-1px); opacity: 0.35; }
-  50%  { transform: translate(0,0); opacity: 0.05; }
-  100% { transform: translate(0,0); opacity: 0.05; }
-}
-/* ⚡ Visible Glitch Effect */
-body::after {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: repeating-linear-gradient(
-    90deg,
-    rgba(255,0,0,0.15) 0px,
-    rgba(0,255,255,0.15) 2px,
-    transparent 4px
-  );
-  pointer-events: none;
-  z-index: 5; /* above background, below content */
-  animation: glitchLines 0.5s infinite steps(2);
-}
-
-@keyframes glitchLines {
-  0%   { transform: translate(0,0); opacity: 0.1; }
-  20%  { transform: translate(-5px,3px); opacity: 0.3; }
-  40%  { transform: translate(5px,-3px); opacity: 0.25; }
-  60%  { transform: translate(-3px,2px); opacity: 0.35; }
-  80%  { transform: translate(3px,-2px); opacity: 0.2; }
-  100% { transform: translate(0,0); opacity: 0.1; }
-}
-
-       
   </style>
 </head>
 <body>
+  <!-- Glitch background -->
+  <div class="glitch-bg">
+    <div class="glitch-line"></div>
+    <div class="glitch-line"></div>
+    <div class="glitch-line"></div>
+    <div class="glitch-line"></div>
+    <div class="glitch-line"></div>
+  </div>
+
   <!-- floating glow orbs -->
   <div class="orb"></div>
   <div class="orb"></div>
@@ -294,14 +214,8 @@ body::after {
   </section>
 
   <section id="music">
-    <h2>music</h2><iframe 
-  src="https://audiomack.com/embed/_tendingsands/album/fickle-little-beasts" 
-  scrolling="yes" 
-  frameborder="0" 
-  title="fickle little beasts"
-  style="height:600px; overflow:auto;">
-</iframe>
-
+    <h2>music</h2>
+    <iframe src="https://audiomack.com/embed/_tendingsands/album/fickle-little-beasts" scrolling="yes" frameborder="0" title="fickle little beasts"></iframe>
     <p>listen on:</p>
     <div class="links">
       <a href="https://music.apple.com/us/artist/tending-sands/1623597740" target="_blank">apple music</a>
