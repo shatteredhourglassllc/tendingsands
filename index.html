@@ -1,379 +1,195 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>_tending sands</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --haze-opacity: 0.12;
-      --haze-scale: 1;
-      --reactive-intensity: 1;
-    }
-
-    html,body{
-      height: 100%;
+    body {
       margin: 0;
-      font-family: "Inter", system-ui, -apple-system, "SF Pro Text", "Roboto", "Helvetica Neue", Arial, sans-serif;
-      background: linear-gradient(135deg,#000 0%,#0b0b0b 50%,#000 100%);
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #000 0%, #111 50%, #000 100%);
+      background-size: 200% 200%;
+      animation: bgShift 15s infinite alternate;
       color: #fff;
       overflow-x: hidden;
-      -webkit-font-smoothing:antialiased;
-      text-transform: lowercase;
+      line-height: 1.8;
+      position: relative;
     }
 
-    /* background layer that we move on pointer/tilt */
-    #bg {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      background:
-        radial-gradient(circle at 15% 25%, rgba(0,255,255,0.16), transparent 40%),
-        radial-gradient(circle at 85% 20%, rgba(255,0,255,0.12), transparent 45%),
-        radial-gradient(circle at 40% 85%, rgba(0,255,128,0.10), transparent 50%);
-      background-size: 200% 200%;
-      transition: transform 120ms linear;
-      will-change: transform;
-      transform: translate3d(0,0,0) scale(var(--haze-scale));
-      mix-blend-mode: screen;
-      filter: saturate(1.1) contrast(1.05);
-      opacity: 1;
-    }
-
-    /* scanline / noise overlay */
-    body::after{
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
-      background: repeating-linear-gradient(
-        0deg,
-        rgba(255,255,255,0.04) 0px,
-        rgba(255,255,255,0.04) 2px,
-        transparent 2px,
-        transparent 4px
-      );
-      opacity: var(--haze-opacity);
-      transform: translate3d(0,0,0);
-      mix-blend-mode: overlay;
-      will-change: transform, opacity;
-      animation: noiseMove 0.45s linear infinite;
-    }
-
-    @keyframes noiseMove {
-      from { transform: translate(0,0); }
-      to   { transform: translate(-9px,-9px); }
+    @keyframes bgShift {
+      from { background-position: 0% 50%; }
+      to { background-position: 100% 50%; }
     }
 
     header, section, footer {
       position: relative;
-      z-index: 2;
-      padding: clamp(28px,6vw,64px) 2rem;
+      z-index: 1;
+      padding: 4rem 2rem;
       text-align: center;
     }
 
-    header h1{
-      margin: 0;
-      font-size: clamp(28px,6vw,56px);
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      color: #ffffff;
-      text-shadow:
-        0 0 calc(6px * var(--reactive-intensity)) rgba(0,255,255,0.85),
-        0 0 calc(18px * var(--reactive-intensity)) rgba(255,0,255,0.55),
-        0 0 calc(32px * var(--reactive-intensity)) rgba(0,255,128,0.18);
-      transform-origin: center center;
-      transition: transform 160ms linear, text-shadow 160ms linear;
+    header h1 {
+      font-size: 3.5rem;
+      font-weight: bold;
+      letter-spacing: 0.05em;
+      text-transform: lowercase;
+      color: #fff;
+      text-shadow: 0 0 10px #0ff, 0 0 20px #f0f, 0 0 40px #0ff;
+      animation: pulse 2s infinite alternate;
     }
 
-    h2{
-      margin: 0 0 12px 0;
-      font-size: clamp(18px,3.2vw,28px);
-      color: rgba(0,255,255,0.95);
-      text-shadow: 0 0 calc(8px * var(--reactive-intensity)) rgba(0,255,255,0.7);
-      transform-origin: center center;
+    @keyframes pulse {
+      from { text-shadow: 0 0 5px #0ff, 0 0 15px #f0f; }
+      to { text-shadow: 0 0 25px #0ff, 0 0 50px #f0f; }
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      text-transform: lowercase;
+      color: #0ff;
+      text-shadow: 0 0 15px #0ff;
     }
 
     p {
-      margin: 0 auto 1.35rem auto;
-      max-width: 720px;
-      color: #cfcfcf;
-      font-size: clamp(14px, 1.9vw, 18px);
-      line-height: 1.6;
+      max-width: 700px;
+      margin: 0 auto 2rem auto;
+      font-size: 1.1rem;
+      color: #bbb;
     }
 
-    /* audio-simulated reactive elements */
-    .reactive {
-      transition: transform 120ms linear, box-shadow 120ms linear, text-shadow 120ms linear;
-      will-change: transform, box-shadow, text-shadow;
-    }
-
-    iframe.embed {
-      width: 100%;
-      max-width: 840px;
-      height: 420px;
+    iframe {
       border: none;
-      margin: 1.2rem auto;
-      border-radius: 8px;
-      box-shadow:
-        0 0 calc(12px * var(--reactive-intensity)) rgba(0,255,255,0.15),
-        0 0 calc(28px * var(--reactive-intensity)) rgba(255,0,255,0.08);
-      transform-origin: center center;
+      width: 100%;
+      max-width: 800px;
+      height: 400px;
+      margin-bottom: 2rem;
+      box-shadow: 0 0 20px #0ff, 0 0 40px #f0f;
+      border-radius: 10px;
+      transition: transform 0.5s ease;
     }
 
-    .platforms {
-      display:flex;
-      gap: 0.6rem;
+    iframe:hover {
+      transform: scale(1.02);
+    }
+
+    .links {
+      display: flex;
       justify-content: center;
-      align-items: center;
       flex-wrap: wrap;
-      margin-top: 1rem;
+      gap: 1rem;
+      margin-top: 2rem;
     }
 
-    .platforms a{
-      display:inline-block;
-      padding: 0.45rem 0.85rem;
-      font-size: 0.92rem;
-      color: rgba(0,255,255,0.96);
+    .links a {
+      display: inline-block;
+      padding: 0.8rem 1.5rem;
+      background: #0ff;
+      color: #000;
       text-decoration: none;
-      border: 1px solid rgba(0,255,255,0.28);
+      font-weight: bold;
       border-radius: 6px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent 60%);
-      box-shadow: 0 0 8px rgba(0,255,255,0.12);
-      transition: transform 160ms ease, background 200ms ease, box-shadow 200ms ease, color 180ms ease;
-      transform-origin: center center;
+      transition: 0.3s;
+      font-size: 1rem;
+      box-shadow: 0 0 15px #0ff, 0 0 25px #f0f;
     }
 
-    .platforms a:hover{
-      transform: translateY(-2px) scale(1.02);
-      background: linear-gradient(90deg, rgba(0,255,255,0.95), rgba(255,0,255,0.85));
-      color: #000;
-      box-shadow: 0 0 26px rgba(0,255,255,0.28), 0 0 48px rgba(255,0,255,0.14);
-    }
-
-    .merch {
-      margin-top: 12px;
-    }
-
-    .merch a {
-      display:inline-block;
-      padding: 0.9rem 1.9rem;
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: #000;
-      text-decoration: none;
-      border-radius: 8px;
-      background: linear-gradient(90deg, rgba(0,255,255,1), rgba(255,0,255,0.9));
-      box-shadow:
-        0 0 calc(14px * var(--reactive-intensity)) rgba(0,255,255,0.28),
-        0 0 calc(30px * var(--reactive-intensity)) rgba(255,0,255,0.18);
-      transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease;
-      transform-origin: center center;
-    }
-
-    .merch a:hover {
-      transform: scale(1.03);
-      filter: brightness(1.05);
+    .links a:hover {
+      background: #fff;
+      color: #0ff;
+      box-shadow: 0 0 25px #0ff, 0 0 50px #f0f;
+      transform: translateY(-3px);
     }
 
     footer {
-      padding: clamp(18px,4vw,36px) 2rem;
-      color: #9a9a9a;
+      padding: 2rem;
       font-size: 0.9rem;
-      text-align:center;
+      color: #666;
     }
 
-    /* reduced motion safety */
-    @media (prefers-reduced-motion: reduce) {
-      * { animation: none !important; transition: none !important; }
+    /* ⚡ Ambient glowing scan layer */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(255,255,255,0.05) 0px,
+        rgba(255,255,255,0.05) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      animation: scan 6s linear infinite;
+      opacity: 0.1;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes scan {
+      from { transform: translateY(0); }
+      to { transform: translateY(20px); }
+    }
+
+    /* 🎨 Floating accent orbs */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, #0ff, transparent);
+      opacity: 0.25;
+      animation: float 12s infinite ease-in-out;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .orb:nth-child(1) { width: 150px; height: 150px; top: 10%; left: 15%; animation-delay: 0s; }
+    .orb:nth-child(2) { width: 200px; height: 200px; bottom: 15%; right: 10%; animation-delay: 4s; }
+    .orb:nth-child(3) { width: 120px; height: 120px; bottom: 25%; left: 25%; animation-delay: 8s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-30px) scale(1.1); }
     }
   </style>
 </head>
 <body>
-  <div id="bg" aria-hidden="true"></div>
+  <!-- floating glow orbs -->
+  <div class="orb"></div>
+  <div class="orb"></div>
+  <div class="orb"></div>
 
   <header>
-    <h1 class="reactive">_tending sands</h1>
+    <h1>_tending sands</h1>
   </header>
+
+  <section id="about">
+    <h2>about</h2>
+    <p>Tending Sands is an independent music project exploring raw soundscapes, shifting rhythms, and unapologetic emotion. Each release bends between chaos and stillness, reflecting fragments of a fractured world stitched into melody.</p>
+  </section>
 
   <section id="music">
     <h2>music</h2>
-    <iframe class="embed reactive"
-      src="https://audiomack.com/embed/_tendingsands/album/fickle-little-beasts"
-      scrolling="no"
-      frameborder="0"
-      title="fickle little beasts"></iframe>
-
-    <div class="platforms">
-      <p style="margin:0 0 0.2rem 0; color:#b7b7b7; font-size:0.9rem; padding-right:0.6rem">listen on:</p>
-      <a href="https://music.apple.com/us/artist/tending-sands/1623597740" target="_blank" rel="noopener">apple music</a>
-      <a href="https://tidal.com/browse/artist/38458482" target="_blank" rel="noopener">tidal</a>
-      <a href="https://music.amazon.com/artists/B0B132B2TR/tending-sands?marketplaceId=ATVPDKIKX0DER&musicTerritory=US&ref=dm_sh_2CaF9IEp4lXKItAwSuUXv3pjV" target="_blank" rel="noopener">amazon</a>
-      <a href="https://www.qobuz.com/us-en/interpreter/tending-sands/14089052" target="_blank" rel="noopener">qobuz</a>
+    <iframe src="https://audiomack.com/embed/_tendingsands/album/fickle-little-beasts" scrolling="no" frameborder="0" title="fickle little beasts"></iframe>
+    <p>listen on:</p>
+    <div class="links">
+      <a href="https://music.apple.com/us/artist/tending-sands/1623597740" target="_blank">apple music</a>
+      <a href="https://tidal.com/browse/artist/38458482" target="_blank">tidal</a>
+      <a href="https://music.amazon.com/artists/B0B132B2TR/tending-sands" target="_blank">amazon</a>
+      <a href="https://www.qobuz.com/us-en/interpreter/tending-sands/14089052" target="_blank">qobuz</a>
     </div>
   </section>
 
   <section id="merch">
     <h2>merch</h2>
     <p>limited pieces available now.</p>
-    <div class="merch">
-      <a class="reactive" href="https://www.paypal.com/ncp/payment/MQGWPJHQSXND4" target="_blank" rel="noopener">buy now</a>
-    </div>
+    <a href="https://www.paypal.com/ncp/payment/MQGWPJHQSXND4" target="_blank">buy now</a>
   </section>
 
   <footer>
     <p>&copy; 2025 _tending sands. all rights reserved.</p>
   </footer>
-
-  <script>
-    (function(){
-      const root = document.documentElement;
-      const bg = document.getElementById('bg');
-      const reactiveEls = Array.from(document.querySelectorAll('.reactive'));
-      const merchBtn = document.querySelector('.merch a');
-      const iframe = document.querySelector('iframe.embed');
-      const headerTitle = document.querySelector('header h1');
-
-      // pointer / tilt reactive background
-      let targetX = 0, targetY = 0, curX = 0, curY = 0;
-      function setBGTransform(x,y,scale=1){
-        bg.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${scale})`;
-      }
-
-      // mouse
-      window.addEventListener('mousemove', (e) => {
-        const rx = (e.clientX / window.innerWidth - 0.5) * 24;
-        const ry = (e.clientY / window.innerHeight - 0.5) * 18;
-        targetX = rx;
-        targetY = ry;
-      }, {passive:true});
-
-      // touch fallback: drag to move
-      let lastTouch = null;
-      window.addEventListener('touchstart', (e)=>{
-        if(e.touches && e.touches[0]) lastTouch = e.touches[0];
-      }, {passive:true});
-      window.addEventListener('touchmove', (e)=>{
-        if(!e.touches || !e.touches[0]) return;
-        const t = e.touches[0];
-        const dx = (t.clientX - (lastTouch ? lastTouch.clientX : t.clientX)) * 0.2;
-        const dy = (t.clientY - (lastTouch ? lastTouch.clientY : t.clientY)) * 0.2;
-        targetX = dx;
-        targetY = dy;
-      }, {passive:true});
-      window.addEventListener('touchend', ()=> lastTouch = null, {passive:true});
-
-      // device tilt for mobiles (if available)
-      function handleOrientation(e){
-        // gamma: left-right, beta: front-back
-        if(e.gamma === null || e.beta === null) return;
-        const gx = Math.max(-30, Math.min(30, e.gamma)); // clamp
-        const by = Math.max(-30, Math.min(30, e.beta));
-        targetX = (gx / 30) * 18;
-        targetY = (by / 30) * 12;
-      }
-      if(window.DeviceOrientationEvent){
-        window.addEventListener('deviceorientation', handleOrientation, true);
-      }
-
-      // simulated audio-reactive pulse (visual only)
-      let lastSpike = 0;
-      let nextSpike = 4000 + Math.random()*4000;
-
-      function simulateIntensity(now){
-        // base slow breathing
-        const base = 0.9 + 0.15 * Math.sin(now * 0.0022 * Math.PI * 2); // ~0.7-1.1 rhythm
-        // occasional spikes
-        if(now - lastSpike > nextSpike){
-          lastSpike = now;
-          nextSpike = 3000 + Math.random()*6000;
-          return base + 0.9; // immediate spike
-        }
-        // soft decay if recently spiked:
-        const sinceSpike = now - lastSpike;
-        const spike = Math.max(0, 1.2 * Math.exp(-sinceSpike/650)); // decaying spike
-        return Math.max(0.7, Math.min(1.6, base + spike));
-      }
-
-      // lerp helper
-      function lerp(a,b,t){ return a + (b-a)*t; }
-
-      // main loop
-      let last = performance.now();
-      let curIntensity = 1;
-      function raf(now){
-        const dt = now - last;
-        last = now;
-
-        // spring/lerp background position
-        curX = lerp(curX, targetX, 0.12);
-        curY = lerp(curY, targetY, 0.12);
-
-        // simulated reactive intensity
-        const targetIntensity = simulateIntensity(now);
-        curIntensity = lerp(curIntensity, targetIntensity, 0.14);
-
-        // update CSS var for other CSS to use
-        root.style.setProperty('--reactive-intensity', curIntensity.toFixed(3));
-
-        // update haze scale and opacity subtly
-        const hazeScale = 1 + (curIntensity - 1) * 0.06;
-        const hazeOpacity = 0.08 + Math.min(0.35, (curIntensity - 0.85) * 0.25);
-        root.style.setProperty('--haze-scale', hazeScale.toFixed(3));
-        root.style.setProperty('--haze-opacity', hazeOpacity.toFixed(3));
-
-        // apply bg transform
-        setBGTransform(curX, curY, hazeScale);
-
-        // apply subtle transforms to reactive elements
-        const titleScale = 1 + (curIntensity - 1) * 0.02;
-        headerTitle.style.transform = `scale(${titleScale}) translateZ(0)`;
-
-        // iframe reacts more
-        if(iframe){
-          const ifScale = 1 + (curIntensity - 1) * 0.025;
-          iframe.style.transform = `scale(${ifScale})`;
-          iframe.style.boxShadow = `
-            0 0 ${12 * curIntensity}px rgba(0,255,255,0.12),
-            0 0 ${28 * curIntensity}px rgba(255,0,255,0.08)
-          `;
-        }
-
-        // merch button punch
-        if(merchBtn){
-          const mScale = 1 + (curIntensity - 1) * 0.035;
-          merchBtn.style.transform = `scale(${mScale})`;
-          merchBtn.style.boxShadow = `
-            0 0 ${14 * curIntensity}px rgba(0,255,255,0.22),
-            0 0 ${30 * curIntensity}px rgba(255,0,255,0.12)
-          `;
-        }
-
-        // small parallax on platform links
-        document.querySelectorAll('.platforms a').forEach((a, i) => {
-          const wobble = Math.sin((now/3000) + i) * 0.4 * (curIntensity - 0.9);
-          a.style.transform = `translateY(${wobble}px)`;
-        });
-
-        requestAnimationFrame(raf);
-      }
-
-      requestAnimationFrame(raf);
-
-      // accessibility: stop heavy motion if user prefers reduced motion
-      const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-      if(mq && mq.matches){
-        // disable dynamic updates
-        root.style.setProperty('--reactive-intensity', '1');
-        root.style.setProperty('--haze-opacity', '0.10');
-        bg.style.transition = 'none';
-        window.removeEventListener('mousemove',()=>{});
-        // keep a minimal static feel
-      }
-    })();
-  </script>
 </body>
 </html>
