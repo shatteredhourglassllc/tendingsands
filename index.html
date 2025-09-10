@@ -247,6 +247,33 @@ body::after {
   50%  { transform: translate(0,0); opacity: 0.05; }
   100% { transform: translate(0,0); opacity: 0.05; }
 }
+/* ⚡ Visible Glitch Effect */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(255,0,0,0.15) 0px,
+    rgba(0,255,255,0.15) 2px,
+    transparent 4px
+  );
+  pointer-events: none;
+  z-index: 5; /* above background, below content */
+  animation: glitchLines 0.5s infinite steps(2);
+}
+
+@keyframes glitchLines {
+  0%   { transform: translate(0,0); opacity: 0.1; }
+  20%  { transform: translate(-5px,3px); opacity: 0.3; }
+  40%  { transform: translate(5px,-3px); opacity: 0.25; }
+  60%  { transform: translate(-3px,2px); opacity: 0.35; }
+  80%  { transform: translate(3px,-2px); opacity: 0.2; }
+  100% { transform: translate(0,0); opacity: 0.1; }
+}
 
        
   </style>
