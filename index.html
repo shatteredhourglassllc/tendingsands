@@ -1,307 +1,301 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>_tending sands</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #000 0%, #111 50%, #000 100%);
-      background-size: 200% 200%;
-      animation: bgShift 15s infinite alternate;
-      color: #fff;
-      overflow-x: hidden;
-      line-height: 1.8;
-      position: relative;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>_tending sands</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700&display=swap" rel="stylesheet">
+<style>
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #000 0%, #111 50%, #000 100%);
+  background-size: 200% 200%;
+  animation: bgShift 15s infinite alternate;
+  color: #fff;
+  overflow-x: hidden;
+  line-height: 1.8;
+  position: relative;
+}
 
-    @keyframes bgShift {
-      from { background-position: 0% 50%; }
-      to { background-position: 100% 50%; }
-    }
+@keyframes bgShift {
+  from { background-position: 0% 50%; }
+  to { background-position: 100% 50%; }
+}
 
-    header, section, footer {
-      position: relative;
-      z-index: 3;
-      padding: 4rem 2rem;
-      text-align: center;
-    }
+header, section, footer {
+  position: relative;
+  z-index: 3;
+  padding: 4rem 2rem;
+  text-align: center;
+}
 
-    header h1 {
-      font-size: 3.5rem;
-      font-weight: bold;
-      letter-spacing: 0.05em;
-      text-transform: lowercase;
-      color: #fff;
-      text-shadow: 0 0 10px #0ff, 0 0 20px #f0f, 0 0 40px #0ff;
-      animation: pulse 2s infinite alternate;
-    }
+header h1 {
+  font-size: 3.5rem;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  text-transform: lowercase;
+  color: #fff;
+  text-shadow: 0 0 10px #0ff, 0 0 20px #f0f, 0 0 40px #0ff;
+  animation: pulse 2s infinite alternate;
+}
 
-    @keyframes pulse {
-      from { text-shadow: 0 0 5px #0ff, 0 0 15px #f0f; }
-      to { text-shadow: 0 0 25px #0ff, 0 0 50px #f0f; }
-    }
+@keyframes pulse {
+  from { text-shadow: 0 0 5px #0ff, 0 0 15px #f0f; }
+  to { text-shadow: 0 0 25px #0ff, 0 0 50px #f0f; }
+}
 
-    h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      text-transform: lowercase;
-      color: #0ff;
-      text-shadow: 0 0 15px #0ff;
-    }
+h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-transform: lowercase;
+  color: #0ff;
+  text-shadow: 0 0 15px #0ff;
+}
 
-    p {
-      max-width: 700px;
-      margin: 0 auto 2rem auto;
-      font-size: 1.1rem;
-      color: #bbb;
-    }
+p {
+  max-width: 700px;
+  margin: 0 auto 2rem auto;
+  font-size: 1.1rem;
+  color: #bbb;
+}
 
-    iframe {
-      border: none;
-      width: 100%;
-      max-width: 800px;
-      height: 600px;
-      margin-bottom: 2rem;
-      box-shadow: 0 0 20px #0ff, 0 0 40px #f0f;
-      border-radius: 10px;
-      transition: transform 0.5s ease;
-    }
+iframe {
+  border: none;
+  width: 100%;
+  max-width: 800px;
+  height: 600px;
+  margin-bottom: 2rem;
+  box-shadow: 0 0 20px #0ff, 0 0 40px #f0f;
+  border-radius: 10px;
+  transition: transform 0.5s ease;
+}
 
-    iframe:hover {
-      transform: scale(1.02);
-    }
+iframe:hover {
+  transform: scale(1.02);
+}
 
-    .links {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-top: 2rem;
-    }
+.links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
 
-    .links a, .merch a {
-      display: inline-block;
-      padding: 0.8rem 1.5rem;
-      background: #0ff;
-      color: #000;
-      text-decoration: none;
-      font-weight: bold;
-      border-radius: 6px;
-      transition: 0.3s;
-      font-size: 1rem;
-      box-shadow: 0 0 15px #0ff, 0 0 25px #f0f;
-    }
+.links a, .merch a {
+  display: inline-block;
+  padding: 0.8rem 1.5rem;
+  background: #0ff;
+  color: #000;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 6px;
+  transition: 0.3s;
+  font-size: 1rem;
+  box-shadow: 0 0 15px #0ff, 0 0 25px #f0f;
+}
 
-    .links a:hover, .merch a:hover {
-      background: #fff;
-      color: #0ff;
-      box-shadow: 0 0 25px #0ff, 0 0 50px #f0f;
-      transform: translateY(-3px);
-    }
+.links a:hover, .merch a:hover {
+  background: #fff;
+  color: #0ff;
+  box-shadow: 0 0 25px #0ff, 0 0 50px #f0f;
+  transform: translateY(-3px);
+}
 
-    footer {
-      padding: 2rem;
-      font-size: 0.9rem;
-      color: #666;
-    }
+footer {
+  padding: 2rem;
+  font-size: 0.9rem;
+  color: #666;
+}
 
-    /* ⚡ Ambient glowing scan layer */
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: repeating-linear-gradient(
-        0deg,
-        rgba(255,255,255,0.05) 0px,
-        rgba(255,255,255,0.05) 1px,
-        transparent 1px,
-        transparent 3px
-      );
-      animation: scan 6s linear infinite;
-      opacity: 0.1;
-      pointer-events: none;
-      z-index: 2;
-    }
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255,255,255,0.05) 0px,
+    rgba(255,255,255,0.05) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  animation: scan 6s linear infinite;
+  opacity: 0.1;
+  pointer-events: none;
+  z-index: 2;
+}
 
-    @keyframes scan {
-      from { transform: translateY(0); }
-      to { transform: translateY(20px); }
-    }
+@keyframes scan {
+  from { transform: translateY(0); }
+  to { transform: translateY(20px); }
+}
 
-    /* 🎨 Floating accent orbs */
-    .orb {
-      position: absolute;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,255,255,0.4), transparent);
-      opacity: 0.25;
-      animation: float 12s infinite ease-in-out;
-      pointer-events: none;
-      z-index: 1;
-    }
-    .orb:nth-child(1) { width: 150px; height: 150px; top: 10%; left: 15%; animation-delay: 0s; }
-    .orb:nth-child(2) { width: 200px; height: 200px; bottom: 15%; right: 10%; animation-delay: 4s; }
-    .orb:nth-child(3) { width: 120px; height: 120px; bottom: 25%; left: 25%; animation-delay: 8s; }
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,255,255,0.4), transparent);
+  opacity: 0.25;
+  animation: float 12s infinite ease-in-out;
+  pointer-events: none;
+  z-index: 1;
+}
+.orb:nth-child(1) { width: 150px; height: 150px; top: 10%; left: 15%; animation-delay: 0s; }
+.orb:nth-child(2) { width: 200px; height: 200px; bottom: 15%; right: 10%; animation-delay: 4s; }
+.orb:nth-child(3) { width: 120px; height: 120px; bottom: 25%; left: 25%; animation-delay: 8s; }
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0) scale(1); }
-      50% { transform: translateY(-30px) scale(1.1); }
-    }
+@keyframes float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-30px) scale(1.1); }
+}
 
-    /* 🔥 Glitch background layer with RGB split */
-    .glitch-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      z-index: 1; /* behind content but above base gradient */
-      overflow: hidden;
-      mix-blend-mode: screen;
-    }
+.glitch-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+  mix-blend-mode: screen;
+}
 
-    .glitch-line {
-      position: absolute;
-      width: 200%;
-      height: 2px;
-      background: rgba(255,0,255,0.15);
-      animation: glitchMove 0.3s infinite linear alternate;
-    }
+.glitch-line {
+  position: absolute;
+  width: 300%;
+  height: 2px;
+  background: rgba(255,0,255,0.15);
+  animation: glitchMove 0.25s infinite linear alternate;
+}
 
-    .glitch-line:nth-child(2) { top: 20%; background: rgba(0,255,255,0.15); animation-delay: 0.05s; }
-    .glitch-line:nth-child(3) { top: 40%; background: rgba(255,255,0,0.15); animation-delay: 0.1s; }
-    .glitch-line:nth-child(4) { top: 60%; background: rgba(0,255,0,0.15); animation-delay: 0.15s; }
-    .glitch-line:nth-child(5) { top: 80%; background: rgba(255,0,0,0.15); animation-delay: 0.2s; }
+.glitch-line:nth-child(2) { top: 10%; background: rgba(0,255,255,0.15); animation-delay: 0.02s; }
+.glitch-line:nth-child(3) { top: 20%; background: rgba(255,255,0,0.15); animation-delay: 0.04s; }
+.glitch-line:nth-child(4) { top: 30%; background: rgba(0,255,0,0.15); animation-delay: 0.06s; }
+.glitch-line:nth-child(5) { top: 40%; background: rgba(255,0,0,0.15); animation-delay: 0.08s; }
+.glitch-line:nth-child(6) { top: 50%; background: rgba(255,0,255,0.15); animation-delay: 0.1s; }
+.glitch-line:nth-child(7) { top: 60%; background: rgba(0,255,255,0.15); animation-delay: 0.12s; }
+.glitch-line:nth-child(8) { top: 70%; background: rgba(255,255,0,0.15); animation-delay: 0.14s; }
+.glitch-line:nth-child(9) { top: 80%; background: rgba(0,255,0,0.15); animation-delay: 0.16s; }
+.glitch-line:nth-child(10) { top: 90%; background: rgba(255,0,0,0.15); animation-delay: 0.18s; }
 
-    @keyframes glitchMove {
-      0%   { transform: translate(0,0) skewX(0deg); opacity: 0.1; }
-      10%  { transform: translate(-20px,5px) skewX(5deg); opacity: 0.3; }
-      20%  { transform: translate(15px,-10px) skewX(-5deg); opacity: 0.25; }
-      30%  { transform: translate(-10px,8px) skewX(3deg); opacity: 0.35; }
-      40%  { transform: translate(10px,-6px) skewX(-3deg); opacity: 0.2; }
-      50%  { transform: translate(-5px,5px) skewX(2deg); opacity: 0.3; }
-      60%  { transform: translate(8px,-4px) skewX(-2deg); opacity: 0.25; }
-      70%  { transform: translate(-12px,7px) skewX(4deg); opacity: 0.35; }
-      80%  { transform: translate(5px,-3px) skewX(-4deg); opacity: 0.2; }
-      90%  { transform: translate(-8px,4px) skewX(1deg); opacity: 0.3; }
-      100% { transform: translate(0,0) skewX(0deg); opacity: 0.1; }
-    }
-
-  </style>
+@keyframes glitchMove {
+  0%   { transform: translate(0,0) skewX(0deg); opacity: 0.1; }
+  10%  { transform: translate(-25px,8px) skewX(5deg); opacity: 0.3; }
+  20%  { transform: translate(20px,-12px) skewX(-5deg); opacity: 0.25; }
+  30%  { transform: translate(-15px,10px) skewX(3deg); opacity: 0.35; }
+  40%  { transform: translate(12px,-8px) skewX(-3deg); opacity: 0.2; }
+  50%  { transform: translate(-8px,6px) skewX(2deg); opacity: 0.3; }
+  60%  { transform: translate(10px,-5px) skewX(-2deg); opacity: 0.25; }
+  70%  { transform: translate(-18px,12px) skewX(4deg); opacity: 0.35; }
+  80%  { transform: translate(8px,-6px) skewX(-4deg); opacity: 0.2; }
+  90%  { transform: translate(-12px,8px) skewX(1deg); opacity: 0.3; }
+  100% { transform: translate(0,0) skewX(0deg); opacity: 0.1; }
+}
+</style>
 </head>
 <body>
-  <!-- Glitch background -->
-  <div class="glitch-bg">
-    <div class="glitch-line"></div>
-    <div class="glitch-line"></div>
-    <div class="glitch-line"></div>
-    <div class="glitch-line"></div>
-    <div class="glitch-line"></div>
-  </div>
+<div class="glitch-bg">
+  <div class="glitch-line"></div>
+  <div class="glitch-line"></div>
+  <div class="glitch-line"></div>
+  <div class="glitch-line"></div>
+  <div class="glitch-line"></div>
+  <div class="glitch-line"></div>
+  <div class="glitch-line"></div>
+  <div class="glitch-line"></div>
+  <div class="glitch-line"></div>
+  <div class="glitch-line"></div>
+</div>
 
-  <!-- floating glow orbs -->
-  <div class="orb"></div>
-  <div class="orb"></div>
-  <div class="orb"></div>
+<div class="orb"></div>
+<div class="orb"></div>
+<div class="orb"></div>
 
-  <header>
-    <h1>_tending sands</h1>
-  </header>
+<header>
+<h1>_tending sands</h1>
+</header>
 
-  <section id="about">
-    <h2>about</h2>
-    <p>_tending sands is a music project weaving together raw sound, layered textures, and defiant truth. carving out space in a digital world bent on distortion, it resists silence with sharp edges, honest reflection, and sonic rebellion. every track is both exile and return — a voice cutting through static. emerging from the the arid landscapes of apple valley, california, tending sands—born jeramy kendell hoffman on january 8, 1989—crafts music that mirrors the shifting sands of his environment. his compositions blend ambient textures, industrial rhythms, and experimental soundscapes, creating a genre-defying auditory experience. tending sands’ discography is a testament to his prolific nature and thematic depth. albums like taking shape (2024) and making illusions (war is not real / reality of war is) (2024) delve into existential themes, while tracks such as “drop another bomb on a city” and “tear myself down” showcase his ability to intertwine political commentary with personal introspection. his music is available across various platforms, including apple music, amazon music, and qobuz, offering listeners a chance to explore his evolving soundscape. beyond his musical endeavors, hoffman operates under the label shattered hourglass llc, further emphasizing his commitment to producing and distributing his unique sound independently. for those seeking a musical journey that challenges conventions and evokes the ephemeral nature of existence, tending sands offers a compelling and thought-provoking experience.</p>
-  </section>
+<section id="about">
+<h2>about</h2>
+<p>_tending sands is a music project weaving together raw sound, layered textures, and defiant truth. carving out space in a digital world bent on distortion, it resists silence with sharp edges, honest reflection, and sonic rebellion. every track is both exile and return — a voice cutting through static. emerging from the the arid landscapes of apple valley, california, tending sands—born jeramy kendell hoffman on january 8, 1989—crafts music that mirrors the shifting sands of his environment. his compositions blend ambient textures, industrial rhythms, and experimental soundscapes, creating a genre-defying auditory experience. tending sands’ discography is a testament to his prolific nature and thematic depth. albums like taking shape (2024) and making illusions (war is not real / reality of war is) (2024) delve into existential themes, while tracks such as “drop another bomb on a city” and “tear myself down” showcase his ability to intertwine political commentary with personal introspection. his music is available across various platforms, including apple music, amazon music, and qobuz, offering listeners a chance to explore his evolving soundscape. beyond his musical endeavors, hoffman operates under the label shattered hourglass llc, further emphasizing his commitment to producing and distributing his unique sound independently. for those seeking a musical journey that challenges conventions and evokes the ephemeral nature of existence, tending sands offers a compelling and thought-provoking experience.</p>
+</section>
 
-  <section id="music">
-    <h2>music</h2>
-    <iframe src="https://audiomack.com/embed/_tendingsands/album/fickle-little-beasts" scrolling="yes" frameborder="0" title="fickle little beasts"></iframe>
-    <p>listen on:</p>
-    <div class="links">
-      <a href="https://music.apple.com/us/artist/tending-sands/1623597740" target="_blank">apple music</a>
-      <a href="https://tidal.com/browse/artist/38458482" target="_blank">tidal</a>
-      <a href="https://music.amazon.com/artists/B0B132B2TR/tending-sands" target="_blank">amazon</a>
-      <a href="https://www.qobuz.com/us-en/interpreter/tending-sands/14089052" target="_blank">qobuz</a>
-    </div>
-  </section>
+<section id="music">
+<h2>music</h2>
+<iframe src="https://audiomack.com/embed/_tendingsands/album/fickle-little-beasts" scrolling="yes" frameborder="0" title="fickle little beasts"></iframe>
+<p>listen on:</p>
+<div class="links">
+<a href="https://music.apple.com/us/artist/tending-sands/1623597740" target="_blank">apple music</a>
+<a href="https://tidal.com/browse/artist/38458482" target="_blank">tidal</a>
+<a href="https://music.amazon.com/artists/B0B132B2TR/tending-sands" target="_blank">amazon</a>
+<a href="https://www.qobuz.com/us-en/interpreter/tending-sands/14089052" target="_blank">qobuz</a>
+</div>
+</section>
 
-  <section id="merch">
-    <h2>merch</h2>
-    <p>limited pieces available now.</p>
-    <div class="merch">
-      <a href="https://www.paypal.com/ncp/payment/MQGWPJHQSXND4" target="_blank" rel="noopener">buy now</a>
-    </div>
-  </section>
+<section id="merch">
+<h2>merch</h2>
+<p>limited pieces available now.</p>
+<div class="merch">
+<a href="https://www.paypal.com/ncp/payment/MQGWPJHQSXND4" target="_blank" rel="noopener">buy now</a>
+</div>
+</section>
+
+<footer>
+<p>&copy; 2025 _tending sands. all rights reserved.</p>
+</footer>
+
 <script>
-  // --- Mobile device motion reactivity ---
-  if (window.DeviceOrientationEvent) {
-    window.addEventListener('deviceorientation', (event) => {
-      const x = event.gamma || 0; // left-right tilt
-      const y = event.beta || 0;  // front-back tilt
-      const orbs = document.querySelectorAll('.orb');
-      orbs.forEach((orb, i) => {
-        const offsetX = x * (i+1) * 0.5;
-        const offsetY = y * (i+1) * 0.5;
-        orb.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(1.1)`;
-      });
-
-      const glitchLines = document.querySelectorAll('.glitch-line');
-      glitchLines.forEach((line, i) => {
-        line.style.transform = `translate(${Math.sin(x+i)*15}px, ${Math.sin(y+i)*10}px) skewX(${x/10}deg)`;
-      });
-    }, true);
-  }
-
-  // --- Mouse hover reactivity ---
-  const hoverTargets = document.querySelectorAll('iframe, .links a, .merch a, h1, h2, p');
-  hoverTargets.forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      el.style.filter = 'drop-shadow(0 0 20px #0ff) drop-shadow(0 0 30px #f0f)';
-      el.style.transform = 'scale(1.02)';
+// Mobile tilt reactivity
+if (window.DeviceOrientationEvent) {
+  window.addEventListener('deviceorientation', (e) => {
+    const x = e.gamma || 0;
+    const y = e.beta || 0;
+    document.querySelectorAll('.orb').forEach((orb,i) => {
+      orb.style.transform = `translate(${x*(i+1)*0.5}px, ${y*(i+1)*0.5}px) scale(1.1)`;
     });
-    el.addEventListener('mouseleave', () => {
-      el.style.filter = '';
-      el.style.transform = '';
+    document.querySelectorAll('.glitch-line').forEach((line,i) => {
+      line.style.transform = `translate(${Math.sin(x+i)*25}px, ${Math.sin(y+i)*15}px) skewX(${x/5}deg)`;
     });
   });
+}
 
-  // --- Click reactivity ---
-  document.addEventListener('click', (e) => {
-    const ripple = document.createElement('div');
-    ripple.style.position = 'absolute';
-    ripple.style.width = '20px';
-    ripple.style.height = '20px';
-    ripple.style.borderRadius = '50%';
-    ripple.style.background = 'rgba(0,255,255,0.4)';
-    ripple.style.left = `${e.pageX-10}px`;
-    ripple.style.top = `${e.pageY-10}px`;
-    ripple.style.pointerEvents = 'none';
-    ripple.style.zIndex = '10';
-    ripple.style.animation = 'rippleAnim 0.5s ease-out forwards';
-    document.body.appendChild(ripple);
-    setTimeout(() => ripple.remove(), 500);
-  });
+// Hover reactivity
+const hoverTargets = document.querySelectorAll('iframe, .links a, .merch a, h1, h2, p');
+hoverTargets.forEach(el=>{
+  el.addEventListener('mouseenter', ()=>{el.style.filter='drop-shadow(0 0 20px #0ff) drop-shadow(0 0 30px #f0f)'; el.style.transform='scale(1.02)';});
+  el.addEventListener('mouseleave', ()=>{el.style.filter=''; el.style.transform='';});
+});
 
-  // --- Ripple animation ---
-  const style = document.createElement('style');
-  style.innerHTML = `
-    @keyframes rippleAnim {
-      0% { transform: scale(0.5); opacity: 0.6; }
-      100% { transform: scale(4); opacity: 0; }
-    }
-  `;
-  document.head.appendChild(style);
+// Click ripple reactivity
+document.addEventListener('click',(e)=>{
+  const ripple=document.createElement('div');
+  ripple.style.position='absolute';
+  ripple.style.width='20px';
+  ripple.style.height='20px';
+  ripple.style.borderRadius='50%';
+  ripple.style.background='rgba(0,255,255,0.4)';
+  ripple.style.left=`${e.pageX-10}px`;
+  ripple.style.top=`${e.pageY-10}px`;
+  ripple.style.pointerEvents='none';
+  ripple.style.zIndex='10';
+  ripple.style.animation='rippleAnim 0.5s ease-out forwards';
+  document.body.appendChild(ripple);
+  setTimeout(()=>ripple.remove(),500);
+});
+
+// Ripple animation
+const style=document.createElement('style');
+style.innerHTML=`@keyframes rippleAnim {0%{transform:scale(0.5);opacity:0.6;}100%{transform:scale(4);opacity:0;}}`;
+document.head.appendChild(style);
+
+// Intensify glitch on hover or click
+document.addEventListener('mousemove',()=>{document.querySelectorAll('.glitch-line').forEach(line=>{line.style.animationDuration='0.15s';});});
+document.addEventListener('mouseleave',()=>{document.querySelectorAll('.glitch-line').forEach(line=>{line.style.animationDuration='0.25s';});});
+document.addEventListener('click',()=>{document.querySelectorAll('.glitch-line').forEach(line=>{line.style.animationDuration='0.12s';});});
 </script>
-
-  <footer>
-    <p>&copy; 2025 _tending sands, shatteredhourglass llc all rights reserved.</p>
-  </footer>
 </body>
 </html>
