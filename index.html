@@ -218,6 +218,36 @@ body::after {
   60% { transform: translate(-3px,1px); opacity: 0.3; }
   80% { transform: translate(3px,-1px); opacity: 0
 
+       /* ⚡ Stronger glitch overlay */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(255,0,0,0.1) 0%,
+    rgba(0,255,255,0.08) 50%,
+    rgba(255,0,255,0.1) 100%
+  );
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 0; /* sit behind content but above body gradient */
+  animation: glitchShift 1.2s infinite;
+}
+
+@keyframes glitchShift {
+  0%   { transform: translate(0,0); opacity: 0.05; }
+  10%  { transform: translate(-3px,2px); opacity: 0.3; }
+  20%  { transform: translate(3px,-2px); opacity: 0.25; }
+  30%  { transform: translate(-2px,1px); opacity: 0.2; }
+  40%  { transform: translate(2px,-1px); opacity: 0.35; }
+  50%  { transform: translate(0,0); opacity: 0.05; }
+  100% { transform: translate(0,0); opacity: 0.05; }
+}
+
        
   </style>
 </head>
