@@ -12,9 +12,17 @@
     body {
       font-family: 'Share Tech Mono', monospace;
       color: #fff;
-      background: #000;
+      background: linear-gradient(135deg, #000 0%, #111 50%, #000 100%);
+      background-size: 200% 200%;
+      animation: bgShift 15s infinite alternate;
       overflow-x: hidden;
       position: relative;
+      line-height: 1.8;
+    }
+
+    @keyframes bgShift {
+      from { background-position: 0% 50%; }
+      to { background-position: 100% 50%; }
     }
 
     /* glitch background */
@@ -89,185 +97,12 @@
 
     /* glitch title */
     h1 {
-      font-size: 2.5rem;
-      color: #0ff;
-      position: relative;
-      text-shadow: 0 0 5px #0ff, 0 0 15px #0ff;
-      margin-bottom: 1rem;
-      animation: textGlitch 3s infinite;
-    }
-
-    h1::before,
-    h1::after {
-      content: "tending sands";
-      position: absolute;
-      left: 0;
-      width: 100%;
-      overflow: hidden;
-      color: #f0f;
-      clip: rect(0, 900px, 0, 0);
-    }
-
-    h1::before {
-      animation: glitchTop 2.5s infinite linear alternate-reverse;
-    }
-
-    h1::after {
-      color: #0ff;
-      animation: glitchBottom 3s infinite linear alternate-reverse;
-    }
-
-    @keyframes textGlitch {
-      0%, 100% { text-shadow: 0 0 5px #0ff, 0 0 15px #0ff; }
-      48% { text-shadow: 0 0 2px #f0f, 0 0 8px #0ff; }
-      50% { text-shadow: 0 0 15px #ff0, 0 0 30px #f0f; }
-      52% { text-shadow: 0 0 2px #0ff, 0 0 8px #f0f; }
-    }
-
-    @keyframes glitchTop {
-      0% { clip: rect(0, 900px, 0, 0); }
-      5% { clip: rect(10px, 900px, 50px, 0); transform: translate(-3px, -2px); }
-      10% { clip: rect(85px, 900px, 140px, 0); transform: translate(3px, 2px); }
-      15% { clip: rect(50px, 900px, 85px, 0); transform: none; }
-      100% { clip: rect(0, 900px, 0, 0); }
-    }
-
-    @keyframes glitchBottom {
-      0% { clip: rect(0, 900px, 0, 0); }
-      5% { clip: rect(140px, 900px, 200px, 0); transform: translate(3px, 2px); }
-      10% { clip: rect(200px, 900px, 260px, 0); transform: translate(-3px, -2px); }
-      15% { clip: rect(100px, 900px, 160px, 0); transform: none; }
-      100% { clip: rect(0, 900px, 0, 0); }
-    }
-
-    p.bio {
-      font-size: 1rem;
-      line-height: 1.6;
-      text-align: justify;
-      margin-bottom: 2rem;
-    }
-
-    /* glowing buttons with glitch sparks */
-    .buttons {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
-    }
-
-    .buttons a {
-      position: relative;
-      padding: 0.75rem 1.5rem;
-      border: 2px solid #0ff;
-      color: #0ff;
-      text-decoration: none;
-      font-weight: bold;
-      border-radius: 8px;
-      transition: all 0.2s ease-in-out;
-      overflow: hidden;
-    }
-
-    .buttons a:hover {
-      background: #0ff;
-      color: #000;
-      box-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
-    }
-
-    /* glitch sparks on hover */
-    .buttons a::before,
-    .buttons a::after {
-      content: attr(data-text);
-      position: absolute;
-      left: 0;
-      width: 100%;
-      opacity: 0;
-      clip: rect(0, 0, 0, 0);
-      color: #f0f;
-    }
-
-    .buttons a:hover::before {
-      animation: btnGlitchTop 0.3s steps(2, end);
-    }
-
-    .buttons a:hover::after {
-      animation: btnGlitchBottom 0.3s steps(2, end);
-    }
-
-    @keyframes btnGlitchTop {
-      0% { clip: rect(0, 9999px, 0, 0); opacity: 1; transform: translate(-2px, -2px); }
-      50% { clip: rect(0, 9999px, 100%, 0); opacity: 1; transform: translate(2px, 2px); }
-      100% { clip: rect(0, 9999px, 0, 0); opacity: 0; }
-    }
-
-    @keyframes btnGlitchBottom {
-      0% { clip: rect(0, 9999px, 0, 0); opacity: 1; transform: translate(2px, 2px); }
-      50% { clip: rect(0, 9999px, 100%, 0); opacity: 1; transform: translate(-2px, -2px); }
-      100% { clip: rect(0, 9999px, 0, 0); opacity: 0; }
-    }
-
-    footer {
-      margin-top: 3rem;
-      font-size: 0.9rem;
-      color: #666;
-    }
-  </style>
-</head>
-<body>
-  <div class="glitch-background"></div>
-
-  <div class="container">
-    <h1>tending sands</h1>
-    <img src="assets/images/cover.png" alt="tending sands cover" class="cover">
-
-    <p class="bio">
-      tending sands is a music project weaving together raw sound, layered textures, and defiant truth. carving out space in a digital world bent on distortion, it resists silence with sharp edges, honest reflection, and sonic rebellion. every track is both exile and return — a voice cutting through static. emerging from the arid landscapes of apple valley, california, tending sands—born jeramy kendell hoffman on january 8, 1989—crafts music that mirrors the shifting sands of his environment. his compositions blend ambient textures, industrial rhythms, and experimental soundscapes, creating a genre-defying auditory experience. tending sands’ discography is a testament to his prolific nature and thematic depth. albums like taking shape (2024) and making illusions (war is not real / reality of war is) (2024) delve into existential themes, while tracks such as “drop another bomb on a city” and “tear myself down” showcase his ability to intertwine political commentary with personal introspection. his music is available across various platforms, including apple music, amazon music, qobuz, spotify, and youtube, offering listeners a chance to explore his evolving soundscape. beyond his musical endeavors, hoffman operates under the label shattered hourglass llc, further emphasizing his commitment to producing and distributing his unique sound independently.
-    </p>
-<section id="music">
-  <h2>music</h2>
-  <p>listen on:</p>
-  <div class="links">
-    <a href="https://audiomack.com/_tendingsands/album/fickle-little-beasts" target="_blank">audiomack</a>
-    <a href="https://music.apple.com/us/artist/tending-sands/1623597740" target="_blank">apple music</a>
-    <a href="https://tidal.com/browse/artist/38458482" target="_blank">tidal</a>
-    <a href="https://music.amazon.com/artists/B0B132B2TR/tending-sands" target="_blank">amazon</a>
-    <a href="https://www.qobuz.com/us-en/interpreter/tending-sands/14089052" target="_blank">qobuz</a>
-  </div>
-</section>
-  </section>
-    <footer>
-      &copy; shattered hourglass llc
-    </footer>
-  </div>
-margin: 0;
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #000 0%, #111 50%, #000 100%);
-      background-size: 200% 200%;
-      animation: bgShift 15s infinite alternate;
-      color: #fff;
-      overflow-x: hidden;
-      line-height: 1.8;
-      position: relative;
-    }
-
-    @keyframes bgShift {
-      from { background-position: 0% 50%; }
-      to { background-position: 100% 50%; }
-    }
-
-    header, section, footer {
-      position: relative;
-      z-index: 1;
-      padding: 4rem 2rem;
-      text-align: center;
-    }
-
-    header h1 {
       font-size: 3.5rem;
-      font-weight: bold;
-      letter-spacing: 0.05em;
-      text-transform: lowercase;
       color: #fff;
+      position: relative;
+      text-transform: lowercase;
       text-shadow: 0 0 10px #0ff, 0 0 20px #f0f, 0 0 40px #0ff;
+      margin-bottom: 1rem;
       animation: pulse 2s infinite alternate;
     }
 
@@ -284,28 +119,18 @@ margin: 0;
       text-shadow: 0 0 15px #0ff;
     }
 
-    p {
-      max-width: 700px;
-      margin: 0 auto 2rem auto;
-      font-size: 1.1rem;
-      color: #bbb;
-    }
-
-    iframe {
-      border: none;
-      width: 100%;
-      max-width: 800px;
-      height: 400px;
+    p.bio {
+      font-size: 1rem;
+      line-height: 1.6;
+      text-align: justify;
       margin-bottom: 2rem;
-      box-shadow: 0 0 20px #0ff, 0 0 40px #f0f;
-      border-radius: 10px;
-      transition: transform 0.5s ease;
+      color: #bbb;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
-    iframe:hover {
-      transform: scale(1.02);
-    }
-
+    /* glowing buttons */
     .links {
       display: flex;
       justify-content: center;
@@ -314,7 +139,7 @@ margin: 0;
       margin-top: 2rem;
     }
 
-    .links a, .merch a {
+    .links a {
       display: inline-block;
       padding: 0.8rem 1.5rem;
       background: #0ff;
@@ -327,7 +152,7 @@ margin: 0;
       box-shadow: 0 0 15px #0ff, 0 0 25px #f0f;
     }
 
-    .links a:hover, .merch a:hover {
+    .links a:hover {
       background: #fff;
       color: #0ff;
       box-shadow: 0 0 25px #0ff, 0 0 50px #f0f;
@@ -335,38 +160,12 @@ margin: 0;
     }
 
     footer {
-      padding: 2rem;
+      margin-top: 3rem;
       font-size: 0.9rem;
       color: #666;
     }
 
-    /* ⚡ Ambient glowing scan layer */
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: repeating-linear-gradient(
-        0deg,
-        rgba(255,255,255,0.05) 0px,
-        rgba(255,255,255,0.05) 1px,
-        transparent 1px,
-        transparent 3px
-      );
-      animation: scan 6s linear infinite;
-      opacity: 0.1;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    @keyframes scan {
-      from { transform: translateY(0); }
-      to { transform: translateY(20px); }
-    }
-
-    /* 🎨 Floating accent orbs */
+    /* floating orbs */
     .orb {
       position: absolute;
       border-radius: 50%;
@@ -384,27 +183,41 @@ margin: 0;
       0%, 100% { transform: translateY(0) scale(1); }
       50% { transform: translateY(-30px) scale(1.1); }
     }
+  </style>
+</head>
+<body>
+  <div class="glitch-background"></div>
+  <div class="orb"></div>
+  <div class="orb"></div>
+  <div class="orb"></div>
+
+  <div class="container">
+    <h1>tending sands</h1>
+    <img src="assets/images/cover.png" alt="tending sands cover" class="cover">
+
+    <p class="bio">
+      tending sands is a music project weaving together raw sound, layered textures, and defiant truth. carving out space in a digital world bent on distortion, it resists silence with sharp edges, honest reflection, and sonic rebellion. every track is both exile and return — a voice cutting through static. emerging from the arid landscapes of apple valley, california, tending sands—born jeramy kendell hoffman on january 8, 1989—crafts music that mirrors the shifting sands of his environment. his compositions blend ambient textures, industrial rhythms, and experimental soundscapes, creating a genre-defying auditory experience. tending sands’ discography is a testament to his prolific nature and thematic depth. albums like taking shape (2024) and making illusions (war is not real / reality of war is) (2024) delve into existential themes, while tracks such as “drop another bomb on a city” and “tear myself down” showcase his ability to intertwine political commentary with personal introspection. his music is available across various platforms, including apple music, amazon music, qobuz, spotify, and youtube, offering listeners a chance to explore his evolving soundscape. beyond his musical endeavors, hoffman operates under the label shattered hourglass llc, further emphasizing his commitment to producing and distributing his unique sound independently.
+    </p>
+
+    <section id="music">
+      <h2>music</h2>
+      <p>listen on:</p>
+      <div class="links">
+        <a href="https://audiomack.com/_tendingsands/album/fickle-little-beasts" target="_blank">audiomack</a>
+        <a href="https://music.apple.com/us/artist/tending-sands/1623597740" target="_blank">apple music</a>
+        <a href="https://tidal.com/browse/artist/38458482" target="_blank">tidal</a>
+        <a href="https://music.amazon.com/artists/B0B132B2TR/tending-sands" target="_blank">amazon</a>
+        <a href="https://www.qobuz.com/us-en/interpreter/tending-sands/14089052" target="_blank">qobuz</a>
+        <a href="https://open.spotify.com/artist/4QbBTb0VwYLaKI7fjIeCPr?si=RmAx_PzDTYOCSIlS0eZvyw
+" target="_blank">spotify</a>
+        <a href="https://music.youtube.com/channel/UCrGFy9Uu1EuaYtKtwjJwr0A" target="_blank">youtube</a>
+      </div>
+    </section>
+
+    <footer>
+      &copy; shattered hourglass llc
+    </footer>
+  </div>
+
   <script>
     // desktop mouse interaction
-    document.addEventListener("mousemove", e => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 20;
-      const y = (e.clientY / window.innerHeight - 0.5) * 20;
-      document.querySelector(".glitch-background").style.transform = `translate(${x}px, ${y}px)`;
-    });
-
-    // mobile tilt interaction
-    window.addEventListener("deviceorientation", e => {
-      const x = e.gamma / 5;
-      const y = e.beta / 5;
-      document.querySelector(".glitch-background").style.transform = `translate(${x}px, ${y}px)`;
-    });
-
-    // cover glitch interaction
-    const cover = document.querySelector(".cover");
-    cover.addEventListener("click", () => {
-      cover.classList.add("active");
-      setTimeout(() => cover.classList.remove("active"), 400);
-    });
-  </script>
-</body>
-</html>
