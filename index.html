@@ -12,17 +12,10 @@
     body {
       font-family: 'Share Tech Mono', monospace;
       color: #fff;
-      background: linear-gradient(135deg, #000 0%, #111 50%, #000 100%);
-      background-size: 200% 200%;
-      animation: bgShift 15s infinite alternate;
+      background: #000;
       overflow-x: hidden;
       position: relative;
       line-height: 1.8;
-    }
-
-    @keyframes bgShift {
-      from { background-position: 0% 50%; }
-      to { background-position: 100% 50%; }
     }
 
     /* glitch background */
@@ -39,6 +32,7 @@
       animation: glitchMove 1.5s infinite linear;
       pointer-events: none;
       z-index: -2;
+      transition: transform 0.2s ease-out;
     }
 
     @keyframes glitchMove {
@@ -70,22 +64,10 @@
     }
 
     @keyframes glitchPulse {
-      0%, 90%, 100% {
-        transform: none;
-        filter: drop-shadow(0 0 20px #0ff);
-      }
-      92% {
-        transform: translate(-3px, 2px) skew(-5deg);
-        filter: hue-rotate(20deg) drop-shadow(0 0 30px #f0f);
-      }
-      94% {
-        transform: translate(3px, -2px) skew(5deg);
-        filter: hue-rotate(-20deg) drop-shadow(0 0 30px #0ff);
-      }
-      96% {
-        transform: translate(-2px, 1px);
-        filter: hue-rotate(10deg) drop-shadow(0 0 25px #ff0);
-      }
+      0%, 90%, 100% { transform: none; filter: drop-shadow(0 0 20px #0ff); }
+      92% { transform: translate(-3px, 2px) skew(-5deg); filter: hue-rotate(20deg) drop-shadow(0 0 30px #f0f); }
+      94% { transform: translate(3px, -2px) skew(5deg); filter: hue-rotate(-20deg) drop-shadow(0 0 30px #0ff); }
+      96% { transform: translate(-2px, 1px); filter: hue-rotate(10deg) drop-shadow(0 0 25px #ff0); }
     }
 
     @keyframes coverGlitch {
@@ -97,26 +79,49 @@
 
     /* glitch title */
     h1 {
-      font-size: 3.5rem;
-      color: #fff;
-      position: relative;
-      text-transform: lowercase;
-      text-shadow: 0 0 10px #0ff, 0 0 20px #f0f, 0 0 40px #0ff;
-      margin-bottom: 1rem;
-      animation: pulse 2s infinite alternate;
-    }
-
-    @keyframes pulse {
-      from { text-shadow: 0 0 5px #0ff, 0 0 15px #f0f; }
-      to { text-shadow: 0 0 25px #0ff, 0 0 50px #f0f; }
-    }
-
-    h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      text-transform: lowercase;
+      font-size: 2.5rem;
       color: #0ff;
-      text-shadow: 0 0 15px #0ff;
+      position: relative;
+      text-shadow: 0 0 5px #0ff, 0 0 15px #0ff;
+      margin-bottom: 1rem;
+      animation: textGlitch 3s infinite;
+    }
+
+    h1::before,
+    h1::after {
+      content: "tending sands";
+      position: absolute;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      color: #f0f;
+      clip: rect(0, 900px, 0, 0);
+    }
+
+    h1::before { animation: glitchTop 2.5s infinite linear alternate-reverse; }
+    h1::after { color: #0ff; animation: glitchBottom 3s infinite linear alternate-reverse; }
+
+    @keyframes textGlitch {
+      0%, 100% { text-shadow: 0 0 5px #0ff, 0 0 15px #0ff; }
+      48% { text-shadow: 0 0 2px #f0f, 0 0 8px #0ff; }
+      50% { text-shadow: 0 0 15px #ff0, 0 0 30px #f0f; }
+      52% { text-shadow: 0 0 2px #0ff, 0 0 8px #f0f; }
+    }
+
+    @keyframes glitchTop {
+      0% { clip: rect(0, 900px, 0, 0); }
+      5% { clip: rect(10px, 900px, 50px, 0); transform: translate(-3px, -2px); }
+      10% { clip: rect(85px, 900px, 140px, 0); transform: translate(3px, 2px); }
+      15% { clip: rect(50px, 900px, 85px, 0); transform: none; }
+      100% { clip: rect(0, 900px, 0, 0); }
+    }
+
+    @keyframes glitchBottom {
+      0% { clip: rect(0, 900px, 0, 0); }
+      5% { clip: rect(140px, 900px, 200px, 0); transform: translate(3px, 2px); }
+      10% { clip: rect(200px, 900px, 260px, 0); transform: translate(-3px, -2px); }
+      15% { clip: rect(100px, 900px, 160px, 0); transform: none; }
+      100% { clip: rect(0, 900px, 0, 0); }
     }
 
     p.bio {
@@ -124,10 +129,6 @@
       line-height: 1.6;
       text-align: justify;
       margin-bottom: 2rem;
-      color: #bbb;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
     }
 
     /* glowing buttons */
@@ -164,32 +165,10 @@
       font-size: 0.9rem;
       color: #666;
     }
-
-    /* floating orbs */
-    .orb {
-      position: absolute;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,255,255,0.4), transparent);
-      opacity: 0.25;
-      animation: float 12s infinite ease-in-out;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .orb:nth-child(1) { width: 150px; height: 150px; top: 10%; left: 15%; animation-delay: 0s; }
-    .orb:nth-child(2) { width: 200px; height: 200px; bottom: 15%; right: 10%; animation-delay: 4s; }
-    .orb:nth-child(3) { width: 120px; height: 120px; bottom: 25%; left: 25%; animation-delay: 8s; }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0) scale(1); }
-      50% { transform: translateY(-30px) scale(1.1); }
-    }
   </style>
 </head>
 <body>
   <div class="glitch-background"></div>
-  <div class="orb"></div>
-  <div class="orb"></div>
-  <div class="orb"></div>
 
   <div class="container">
     <h1>tending sands</h1>
@@ -203,15 +182,14 @@
       <h2>music</h2>
       <p>listen on:</p>
       <div class="links">
-        <a href="https://audiomack.com/_tendingsands/album/fickle-little-beasts" target="_blank">audiomack</a>
+       <a href="https://audiomack.com/_tendingsands/album/fickle-little-beasts" target="_blank">audiomack</a>
         <a href="https://music.apple.com/us/artist/tending-sands/1623597740" target="_blank">apple music</a>
         <a href="https://tidal.com/browse/artist/38458482" target="_blank">tidal</a>
         <a href="https://music.amazon.com/artists/B0B132B2TR/tending-sands" target="_blank">amazon</a>
         <a href="https://www.qobuz.com/us-en/interpreter/tending-sands/14089052" target="_blank">qobuz</a>
         <a href="https://open.spotify.com/artist/4QbBTb0VwYLaKI7fjIeCPr?si=RmAx_PzDTYOCSIlS0eZvyw
 " target="_blank">spotify</a>
-        <a href="https://music.youtube.com/channel/UCrGFy9Uu1EuaYtKtwjJwr0A" target="_blank">youtube</a>
-      </div>
+        <a href="https://music.youtube.com/channel/UCrGFy9Uu1EuaYtKtwjJwr0A" target="_blank">youtube</a>      </div>
     </section>
 
     <footer>
@@ -221,3 +199,26 @@
 
   <script>
     // desktop mouse interaction
+    document.addEventListener("mousemove", e => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 30;
+      const y = (e.clientY / window.innerHeight - 0.5) * 30;
+      document.querySelector(".glitch-background").style.transform = `translate(${x}px, ${y}px)`;
+    });
+
+    // mobile tilt interaction
+    window.addEventListener("deviceorientation", e => {
+      const x = e.gamma / 3;
+      const y = e.beta / 3;
+      document.querySelector(".glitch-background").style.transform = `translate(${x}px, ${y}px)`;
+    });
+
+    // cover glitch on click
+    const cover = document.querySelector(".cover");
+    cover.addEventListener("click", () => {
+      cover.classList.add("active");
+      setTimeout(() => cover.classList.remove("active"), 400);
+    });
+  </script>
+</body>
+</html>
+
