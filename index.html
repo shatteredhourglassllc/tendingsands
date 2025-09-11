@@ -3,174 +3,226 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>_tending sands</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700&display=swap" rel="stylesheet">
+  <title>tending sands</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #000 0%, #111 50%, #000 100%);
-      background-size: 200% 200%;
-      animation: bgShift 15s infinite alternate;
+      font-family: 'Share Tech Mono', monospace;
       color: #fff;
+      background: #000;
       overflow-x: hidden;
-      line-height: 1.8;
       position: relative;
     }
 
-    @keyframes bgShift {
-      from { background-position: 0% 50%; }
-      to { background-position: 100% 50%; }
+    /* glitch background */
+    .glitch-background {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.03) 0px,
+        rgba(255,255,255,0.03) 1px,
+        transparent 2px
+      );
+      animation: glitchMove 1.5s infinite linear;
+      pointer-events: none;
+      z-index: -2;
     }
 
-    header, section, footer {
-      position: relative;
-      z-index: 1;
-      padding: 4rem 2rem;
+    @keyframes glitchMove {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
       text-align: center;
     }
 
-    header h1 {
-      font-size: 3.5rem;
-      font-weight: bold;
-      letter-spacing: 0.05em;
-      text-transform: lowercase;
-      color: #fff;
-      text-shadow: 0 0 10px #0ff, 0 0 20px #f0f, 0 0 40px #0ff;
-      animation: pulse 2s infinite alternate;
-    }
-
-    @keyframes pulse {
-      from { text-shadow: 0 0 5px #0ff, 0 0 15px #f0f; }
-      to { text-shadow: 0 0 25px #0ff, 0 0 50px #f0f; }
-    }
-
-    h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      text-transform: lowercase;
-      color: #0ff;
-      text-shadow: 0 0 15px #0ff;
-    }
-
-    p {
-      max-width: 700px;
-      margin: 0 auto 2rem auto;
-      font-size: 1.1rem;
-      color: #bbb;
-    }
-
-    iframe {
-      border: none;
+    /* cover */
+    img.cover {
       width: 100%;
-      max-width: 800px;
-      height: 400px;
+      max-width: 500px;
+      margin: 2rem auto;
+      display: block;
+      filter: drop-shadow(0 0 20px #0ff);
+      animation: glitchPulse 6s infinite;
+      cursor: pointer;
+    }
+
+    img.cover.active {
+      animation: coverGlitch 0.4s steps(2, end);
+    }
+
+    @keyframes glitchPulse {
+      0%, 90%, 100% {
+        transform: none;
+        filter: drop-shadow(0 0 20px #0ff);
+      }
+      92% {
+        transform: translate(-3px, 2px) skew(-5deg);
+        filter: hue-rotate(20deg) drop-shadow(0 0 30px #f0f);
+      }
+      94% {
+        transform: translate(3px, -2px) skew(5deg);
+        filter: hue-rotate(-20deg) drop-shadow(0 0 30px #0ff);
+      }
+      96% {
+        transform: translate(-2px, 1px);
+        filter: hue-rotate(10deg) drop-shadow(0 0 25px #ff0);
+      }
+    }
+
+    @keyframes coverGlitch {
+      0% { transform: translate(-2px, -2px); filter: hue-rotate(30deg) drop-shadow(0 0 30px #f0f); }
+      25% { transform: translate(2px, 2px); filter: hue-rotate(-30deg) drop-shadow(0 0 30px #0ff); }
+      50% { transform: translate(-3px, 1px); filter: hue-rotate(15deg) drop-shadow(0 0 25px #ff0); }
+      100% { transform: none; filter: drop-shadow(0 0 20px #0ff); }
+    }
+
+    /* glitch title */
+    h1 {
+      font-size: 2.5rem;
+      color: #0ff;
+      position: relative;
+      text-shadow: 0 0 5px #0ff, 0 0 15px #0ff;
+      margin-bottom: 1rem;
+      animation: textGlitch 3s infinite;
+    }
+
+    h1::before,
+    h1::after {
+      content: "tending sands";
+      position: absolute;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      color: #f0f;
+      clip: rect(0, 900px, 0, 0);
+    }
+
+    h1::before {
+      animation: glitchTop 2.5s infinite linear alternate-reverse;
+    }
+
+    h1::after {
+      color: #0ff;
+      animation: glitchBottom 3s infinite linear alternate-reverse;
+    }
+
+    @keyframes textGlitch {
+      0%, 100% { text-shadow: 0 0 5px #0ff, 0 0 15px #0ff; }
+      48% { text-shadow: 0 0 2px #f0f, 0 0 8px #0ff; }
+      50% { text-shadow: 0 0 15px #ff0, 0 0 30px #f0f; }
+      52% { text-shadow: 0 0 2px #0ff, 0 0 8px #f0f; }
+    }
+
+    @keyframes glitchTop {
+      0% { clip: rect(0, 900px, 0, 0); }
+      5% { clip: rect(10px, 900px, 50px, 0); transform: translate(-3px, -2px); }
+      10% { clip: rect(85px, 900px, 140px, 0); transform: translate(3px, 2px); }
+      15% { clip: rect(50px, 900px, 85px, 0); transform: none; }
+      100% { clip: rect(0, 900px, 0, 0); }
+    }
+
+    @keyframes glitchBottom {
+      0% { clip: rect(0, 900px, 0, 0); }
+      5% { clip: rect(140px, 900px, 200px, 0); transform: translate(3px, 2px); }
+      10% { clip: rect(200px, 900px, 260px, 0); transform: translate(-3px, -2px); }
+      15% { clip: rect(100px, 900px, 160px, 0); transform: none; }
+      100% { clip: rect(0, 900px, 0, 0); }
+    }
+
+    p.bio {
+      font-size: 1rem;
+      line-height: 1.6;
+      text-align: justify;
       margin-bottom: 2rem;
-      box-shadow: 0 0 20px #0ff, 0 0 40px #f0f;
-      border-radius: 10px;
-      transition: transform 0.5s ease;
     }
 
-    iframe:hover {
-      transform: scale(1.02);
-    }
-
-    .links {
+    /* glowing buttons with glitch sparks */
+    .buttons {
       display: flex;
-      justify-content: center;
       flex-wrap: wrap;
+      justify-content: center;
       gap: 1rem;
-      margin-top: 2rem;
     }
 
-    .links a, .merch a {
-      display: inline-block;
-      padding: 0.8rem 1.5rem;
-      background: #0ff;
-      color: #000;
+    .buttons a {
+      position: relative;
+      padding: 0.75rem 1.5rem;
+      border: 2px solid #0ff;
+      color: #0ff;
       text-decoration: none;
       font-weight: bold;
-      border-radius: 6px;
-      transition: 0.3s;
-      font-size: 1rem;
-      box-shadow: 0 0 15px #0ff, 0 0 25px #f0f;
+      border-radius: 8px;
+      transition: all 0.2s ease-in-out;
+      overflow: hidden;
     }
 
-    .links a:hover, .merch a:hover {
-      background: #fff;
-      color: #0ff;
-      box-shadow: 0 0 25px #0ff, 0 0 50px #f0f;
-      transform: translateY(-3px);
+    .buttons a:hover {
+      background: #0ff;
+      color: #000;
+      box-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+    }
+
+    /* glitch sparks on hover */
+    .buttons a::before,
+    .buttons a::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 0;
+      width: 100%;
+      opacity: 0;
+      clip: rect(0, 0, 0, 0);
+      color: #f0f;
+    }
+
+    .buttons a:hover::before {
+      animation: btnGlitchTop 0.3s steps(2, end);
+    }
+
+    .buttons a:hover::after {
+      animation: btnGlitchBottom 0.3s steps(2, end);
+    }
+
+    @keyframes btnGlitchTop {
+      0% { clip: rect(0, 9999px, 0, 0); opacity: 1; transform: translate(-2px, -2px); }
+      50% { clip: rect(0, 9999px, 100%, 0); opacity: 1; transform: translate(2px, 2px); }
+      100% { clip: rect(0, 9999px, 0, 0); opacity: 0; }
+    }
+
+    @keyframes btnGlitchBottom {
+      0% { clip: rect(0, 9999px, 0, 0); opacity: 1; transform: translate(2px, 2px); }
+      50% { clip: rect(0, 9999px, 100%, 0); opacity: 1; transform: translate(-2px, -2px); }
+      100% { clip: rect(0, 9999px, 0, 0); opacity: 0; }
     }
 
     footer {
-      padding: 2rem;
+      margin-top: 3rem;
       font-size: 0.9rem;
       color: #666;
-    }
-
-    /* ⚡ Ambient glowing scan layer */
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: repeating-linear-gradient(
-        0deg,
-        rgba(255,255,255,0.05) 0px,
-        rgba(255,255,255,0.05) 1px,
-        transparent 1px,
-        transparent 3px
-      );
-      animation: scan 6s linear infinite;
-      opacity: 0.1;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    @keyframes scan {
-      from { transform: translateY(0); }
-      to { transform: translateY(20px); }
-    }
-
-    /* 🎨 Floating accent orbs */
-    .orb {
-      position: absolute;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,255,255,0.4), transparent);
-      opacity: 0.25;
-      animation: float 12s infinite ease-in-out;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .orb:nth-child(1) { width: 150px; height: 150px; top: 10%; left: 15%; animation-delay: 0s; }
-    .orb:nth-child(2) { width: 200px; height: 200px; bottom: 15%; right: 10%; animation-delay: 4s; }
-    .orb:nth-child(3) { width: 120px; height: 120px; bottom: 25%; left: 25%; animation-delay: 8s; }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0) scale(1); }
-      50% { transform: translateY(-30px) scale(1.1); }
     }
   </style>
 </head>
 <body>
-  <!-- floating glow orbs -->
-  <div class="orb"></div>
-  <div class="orb"></div>
-  <div class="orb"></div>
+  <div class="glitch-background"></div>
 
-  <header>
-    <h1>_tending sands</h1>
-  </header>
+  <div class="container">
+    <h1>tending sands</h1>
+    <img src="assets/images/cover.png" alt="tending sands cover" class="cover">
 
-  <section id="about">
-    <h2>about</h2>
-    <p>Tending Sands is an independent music project exploring raw soundscapes, shifting rhythms, and unapologetic emotion. Each release bends between chaos and stillness, reflecting fragments of a fractured world stitched into melody.</p>
-  </section>
-
-    <section id="music">
+    <p class="bio">
+      tending sands is a music project weaving together raw sound, layered textures, and defiant truth. carving out space in a digital world bent on distortion, it resists silence with sharp edges, honest reflection, and sonic rebellion. every track is both exile and return — a voice cutting through static. emerging from the arid landscapes of apple valley, california, tending sands—born jeramy kendell hoffman on january 8, 1989—crafts music that mirrors the shifting sands of his environment. his compositions blend ambient textures, industrial rhythms, and experimental soundscapes, creating a genre-defying auditory experience. tending sands’ discography is a testament to his prolific nature and thematic depth. albums like taking shape (2024) and making illusions (war is not real / reality of war is) (2024) delve into existential themes, while tracks such as “drop another bomb on a city” and “tear myself down” showcase his ability to intertwine political commentary with personal introspection. his music is available across various platforms, including apple music, amazon music, qobuz, spotify, and youtube, offering listeners a chance to explore his evolving soundscape. beyond his musical endeavors, hoffman operates under the label shattered hourglass llc, further emphasizing his commitment to producing and distributing his unique sound independently.
+    </p>
+<section id="music">
   <h2>music</h2>
   <p>listen on:</p>
   <div class="links">
@@ -182,17 +234,32 @@
   </div>
 </section>
   </section>
+    <footer>
+      &copy; shattered hourglass llc
+    </footer>
+  </div>
 
-  <section id="merch">
-    <h2>merch</h2>
-    <p>limited pieces available now.</p>
-    <div class="merch">
-      <a href="https://www.paypal.com/ncp/payment/MQGWPJHQSXND4" target="_blank" rel="noopener">buy now</a>
-    </div>
-  </section>
+  <script>
+    // desktop mouse interaction
+    document.addEventListener("mousemove", e => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 20;
+      const y = (e.clientY / window.innerHeight - 0.5) * 20;
+      document.querySelector(".glitch-background").style.transform = `translate(${x}px, ${y}px)`;
+    });
 
-  <footer>
-    <p>&copy; 2025 _tending sands. all rights reserved.</p>
-  </footer>
+    // mobile tilt interaction
+    window.addEventListener("deviceorientation", e => {
+      const x = e.gamma / 5;
+      const y = e.beta / 5;
+      document.querySelector(".glitch-background").style.transform = `translate(${x}px, ${y}px)`;
+    });
+
+    // cover glitch interaction
+    const cover = document.querySelector(".cover");
+    cover.addEventListener("click", () => {
+      cover.classList.add("active");
+      setTimeout(() => cover.classList.remove("active"), 400);
+    });
+  </script>
 </body>
 </html>
