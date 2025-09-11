@@ -1,1 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>_tending sands</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #000 0%, #111 50%, #000 100%);
+      background-size: 200% 200%;
+      animation: bgShift 15s infinite alternate;
+      color: #fff;
+      overflow-x: hidden;
+      line-height: 1.8;
+      position: relative;
+    }
 
+    @keyframes bgShift {
+      from { background-position: 0% 50%; }
+      to { background-position: 100% 50%; }
+    }
+
+    header, section, footer {
+      position: relative;
+      z-index: 1;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 3.5rem;
+      font-weight: bold;
+      letter-spacing: 0.05em;
+      text-transform: lowercase;
+      color: #fff;
+      text-shadow: 0 0 10px #0ff, 0 0 20px #f0f, 0 0 40px #0ff;
+      animation: pulse 2s infinite alternate;
+    }
+
+    @keyframes pulse {
+      from { text-shadow: 0 0 5px #0ff, 0 0 15px #f0f; }
+      to { text-shadow: 0 0 25px #0ff, 0 0 50px #f0f; }
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      text-transform: lowercase;
+      color: #0ff;
+      text-shadow: 0 0 15px #0ff;
+    }
+
+    p {
+      max-width: 700px;
+      margin: 0 auto 2rem auto;
+      font-size: 1.1rem;
+      color: #bbb;
+    }
+
+    iframe {
+      border: none;
+      width: 100%;
+      max-width: 800px;
+      height: 400px;
+      margin-bottom: 2rem;
+      box-shadow: 0 0 20px #0ff, 0 0 40px #f0f;
+      border-radius: 10px;
+      transition: transform 0.5s ease;
+    }
+
+    iframe:hover {
+      transform: scale(1.02);
+    }
+
+    .cover-art {
+      max-width: 400px;
+      border-radius: 12px;
+      box-shadow: 0 0 25px #0ff, 0 0 50px #f0f;
+      margin: 2rem auto;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .cover-art:hover {
+      transform: scale(1.05);
+    }
+
+    .links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .links a {
+      display: inline-block;
+      padding: 0.8rem 1.5rem;
+      background: #0ff;
+      color: #000;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 6px;
+      transition: 0.3s;
+      font-size: 1rem;
+      box-shadow: 0 0 15px #0ff, 0 0 25px #f0f;
+    }
+
+    .links a:hover {
+      background: #fff;
+      color: #0ff;
+      box-shadow: 0 0 25px #0ff, 0 0 50px #f0f;
+      transform: translateY(-3px);
+    }
+
+    footer {
+      padding: 2rem;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(255,255,255,0.05) 0px,
+        rgba(255,255,255,0.05) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      animation: scan 6s linear infinite;
+      opacity: 0.1;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes scan {
+      from { transform: translateY(0); }
+      to { transform: translateY(20px); }
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, #0ff, transparent);
+      opacity: 0.25;
+      animation: float 12s infinite ease-in-out;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .orb:nth-child(1) { width: 150px; height: 150px; top: 10%; left: 15%; animation-delay: 0s; }
+    .orb:nth-child(2) { width: 200px; height: 200px; bottom: 15%; right: 10%; animation-delay: 4s; }
+    .orb:nth-child(3) { width: 120px; height: 120px; bottom: 25%; left: 25%; animation-delay: 8s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-30px) scale(1.1); }
+    }
+  </style>
+</head>
+<body>
+  <!-- floating glow orbs -->
+  <div class="orb"></div>
+  <div class="orb"></div>
+  <div class="orb"></div>
+
+  <header>
+    <h1>_tending sands</h1>
+    <img src="cover.png" alt="tending sands album cover" class="cover-art">
+  </header>
+
+  <section id="about">
+    <h2>about</h2>
+    <p>Tending Sands is an independent music project exploring raw soundscapes, shifting rhythms, and unapologetic emotion. Each release bends between chaos and stillness, reflecting fragments of a fractured world stitched into melody.</p>
+  </section>
+
+  <section id="music">
+    <h2>music</h2>
+    <iframe src="https://audiomack.com/embed/_tendingsands/album/fickle-little-beasts" scrolling="yes" frameborder="0" title="fickle little beasts"></iframe>
+    <p>listen on:</p>
+    <div class="links">
+      <a href="https://music.apple.com/us/artist/tending-sands/1623597740" target="_blank">apple music</a>
+      <a href="https://tidal.com/browse/artist/38458482" target="_blank">tidal</a>
+      <a href="https://music.amazon.com/artists/B0B132B2TR/tending-sands" target="_blank">amazon</a>
+      <a href="https://www.qobuz.com/us-en/interpreter/tending-sands/14089052" target="_blank">qobuz</a>
+    </div>
+  </section>
+
+  <section id="merch">
+    <h2>merch</h2>
+    <p>limited pieces available now.</p>
+    <div class="merch">
+      <a class="reactive" href="https://www.paypal.com/ncp/payment/MQGWPJHQSXND4" target="_blank" rel="noopener">buy now</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 _tending sands. all rights reserved.</p>
+  </footer>
+</body>
+</html>
