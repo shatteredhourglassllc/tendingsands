@@ -1,208 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>_tending sands</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #000 0%, #111 50%, #000 100%);
-      background-size: 200% 200%;
-      animation: bgShift 15s infinite alternate;
-      color: #fff;
-      overflow-x: hidden;
-      line-height: 1.8;
-      position: relative;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tending Sands - The Prophecy of an Atom and the Absence of Humanity</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #111;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    overflow-x: hidden;
+  }
 
-    @keyframes bgShift {
-      from { background-position: 0% 50%; }
-      to { background-position: 100% 50%; }
-    }
+  /* Bio with subtle glow */
+  .bio {
+    max-width: 800px;
+    margin-bottom: 30px;
+    padding: 15px 20px;
+    border-left: 4px solid #fff;
+    background: rgba(255, 255, 255, 0.05);
+    font-size: 1rem;
+    line-height: 1.6;
+    text-shadow: 0 0 8px #fff;
+    transition: 0.3s;
+  }
+  .bio:hover {
+    text-shadow: 0 0 15px #fff, 0 0 25px #0ff, 0 0 35px #0ff;
+  }
 
-    header, section, footer {
-      position: relative;
-      z-index: 1;
-      padding: 4rem 2rem;
-      text-align: center;
-    }
+  .album-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    max-width: 800px;
+    width: 100%;
+  }
 
-    header h1 {
-      font-size: 3.5rem;
-      font-weight: bold;
-      letter-spacing: 0.05em;
-      text-transform: lowercase;
-      color: #fff;
-      text-shadow: 0 0 10px #0ff, 0 0 20px #f0f, 0 0 40px #0ff;
-      animation: pulse 2s infinite alternate;
-    }
+  /* Glitchy, glowing album art */
+  .album-art {
+    width: 100%;
+    max-width: 400px;
+    border: 4px solid #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px #0ff, 0 0 40px #0ff;
+    position: relative;
+    animation: flicker 2s infinite alternate;
+    cursor: pointer;
+  }
 
-    @keyframes pulse {
-      from { text-shadow: 0 0 5px #0ff, 0 0 15px #f0f; }
-      to { text-shadow: 0 0 25px #0ff, 0 0 50px #f0f; }
-    }
+  @keyframes flicker {
+    0% { opacity: 1; transform: translate(0,0) rotate(0deg); }
+    10% { opacity: 0.9; transform: translate(-2px,1px) rotate(-1deg); }
+    20% { opacity: 0.95; transform: translate(1px,-1px) rotate(1deg); }
+    30% { opacity: 1; transform: translate(-1px,0px) rotate(0deg); }
+    40% { opacity: 0.9; transform: translate(2px,1px) rotate(1deg); }
+    50% { opacity: 1; transform: translate(0,-1px) rotate(0deg); }
+    60% { opacity: 0.95; transform: translate(-1px,1px) rotate(-1deg); }
+    70% { opacity: 1; transform: translate(1px,0) rotate(0deg); }
+    80% { opacity: 0.9; transform: translate(0,1px) rotate(1deg); }
+    90% { opacity: 1; transform: translate(-2px,-1px) rotate(-1deg); }
+    100% { opacity: 1; transform: translate(0,0) rotate(0deg); }
+  }
 
-    h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      text-transform: lowercase;
-      color: #0ff;
-      text-shadow: 0 0 15px #0ff;
-    }
+  /* Scrollable Apple Music embed */
+  .embed-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    border: 2px solid #fff;
+    border-radius: 10px;
+  }
 
-    p {
-      max-width: 700px;
-      margin: 0 auto 2rem auto;
-      font-size: 1.1rem;
-      color: #bbb;
-    }
+  iframe {
+    border: none;
+    width: 100%;
+    min-width: 600px;
+    height: 450px;
+    background: transparent;
+    transition: transform 0.3s;
+  }
 
+  iframe:hover {
+    transform: scale(1.02);
+  }
+
+  /* Responsive mobile adjustments */
+  @media (max-width: 600px) {
     iframe {
-      border: none;
-      width: 100%;
-      max-width: 800px;
-      height: 400px;
-      margin-bottom: 2rem;
-      box-shadow: 0 0 20px #0ff, 0 0 40px #f0f;
-      border-radius: 10px;
-      transition: transform 0.5s ease;
+      min-width: 300px;
+      height: 300px;
     }
-
-    iframe:hover {
-      transform: scale(1.02);
+    .album-art {
+      max-width: 300px;
     }
-
-    .cover-art {
-      max-width: 400px;
-      border-radius: 12px;
-      box-shadow: 0 0 25px #0ff, 0 0 50px #f0f;
-      margin: 2rem auto;
-      display: block;
-      transition: transform 0.5s ease;
-    }
-
-    .cover-art:hover {
-      transform: scale(1.05);
-    }
-
-    .links {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-top: 2rem;
-    }
-
-    .links a {
-      display: inline-block;
-      padding: 0.8rem 1.5rem;
-      background: #0ff;
-      color: #000;
-      text-decoration: none;
-      font-weight: bold;
-      border-radius: 6px;
-      transition: 0.3s;
-      font-size: 1rem;
-      box-shadow: 0 0 15px #0ff, 0 0 25px #f0f;
-    }
-
-    .links a:hover {
-      background: #fff;
-      color: #0ff;
-      box-shadow: 0 0 25px #0ff, 0 0 50px #f0f;
-      transform: translateY(-3px);
-    }
-
-    footer {
-      padding: 2rem;
-      font-size: 0.9rem;
-      color: #666;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: repeating-linear-gradient(
-        0deg,
-        rgba(255,255,255,0.05) 0px,
-        rgba(255,255,255,0.05) 1px,
-        transparent 1px,
-        transparent 3px
-      );
-      animation: scan 6s linear infinite;
-      opacity: 0.1;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    @keyframes scan {
-      from { transform: translateY(0); }
-      to { transform: translateY(20px); }
-    }
-
-    .orb {
-      position: absolute;
-      border-radius: 50%;
-      background: radial-gradient(circle, #0ff, transparent);
-      opacity: 0.25;
-      animation: float 12s infinite ease-in-out;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .orb:nth-child(1) { width: 150px; height: 150px; top: 10%; left: 15%; animation-delay: 0s; }
-    .orb:nth-child(2) { width: 200px; height: 200px; bottom: 15%; right: 10%; animation-delay: 4s; }
-    .orb:nth-child(3) { width: 120px; height: 120px; bottom: 25%; left: 25%; animation-delay: 8s; }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0) scale(1); }
-      50% { transform: translateY(-30px) scale(1.1); }
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
-  <!-- floating glow orbs -->
-  <div class="orb"></div>
-  <div class="orb"></div>
-  <div class="orb"></div>
 
-  <header>
-    <h1>_tending sands</h1><div class="album-art-container" style="text-align:center; margin:20px 0;">
+<!-- Bio Section -->
+<div class="bio">
+  Jeramy Kendell Hoffman, performing as Tending Sands, is the founder of Shattered Hourglass LLC in Hesperia, California. As a music artist, Jeramy explores themes of prophecy, societal reflection, and human introspection through experimental and emotive soundscapes. This page features the latest album: <strong>The Prophecy of an Atom and the Absence of Humanity</strong>.
+</div>
 
+<div class="album-container">
+  <!-- Album Art with glitch/flicker -->
+  <img src="https://i.postimg.cc/pTzg0xJJ/IMG-3100-2.jpg" alt="The Prophecy of an Atom and the Absence of Humanity" class="album-art">
 
+  <!-- Scrollable Apple Music Embed -->
+  <div class="embed-wrapper">
+    <iframe allow="autoplay *; encrypted-media *;" frameborder="0" height="450" style="width:100%;max-width:100%;overflow:hidden;background:transparent;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/us/album/the-prophecy-of-an-atom-and-the-absence-of-humanity/1671234567"></iframe>
+  </div>
+</div>
 
-  </header>
-<iframe src="https://audiomack.com//embed/_tendingsands/album/fickle-little-beasts" scrolling="no" width="100%" height="400" frameborder="0" title="The Prophecy of an Atom and the Absence of Humanity"></iframe>
-  <section id="about">
-    <h2>about</h2>
-    <p>_tending sands is a music project weaving together raw sound, layered textures, and defiant truth. carving out space in a digital world bent on distortion, it resists silence with sharp edges, honest reflection, and sonic rebellion. every track is both exile and return — a voice cutting through static. emerging from the the arid landscapes of apple valley, california, tending sands—born jeramy kendell hoffman on january 8, 1989—crafts music that mirrors the shifting sands of his environment. his compositions blend ambient textures, industrial rhythms, and experimental soundscapes, creating a genre-defying auditory experience. tending sands’ discography is a testament to his prolific nature and thematic depth. albums like taking shape (2024) and making illusions (war is not real / reality of war is) (2024) delve into existential themes, while tracks such as “drop another bomb on a city” and “tear myself down” showcase his ability to intertwine political commentary with personal introspection. </p>
-  </section>
+<script>
+  // Subtle parallax movement for album art based on mouse
+  const albumArt = document.querySelector('.album-art');
+  document.addEventListener('mousemove', (e) => {
+    const x = (window.innerWidth/2 - e.clientX) / 30;
+    const y = (window.innerHeight/2 - e.clientY) / 30;
+    albumArt.style.transform = `translate(${x}px, ${y}px)`;
+  });
 
+  // Click effect: small pulse glow
+  albumArt.addEventListener('click', () => {
+    albumArt.style.boxShadow = '0 0 40px #0ff, 0 0 80px #0ff';
+    setTimeout(() => {
+      albumArt.style.boxShadow = '0 0 20px #0ff, 0 0 40px #0ff';
+    }, 300);
+  });
+</script>
 
-    <div class="links">
-      <a href="https://music.apple.com/us/artist/tending-sands/1623597740" target="_blank">apple music</a>
-      <a href="https://tidal.com/browse/artist/38458482" target="_blank">tidal</a>
-      <a href="https://music.amazon.com/artists/B0B132B2TR/tending-sands" target="_blank">amazon</a>
-      <a href="https://www.qobuz.com/us-en/interpreter/tending-sands/14089052" target="_blank">qobuz</a>
-    </div>
-  </section>
-
-  <section id="merch">
-    <h2>merch</h2>
-    <p>limited pieces available now.</p>
-    <div class="merch">
-      <a class="reactive" href="https://www.paypal.com/ncp/payment/MQGWPJHQSXND4" target="_blank" rel="noopener">buy now</a>
-    </div>
-  </section>
-
-  <footer>
-    <p>&copy; 2025 _tending sands. all rights reserved.</p>
-  </footer>
 </body>
 </html>
