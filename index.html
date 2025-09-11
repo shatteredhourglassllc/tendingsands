@@ -1,297 +1,215 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>_tending sands</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700&display=swap" rel="stylesheet">
-<style>
-body {
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-  background: linear-gradient(135deg, #000 0%, #111 50%, #000 100%);
-  background-size: 200% 200%;
-  animation: bgShift 15s infinite alternate;
-  color: #fff;
-  overflow-x: hidden;
-  line-height: 1.8;
-  position: relative;
-}
-
-@keyframes bgShift {
-  from { background-position: 0% 50%; }
-  to { background-position: 100% 50%; }
-}
-
-header, section, footer {
-  position: relative;
-  z-index: 3;
-  padding: 4rem 2rem;
-  text-align: center;
-}
-
-header h1 {
-  font-size: 3.5rem;
-  font-weight: bold;
-  letter-spacing: 0.05em;
-  text-transform: lowercase;
-  color: #fff;
-  text-shadow: 0 0 10px #0ff, 0 0 20px #f0f, 0 0 40px #0ff;
-  animation: pulse 2s infinite alternate;
-}
-
-@keyframes pulse {
-  from { text-shadow: 0 0 5px #0ff, 0 0 15px #f0f; }
-  to { text-shadow: 0 0 25px #0ff, 0 0 50px #f0f; }
-}
-
-h2 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  text-transform: lowercase;
-  color: #0ff;
-  text-shadow: 0 0 15px #0ff;
-}
-
-p {
-  max-width: 700px;
-  margin: 0 auto 2rem auto;
-  font-size: 1.1rem;
-  color: #bbb;
-}
-
-iframe {
-  border: none;
-  width: 100%;
-  max-width: 800px;
-  height: 600px;
-  margin-bottom: 2rem;
-  box-shadow: 0 0 20px #0ff, 0 0 40px #f0f;
-  border-radius: 10px;
-  transition: transform 0.5s ease;
-}
-
-iframe:hover {
-  transform: scale(1.02);
-}
-
-.links {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-top: 2rem;
-}
-
-.links a, .merch a {
-  display: inline-block;
-  padding: 0.8rem 1.5rem;
-  background: #0ff;
-  color: #000;
-  text-decoration: none;
-  font-weight: bold;
-  border-radius: 6px;
-  transition: 0.3s;
-  font-size: 1rem;
-  box-shadow: 0 0 15px #0ff, 0 0 25px #f0f;
-}
-
-.links a:hover, .merch a:hover {
-  background: #fff;
-  color: #0ff;
-  box-shadow: 0 0 25px #0ff, 0 0 50px #f0f;
-  transform: translateY(-3px);
-}
-
-footer {
-  padding: 2rem;
-  font-size: 0.9rem;
-  color: #666;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: repeating-linear-gradient(
-    0deg,
-    rgba(255,255,255,0.05) 0px,
-    rgba(255,255,255,0.05) 1px,
-    transparent 1px,
-    transparent 3px
-  );
-  animation: scan 6s linear infinite;
-  opacity: 0.1;
-  pointer-events: none;
-  z-index: 2;
-}
-
-@keyframes scan {
-  from { transform: translateY(0); }
-  to { transform: translateY(20px); }
-}
-
-.orb {
-  position: absolute;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(0,255,255,0.4), transparent);
-  opacity: 0.25;
-  animation: float 12s infinite ease-in-out;
-  pointer-events: none;
-  z-index: 1;
-}
-.orb:nth-child(1) { width: 150px; height: 150px; top: 10%; left: 15%; animation-delay: 0s; }
-.orb:nth-child(2) { width: 200px; height: 200px; bottom: 15%; right: 10%; animation-delay: 4s; }
-.orb:nth-child(3) { width: 120px; height: 120px; bottom: 25%; left: 25%; animation-delay: 8s; }
-
-@keyframes float {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-30px) scale(1.1); }
-}
-
-.glitch-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 1;
-  overflow: hidden;
-  mix-blend-mode: screen;
-}
-
-.glitch-line {
-  position: absolute;
-  width: 300%;
-  height: 2px;
-  background: rgba(255,0,255,0.15);
-  animation: glitchMove 0.25s infinite linear alternate;
-}
-
-.glitch-line:nth-child(2) { top: 10%; background: rgba(0,255,255,0.15); animation-delay: 0.02s; }
-.glitch-line:nth-child(3) { top: 20%; background: rgba(255,255,0,0.15); animation-delay: 0.04s; }
-.glitch-line:nth-child(4) { top: 30%; background: rgba(0,255,0,0.15); animation-delay: 0.06s; }
-.glitch-line:nth-child(5) { top: 40%; background: rgba(255,0,0,0.15); animation-delay: 0.08s; }
-.glitch-line:nth-child(6) { top: 50%; background: rgba(255,0,255,0.15); animation-delay: 0.1s; }
-.glitch-line:nth-child(7) { top: 60%; background: rgba(0,255,255,0.15); animation-delay: 0.12s; }
-.glitch-line:nth-child(8) { top: 70%; background: rgba(255,255,0,0.15); animation-delay: 0.14s; }
-.glitch-line:nth-child(9) { top: 80%; background: rgba(0,255,0,0.15); animation-delay: 0.16s; }
-.glitch-line:nth-child(10) { top: 90%; background: rgba(255,0,0,0.15); animation-delay: 0.18s; }
-
-@keyframes glitchMove {
-  0%   { transform: translate(0,0) skewX(0deg); opacity: 0.1; }
-  10%  { transform: translate(-25px,8px) skewX(5deg); opacity: 0.3; }
-  20%  { transform: translate(20px,-12px) skewX(-5deg); opacity: 0.25; }
-  30%  { transform: translate(-15px,10px) skewX(3deg); opacity: 0.35; }
-  40%  { transform: translate(12px,-8px) skewX(-3deg); opacity: 0.2; }
-  50%  { transform: translate(-8px,6px) skewX(2deg); opacity: 0.3; }
-  60%  { transform: translate(10px,-5px) skewX(-2deg); opacity: 0.25; }
-  70%  { transform: translate(-18px,12px) skewX(4deg); opacity: 0.35; }
-  80%  { transform: translate(8px,-6px) skewX(-4deg); opacity: 0.2; }
-  90%  { transform: translate(-12px,8px) skewX(1deg); opacity: 0.3; }
-  100% { transform: translate(0,0) skewX(0deg); opacity: 0.1; }
-}
-</style>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.1">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
 </head>
 <body>
-<div class="glitch-bg">
-  <div class="glitch-line"></div>
-  <div class="glitch-line"></div>
-  <div class="glitch-line"></div>
-  <div class="glitch-line"></div>
-  <div class="glitch-line"></div>
-  <div class="glitch-line"></div>
-  <div class="glitch-line"></div>
-  <div class="glitch-line"></div>
-  <div class="glitch-line"></div>
-  <div class="glitch-line"></div>
-</div>
-
-<div class="orb"></div>
-<div class="orb"></div>
-<div class="orb"></div>
-
-<header>
-<h1>_tending sands</h1>
-</header>
-
-<section id="about">
-<h2>about</h2>
-<p>_tending sands is a music project weaving together raw sound, layered textures, and defiant truth. carving out space in a digital world bent on distortion, it resists silence with sharp edges, honest reflection, and sonic rebellion. every track is both exile and return — a voice cutting through static. emerging from the the arid landscapes of apple valley, california, tending sands—born jeramy kendell hoffman on january 8, 1989—crafts music that mirrors the shifting sands of his environment. his compositions blend ambient textures, industrial rhythms, and experimental soundscapes, creating a genre-defying auditory experience. tending sands’ discography is a testament to his prolific nature and thematic depth. albums like taking shape (2024) and making illusions (war is not real / reality of war is) (2024) delve into existential themes, while tracks such as “drop another bomb on a city” and “tear myself down” showcase his ability to intertwine political commentary with personal introspection. his music is available across various platforms, including apple music, amazon music, and qobuz, offering listeners a chance to explore his evolving soundscape. beyond his musical endeavors, hoffman operates under the label shattered hourglass llc, further emphasizing his commitment to producing and distributing his unique sound independently. for those seeking a musical journey that challenges conventions and evokes the ephemeral nature of existence, tending sands offers a compelling and thought-provoking experience.</p>
-</section>
-
-<div class="links">
-<a href="https://music.apple.com/us/artist/tending-sands/1623597740" target="_blank">apple music</a>
-<a href="https://tidal.com/browse/artist/38458482" target="_blank">tidal</a>
-<a href="https://music.amazon.com/artists/B0B132B2TR/tending-sands" target="_blank">amazon</a>
-<a href="https://www.qobuz.com/us-en/interpreter/tending-sands/14089052" target="_blank">qobuz</a>
-</div>
-</section>
-
-<section id="merch">
-<h2>merch</h2>
-<p>the prophecy of the atom and the absence of humanity</p>
-<div class="merch">
-<a href="https://www.paypal.com/ncp/payment/MQGWPJHQSXND4" target="_blank" rel="noopener">buy now</a>
-</div>
-</section>
-
-<footer>
-<p>&copy; 2025 _tending sands. shattered hourglass llc. all rights reserved.</p>
-</footer>
-
-<script>
-// Mobile tilt reactivity
-if (window.DeviceOrientationEvent) {
-  window.addEventListener('deviceorientation', (e) => {
-    const x = e.gamma || 0;
-    const y = e.beta || 0;
-    document.querySelectorAll('.orb').forEach((orb,i) => {
-      orb.style.transform = `translate(${x*(i+1)*0.5}px, ${y*(i+1)*0.5}px) scale(1.1)`;
-    });
-    document.querySelectorAll('.glitch-line').forEach((line,i) => {
-      line.style.transform = `translate(${Math.sin(x+i)*25}px, ${Math.sin(y+i)*15}px) skewX(${x/5}deg)`;
-    });
-  });
-}
-
-// Hover reactivity
-const hoverTargets = document.querySelectorAll('iframe, .links a, .merch a, h1, h2, p');
-hoverTargets.forEach(el=>{
-  el.addEventListener('mouseenter', ()=>{el.style.filter='drop-shadow(0 0 20px #0ff) drop-shadow(0 0 30px #f0f)'; el.style.transform='scale(1.02)';});
-  el.addEventListener('mouseleave', ()=>{el.style.filter=''; el.style.transform='';});
-});
-
-// Click ripple reactivity
-document.addEventListener('click',(e)=>{
-  const ripple=document.createElement('div');
-  ripple.style.position='absolute';
-  ripple.style.width='20px';
-  ripple.style.height='20px';
-  ripple.style.borderRadius='50%';
-  ripple.style.background='rgba(0,255,255,0.4)';
-  ripple.style.left=`${e.pageX-10}px`;
-  ripple.style.top=`${e.pageY-10}px`;
-  ripple.style.pointerEvents='none';
-  ripple.style.zIndex='10';
-  ripple.style.animation='rippleAnim 0.5s ease-out forwards';
-  document.body.appendChild(ripple);
-  setTimeout(()=>ripple.remove(),500);
-});
-
-// Ripple animation
-const style=document.createElement('style');
-style.innerHTML=`@keyframes rippleAnim {0%{transform:scale(0.5);opacity:0.6;}100%{transform:scale(4);opacity:0;}}`;
-document.head.appendChild(style);
-
-// Intensify glitch on hover or click
-document.addEventListener('mousemove',()=>{document.querySelectorAll('.glitch-line').forEach(line=>{line.style.animationDuration='0.15s';});});
-document.addEventListener('mouseleave',()=>{document.querySelectorAll('.glitch-line').forEach(line=>{line.style.animationDuration='0.25s';});});
-document.addEventListener('click',()=>{document.querySelectorAll('.glitch-line').forEach(line=>{line.style.animationDuration='0.12s';});});
-</script>
+<p class="p1">&lt;!doctype html&gt;</p>
+<p class="p1">&lt;html lang="en"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1">&lt;meta charset="utf-8" /&gt;</p>
+<p class="p1">&lt;meta name="viewport" content="width=device-width,initial-scale=1" /&gt;</p>
+<p class="p1">&lt;title&gt;_tending sands&lt;/title&gt;</p>
+<p class="p1">&lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700&amp;display=swap" rel="stylesheet"&gt;</p>
+<p class="p1">&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>:root{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--neon-c1: #00fff3;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--neon-c2: #ff7bff;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--muted: #bfbfbf;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, "SF Pro Text", Roboto, sans-serif;background:#000;color:#fff;text-transform:lowercase;}</p>
+<p class="p2"><br></p>
+<p class="p1">/* background: fragmented ghost text layer (static, subtle) */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.ghost-bg{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position:fixed;inset:0;z-index:0;pointer-events:none;mix-blend-mode:screen;opacity:0.06;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background:</p>
+<p class="p1"><span class="Apple-converted-space">      </span>/* lines of fragmented phrases placed around */</p>
+<p class="p1"><span class="Apple-converted-space">      </span>radial-gradient(circle at 8% 18%, rgba(255,255,255,0.02), transparent 20%),</p>
+<p class="p1"><span class="Apple-converted-space">      </span>radial-gradient(circle at 85% 28%, rgba(255,255,255,0.02), transparent 20%),</p>
+<p class="p1"><span class="Apple-converted-space">      </span>linear-gradient(180deg, rgba(0,0,0,0.0), rgba(0,0,0,0.0));</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background-size:cover;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* static text fragments placed absolutely so they read like the image */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.fragment {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position: absolute;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: rgba(255,255,255,0.08);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: clamp(12px, 2vw, 22px);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>letter-spacing: 0.06em;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>white-space: nowrap;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-weight: 300;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>transform: translateZ(0);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>text-shadow: 0 0 8px rgba(0,255,255,0.02);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.frag1{top:64px;left:48px;opacity:0.12;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.frag2{top:220px;left:24px;opacity:0.11;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.frag3{top:340px;left:320px;opacity:0.09;letter-spacing:0.12em;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.frag4{top:420px;left:900px;opacity:0.08;font-size:18px;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.frag5{top:520px;left:220px;opacity:0.10;font-size:20px;}</p>
+<p class="p2"><br></p>
+<p class="p1">/* page layout */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.wrap{position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>header{width:100%;padding:6vh 2rem 3vh;text-align:left;max-width:1200px;margin:0 auto;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>header h1{margin:0;font-size:clamp(28px,6vw,56px);font-weight:700;color:#fff;letter-spacing:0.02em;text-shadow:</p>
+<p class="p1"><span class="Apple-converted-space">    </span>0 0 10px var(--neon-c1), 0 0 20px var(--neon-c2);}</p>
+<p class="p2"><br></p>
+<p class="p1">/* content sections */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>main{width:100%;max-width:1100px;padding:2rem;margin:0 auto;display:grid;grid-template-columns:1fr;gap:2.5rem;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>section{background: rgba(255,255,255,0.01);border-radius:10px;padding:2rem;backdrop-filter: blur(2px);}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>h2{margin:0 0 0.6rem 0;font-size:1.25rem;color:var(--neon-c1);text-shadow:0 0 8px rgba(0,255,255,0.12);}</p>
+<p class="p2"><br></p>
+<p class="p1">/* about text */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.about p{color:var(--muted);line-height:1.6;margin:0;}</p>
+<p class="p2"><br></p>
+<p class="p1">/* media area: cover artwork + embed */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.media-grid{display:grid;grid-template-columns: 360px 1fr;gap:2rem;align-items:start;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.art-wrap{display:flex;flex-direction:column;gap:1rem;align-items:center;}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* cd mockup */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.cd-case{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width:320px;height:320px;border-radius:8px;position:relative;overflow:hidden;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>box-shadow: 0 10px 40px rgba(0,0,0,0.7), 0 0 30px rgba(0,255,255,0.03);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: #080808;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display:flex;align-items:center;justify-content:center;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.cd-case .cover{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width:92%;height:92%;background-image: url('cover.png');background-size:cover;background-position:center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>filter:contrast(1.05) saturate(1.05);border-radius:6px;box-shadow: inset 0 0 24px rgba(0,0,0,0.6);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* vinyl alternate cover: same image but cropped/zoomed and high-contrast */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.vinyl-mock{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width:320px;height:320px;border-radius:6px;position:relative;overflow:hidden;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background:#000;border:1px solid rgba(255,255,255,0.02);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>box-shadow: 0 12px 60px rgba(0,0,0,0.75);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.vinyl-mock .vinyl-cover{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position:absolute;inset:0;background-image:url('cover.png');background-size:140% auto;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background-position: 38% 35%;filter: brightness(0.6) contrast(1.2) saturate(0.95);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>transform: scale(1.02);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.vinyl-mock::after{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>content:"";</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.35));</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* cd disc placed to the right as a visual */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.disc{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width:120px;height:120px;border-radius:50%;background:#050505;border:6px solid rgba(255,255,255,0.02);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background-image: url('cover.png');background-size:cover;background-position:center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>box-shadow: 0 8px 30px rgba(0,0,0,0.7), 0 0 10px rgba(0,255,255,0.02);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1">/* embed area */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.embed-wrap iframe{width:100%;height:420px;border-radius:8px;border:0;box-shadow:0 8px 40px rgba(0,0,0,0.6);}</p>
+<p class="p2"><br></p>
+<p class="p1">/* platform links */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.platforms{display:flex;gap:0.6rem;flex-wrap:wrap;margin-top:1rem;align-items:center;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.platforms a{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding:0.5rem 0.9rem;border-radius:6px;text-decoration:none;font-weight:700;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color:#000;background:linear-gradient(90deg,var(--neon-c1),var(--neon-c2));</p>
+<p class="p1"><span class="Apple-converted-space">    </span>box-shadow:0 6px 24px rgba(0,255,255,0.08);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>transition:transform .18s ease, box-shadow .18s ease;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.platforms a:hover{transform:translateY(-4px);box-shadow:0 18px 48px rgba(0,255,255,0.12);}</p>
+<p class="p2"><br></p>
+<p class="p1">/* merch button uses same visual */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.merch a{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display:inline-block;padding:0.8rem 1.3rem;border-radius:8px;text-decoration:none;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color:#000;background:linear-gradient(90deg,var(--neon-c1),var(--neon-c2));font-weight:700;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>box-shadow:0 10px 40px rgba(0,255,255,0.08);transition:transform .18s ease;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.merch a:hover{transform:translateY(-4px);filter:brightness(1.06);}</p>
+<p class="p2"><br></p>
+<p class="p1">/* footer */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>footer{color:#8a8a8a;text-align:center;padding:2rem 1rem;font-size:0.95rem;}</p>
+<p class="p2"><br></p>
+<p class="p1">/* responsive */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>@media (max-width:880px){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.media-grid{grid-template-columns:1fr;gap:1.2rem;}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.art-wrap{flex-direction:row;gap:1rem;justify-content:center;}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.cd-case,.vinyl-mock{width:160px;height:160px;}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.disc{display:none;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1">&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="ghost-bg" aria-hidden="true"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- static fragments that echo your uploaded image (subtle, low-opacity) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="fragment frag1"&gt;the prop<span class="Apple-converted-space">  </span>hecy of an&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="fragment frag2"&gt;atom and t<span class="Apple-converted-space">  </span>h&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="fragment frag3"&gt;e absence of h u&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="fragment frag4"&gt;manity&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="fragment frag5"&gt;_tending sands&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="wrap"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;header&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;h1&gt;_tending sands&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/header&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;main&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;section class="about"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h2&gt;about&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;_tending sands is an independent music project exploring raw soundscapes, shifting rhythms, and unapologetic emotion. each release balances abrasion and stillness; fragments of text and noise fold into melody.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;section class="media"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="media-grid"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="art-wrap"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="cd-case" aria-hidden="true"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div class="cover" role="img" aria-label="_tending sands cover"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="vinyl-mock" aria-hidden="true"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div class="vinyl-cover"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="embed-wrap"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;!-- audiomack embed (kept) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;iframe src="https://audiomack.com/embed/_tendingsands/album/fickle-little-beasts" scrolling="no" frameborder="0" title="fickle little beasts"&gt;&lt;/iframe&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="platforms" aria-label="listen on"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;a href="https://music.apple.com/us/artist/tending-sands/1623597740" target="_blank" rel="noopener"&gt;apple music&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;a href="https://tidal.com/browse/artist/38458482" target="_blank" rel="noopener"&gt;tidal&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;a href="https://music.amazon.com/artists/B0B132B2TR/tending-sands" target="_blank" rel="noopener"&gt;amazon&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;a href="https://www.qobuz.com/us-en/interpreter/tending-sands/14089052" target="_blank" rel="noopener"&gt;qobuz&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div style="margin-top:1.2rem;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div class="disc" aria-hidden="true"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;section class="merch"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h2&gt;merch&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;limited pieces available now.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;a href="https://www.paypal.com/ncp/payment/MQGWPJHQSXND4" target="_blank" rel="noopener"&gt;buy now&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/section&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/main&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;footer&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;p&gt;&amp;copy; 2025 _tending sands. all rights reserved.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/footer&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
 </body>
 </html>
