@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tending Sands - The Prophecy of an Atom and the Absence of Humanity</title>
+<title>The Prophecy of an Atom and the Absence of Humanity</title>
 <style>
   body {
     margin: 0;
@@ -15,10 +15,36 @@
     align-items: center;
     padding: 20px;
     overflow-x: hidden;
+    position: relative;
   }
 
-  /* Bio with subtle glow */
+  /* Subtle background glitch effect */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: repeating-linear-gradient(
+      180deg,
+      rgba(255,255,255,0.02),
+      rgba(255,255,255,0.02) 1px,
+      transparent 1px,
+      transparent 2px
+    );
+    pointer-events: none;
+    animation: bg-flicker 0.1s infinite;
+    z-index: 0;
+  }
+
+  @keyframes bg-flicker {
+    0%, 100% { opacity: 0.02; }
+    50% { opacity: 0.08; }
+  }
+
+  /* Full bio with glowing text */
   .bio {
+    position: relative;
+    z-index: 1;
     max-width: 800px;
     margin-bottom: 30px;
     padding: 15px 20px;
@@ -28,12 +54,16 @@
     line-height: 1.6;
     text-shadow: 0 0 8px #fff;
     transition: 0.3s;
+    max-height: 300px;
+    overflow-y: auto;
   }
   .bio:hover {
     text-shadow: 0 0 15px #fff, 0 0 25px #0ff, 0 0 35px #0ff;
   }
 
   .album-container {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -42,16 +72,39 @@
     width: 100%;
   }
 
-  /* Glitchy, glowing album art */
+  /* Glitchy, RGB-split album art */
   .album-art {
     width: 100%;
     max-width: 400px;
     border: 4px solid #fff;
     border-radius: 10px;
     box-shadow: 0 0 20px #0ff, 0 0 40px #0ff;
+    cursor: pointer;
     position: relative;
     animation: flicker 2s infinite alternate;
-    cursor: pointer;
+    filter: drop-shadow(0 0 8px #0ff);
+  }
+
+  /* RGB Split Layers */
+  .album-art::after, .album-art::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border-radius: 10px;
+    background: inherit;
+    mix-blend-mode: screen;
+    pointer-events: none;
+  }
+  .album-art::before {
+    transform: translate(-2px, 0px) rotate(0deg);
+    filter: drop-shadow(2px 0 2px red);
+    animation: rgb-flicker 0.2s infinite;
+  }
+  .album-art::after {
+    transform: translate(2px, 0px) rotate(0deg);
+    filter: drop-shadow(-2px 0 2px cyan);
+    animation: rgb-flicker 0.25s infinite;
   }
 
   @keyframes flicker {
@@ -68,7 +121,13 @@
     100% { opacity: 1; transform: translate(0,0) rotate(0deg); }
   }
 
-  /* Scrollable Apple Music embed */
+  @keyframes rgb-flicker {
+    0% { transform: translate(1px,0) rotate(0deg); opacity: 0.9; }
+    50% { transform: translate(-1px,1px) rotate(0.5deg); opacity: 1; }
+    100% { transform: translate(1px,-1px) rotate(-0.5deg); opacity: 0.9; }
+  }
+
+  /* Scrollable Audiomack embed */
   .embed-wrapper {
     width: 100%;
     overflow-x: auto;
@@ -81,7 +140,6 @@
     width: 100%;
     min-width: 600px;
     height: 450px;
-    background: transparent;
     transition: transform 0.3s;
   }
 
@@ -89,37 +147,31 @@
     transform: scale(1.02);
   }
 
-  /* Responsive mobile adjustments */
   @media (max-width: 600px) {
-    iframe {
-      min-width: 300px;
-      height: 300px;
-    }
-    .album-art {
-      max-width: 300px;
-    }
+    iframe { min-width: 300px; height: 300px; }
+    .album-art { max-width: 300px; }
   }
+
 </style>
 </head>
 <body>
 
 <!-- Bio Section -->
 <div class="bio">
-  Jeramy Kendell Hoffman, performing as Tending Sands, is the founder of Shattered Hourglass LLC in Hesperia, California. As a music artist, Jeramy explores themes of prophecy, societal reflection, and human introspection through experimental and emotive soundscapes. This page features the latest album: <strong>The Prophecy of an Atom and the Absence of Humanity</strong>.
+  Jeramy Kendell Hoffman, performing as Tending Sands, is the founder of Shattered Hourglass LLC in Hesperia, California. Through his music, he explores prophecy, societal reflection, human introspection, and the hidden currents of culture. His work seeks to challenge, provoke, and illuminate, creating soundscapes that resonate with both urgency and subtlety. The Prophecy of an Atom and the Absence of Humanity delves into existential chaos, human absence, and the unseen threads that bind the world. This page showcases the album in full, inviting listeners to immerse in the intensity of his vision.
 </div>
 
 <div class="album-container">
-  <!-- Album Art with glitch/flicker -->
+  <!-- Album Art -->
   <img src="https://i.postimg.cc/pTzg0xJJ/IMG-3100-2.jpg" alt="The Prophecy of an Atom and the Absence of Humanity" class="album-art">
 
-  <!-- Scrollable Apple Music Embed -->
+  <!-- Scrollable Audiomack Embed -->
   <div class="embed-wrapper">
-    <iframe allow="autoplay *; encrypted-media *;" frameborder="0" height="450" style="width:100%;max-width:100%;overflow:hidden;background:transparent;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/us/album/the-prophecy-of-an-atom-and-the-absence-of-humanity/1671234567"></iframe>
+    <iframe src="https://audiomack.com/embed/_tendingsands/album/fickle-little-beasts" allow="autoplay; encrypted-media" allowfullscreen></iframe>
   </div>
 </div>
 
 <script>
-  // Subtle parallax movement for album art based on mouse
   const albumArt = document.querySelector('.album-art');
   document.addEventListener('mousemove', (e) => {
     const x = (window.innerWidth/2 - e.clientX) / 30;
@@ -127,7 +179,6 @@
     albumArt.style.transform = `translate(${x}px, ${y}px)`;
   });
 
-  // Click effect: small pulse glow
   albumArt.addEventListener('click', () => {
     albumArt.style.boxShadow = '0 0 40px #0ff, 0 0 80px #0ff';
     setTimeout(() => {
