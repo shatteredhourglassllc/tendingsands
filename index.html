@@ -2,16 +2,17 @@
 <html lang="en">
 <head>
   <script 
-  src="https://www.paypal.com/sdk/js?client-id=BAAM2CfgNNrCfFM5IPyfHzpKYu4bfj_wE3tbtNilt3RWRCICzg1UbEdL8Abl119ytrnLkPde9mZLoAZpsI&components=hosted-buttons&enable-funding=venmo&currency=USD">
-</script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    src="https://www.paypal.com/sdk/js?client-id=BAAM2CfgNNrCfFM5IPyfHzpKYu4bfj_wE3tbtNilt3RWRCICzg1UbEdL8Abl119ytrnLkPde9mZLoAZpsI&components=hosted-buttons&enable-funding=venmo&currency=USD">
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>tending sands</title>
+
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
+    html,body { height: 100%; }
     body {
       font-family: 'Share Tech Mono', monospace;
       color: #fff;
@@ -19,28 +20,60 @@
       overflow-x: hidden;
       position: relative;
       line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    /* glitch background scanlines */
+    /* Layered glitch backgrounds and scanlines */
     .glitch-background {
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: repeating-linear-gradient(
-        to bottom,
-        rgba(255,255,255,0.03) 0px,
-        rgba(255,255,255,0.03) 1px,
-        transparent 2px
-      );
-      animation: glitchMove 1.5s infinite linear;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,0.03) 0px,
+          rgba(255,255,255,0.03) 1px,
+          transparent 2px
+        ),
+        linear-gradient(180deg, rgba(0,0,0,0.85), rgba(0,0,0,0.95));
+      animation: glitchMove 1.8s infinite linear;
+      pointer-events: none;
+      z-index: -4;
+      transition: transform 0.12s ease-out;
+      will-change: transform;
+    }
+
+    .glitch-overlay {
+      position: fixed;
+      inset: 0;
       pointer-events: none;
       z-index: -3;
-      transition: transform 0.2s ease-out;
+      mix-blend-mode: screen;
+    }
+    /* animated colored flickers */
+    .glitch-overlay::before,
+    .glitch-overlay::after {
+      content: "";
+      position: absolute;
+      inset: -10%;
+      background: linear-gradient(120deg, rgba(0,255,255,0.06), rgba(240,0,255,0.04), rgba(255,255,0,0.03));
+      filter: blur(30px);
+      opacity: 0.7;
+      animation: overlayShift 8s infinite linear;
+    }
+    .glitch-overlay::after { animation-duration: 10s; mix-blend-mode: overlay; opacity: 0.5; }
+
+    @keyframes overlayShift {
+      0% { transform: translateX(0) skewX(0); }
+      50% { transform: translateX(-6%) skewX(-2deg); }
+      100% { transform: translateX(0) skewX(0); }
     }
 
     @keyframes glitchMove {
       0% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+      25% { transform: translateY(-6px); }
+      50% { transform: translateY(-12px); }
+      75% { transform: translateY(-6px); }
       100% { transform: translateY(0); }
     }
 
@@ -57,37 +90,56 @@
     .floater {
       position: absolute;
       width: 20px; height: 20px;
-      background: rgba(0,255,255,0.2);
-      animation: drift 12s infinite linear;
+      background: rgba(0,255,255,0.12);
+      animation: drift 10s infinite linear;
+      mix-blend-mode: screen;
+      border-radius: 3px;
+      box-shadow: 0 0 8px rgba(0,255,255,0.12), 0 0 18px rgba(240,0,255,0.04);
+      will-change: transform, opacity;
     }
 
+    .floater.alt { background: rgba(240,0,255,0.09); }
+    .floater.alt2 { background: rgba(255,255,0,0.08); }
+
     @keyframes drift {
-      from { transform: translateY(100vh) translateX(0); opacity: 1; }
-      to { transform: translateY(-120vh) translateX(50px); opacity: 0; }
+      from { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 1; }
+      to { transform: translateY(-120vh) translateX(50px) rotate(90deg); opacity: 0; }
     }
 
     .container {
-      max-width: 800px;
+      max-width: 980px;
       margin: 0 auto;
-      padding: 2rem;
+      padding: 2.5rem 1.25rem;
       text-align: center;
       position: relative;
       z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 1rem;
     }
 
     /* cover */
     img.cover {
       width: 100%;
-      max-width: 500px;
-      margin: 2rem auto;
+      max-width: 520px;
+      margin: 1.5rem auto;
       display: block;
       filter: drop-shadow(0 0 20px #0ff);
       animation: glitchPulse 6s infinite;
       cursor: pointer;
+      border-radius: 6px;
+      transition: transform 0.25s ease;
+      will-change: transform, filter;
+      border: 1px solid rgba(255,255,255,0.04);
     }
 
+    img.cover:active { transform: scale(0.995); }
+
     img.cover.active {
-      animation: coverGlitch 0.4s steps(2, end);
+      animation: coverGlitch 0.5s steps(3, end);
     }
 
     @keyframes glitchPulse {
@@ -106,12 +158,13 @@
 
     /* glitch title */
     h1 {
-      font-size: 2.5rem;
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
       color: #0ff;
       position: relative;
       text-shadow: 0 0 5px #0ff, 0 0 15px #0ff;
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
       animation: textGlitch 3s infinite;
+      letter-spacing: 0.06em;
     }
 
     h1::before,
@@ -123,10 +176,12 @@
       overflow: hidden;
       color: #f0f;
       clip: rect(0, 900px, 0, 0);
+      pointer-events: none;
+      opacity: 0.9;
     }
 
-    h1::before { animation: glitchTop 2.5s infinite linear alternate-reverse; }
-    h1::after { color: #0ff; animation: glitchBottom 3s infinite linear alternate-reverse; }
+    h1::before { animation: glitchTop 2.5s infinite linear alternate-reverse; transform-origin: left top; }
+    h1::after { color: #0ff; animation: glitchBottom 3s infinite linear alternate-reverse; transform-origin: left bottom; }
 
     @keyframes textGlitch {
       0%, 100% { text-shadow: 0 0 5px #0ff, 0 0 15px #0ff; }
@@ -136,57 +191,30 @@
     }
 
     @keyframes glitchTop {
-      0% { clip: rect(0, 900px, 0, 0); }
+      0% { clip: rect(0, 900px, 0, 0); transform: translate(0,0); }
       5% { clip: rect(10px, 900px, 50px, 0); transform: translate(-3px, -2px); }
       10% { clip: rect(85px, 900px, 140px, 0); transform: translate(3px, 2px); }
       15% { clip: rect(50px, 900px, 85px, 0); transform: none; }
-      100% { clip: rect(0, 900px, 0, 0); }
+      100% { clip: rect(0, 900px, 0, 0); transform: translate(0,0); }
     }
 
     @keyframes glitchBottom {
-      0% { clip: rect(0, 900px, 0, 0); }
+      0% { clip: rect(0, 900px, 0, 0); transform: translate(0,0); }
       5% { clip: rect(140px, 900px, 200px, 0); transform: translate(3px, 2px); }
       10% { clip: rect(200px, 900px, 260px, 0); transform: translate(-3px, -2px); }
       15% { clip: rect(100px, 900px, 160px, 0); transform: none; }
-      100% { clip: rect(0, 900px, 0, 0); }
+      100% { clip: rect(0, 900px, 0, 0); transform: translate(0,0); }
     }
 
     p.bio {
       font-size: 1rem;
       line-height: 1.6;
       text-align: justify;
-      margin-bottom: 2rem;
-    }
-.buy-button {
-  display: inline-block;
-  padding: 0.8rem 1.5rem;
-  background: #0ff;
-  color: #000;
-  text-decoration: none;
-  font-weight: bold;
-  border-radius: 6px;
-  transition: 0.3s;
-  font-size: 1rem;
-  box-shadow: 0 0 15px #0ff, 0 0 25px #f0f;
-}
-
-.buy-button:hover {
-  background: #fff;
-  color: #0ff;
-  box-shadow: 0 0 25px #0ff, 0 0 50px #f0f;
-  transform: translateY(-3px);
-}
-
-    /* glowing buttons */
-    .links {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-top: 2rem;
+      margin-bottom: 1rem;
+      max-width: 880px;
     }
 
-    .links a {
+    .buy-button {
       display: inline-block;
       padding: 0.8rem 1.5rem;
       background: #0ff;
@@ -199,101 +227,130 @@
       box-shadow: 0 0 15px #0ff, 0 0 25px #f0f;
     }
 
-    .links a:hover {
+    .buy-button:hover {
       background: #fff;
       color: #0ff;
       box-shadow: 0 0 25px #0ff, 0 0 50px #f0f;
       transform: translateY(-3px);
     }
 
+    /* glowing buttons and links */
+    .links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .links a {
+      display: inline-block;
+      padding: 0.7rem 1.2rem;
+      background: rgba(0,255,255,0.12);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      border-radius: 6px;
+      transition: 0.26s;
+      font-size: 0.95rem;
+      box-shadow: 0 0 12px rgba(0,255,255,0.06), inset 0 -2px 0 rgba(0,0,0,0.2);
+      backdrop-filter: blur(4px);
+    }
+
+    .links a:hover {
+      background: #0ff;
+      color: #000;
+      box-shadow: 0 0 25px #0ff, 0 0 50px #f0f;
+      transform: translateY(-3px);
+    }
+
     footer {
-      margin-top: 3rem;
+      margin-top: 2rem;
       font-size: 0.9rem;
-      color: #666;
+      color: #999;
+      opacity: 0.9;
+      width: 100%;
+      text-align: center;
+      padding-bottom: 2rem;
+    }
+
+    /* Music grid and embeds */
+    .music-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      width: 90%;
+      max-width: 1200px;
+      margin: 1.75rem auto;
+    }
+
+    .music-embed h2 {
+      font-size: 1.25rem;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      position: relative;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .music-embed h2.glitch:before,
+    .music-embed h2.glitch:after {
+      content: attr(data-text);
+      position: absolute;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      clip: rect(0, 900px, 0, 0);
+    }
+
+    .music-embed h2.glitch:before {
+      animation: glitchTop 2s infinite linear alternate-reverse;
+      color: #f0f;
+      top: -2px;
+    }
+
+    .music-embed h2.glitch:after {
+      animation: glitchBottom 2s infinite linear alternate-reverse;
+      color: #0ff;
+      top: 2px;
+    }
+
+    .embed-container {
+      border: 2px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(255,255,255,0.02);
+      transition: transform 0.28s ease, box-shadow 0.28s ease;
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(4px);
+    }
+
+    .embed-container:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 40px rgba(255,255,255,0.05);
+    }
+
+    /* responsive */
+    @media (max-width: 980px) {
+      .music-section { grid-template-columns: 1fr; padding: 0 1rem; }
+      .container { padding-top: 1.5rem; }
+      p.bio { font-size: 0.98rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition: none !important; }
     }
   </style>
-  
-
-<style>
-.music-section {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  width: 90%;
-  max-width: 1200px;
-  margin: 3rem auto;
-}
-
-.music-embed h2 {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 1.5rem;
-  color: #fff;
-  margin-bottom: 1rem;
-  position: relative;
-  text-transform: uppercase;
-}
-
-.music-embed h2.glitch:before,
-.music-embed h2.glitch:after {
-  content: attr(data-text);
-  position: absolute;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
-  clip: rect(0, 900px, 0, 0);
-}
-
-.music-embed h2.glitch:before {
-  animation: glitchTop 2s infinite linear alternate-reverse;
-  color: #f0f;
-  top: -2px;
-}
-
-.music-embed h2.glitch:after {
-  animation: glitchBottom 2s infinite linear alternate-reverse;
-  color: #0ff;
-  top: 2px;
-}
-
-.embed-container {
-  border: 2px solid #fff;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 0 20px rgba(255,255,255,0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.embed-container:hover {
-  transform: scale(1.02);
-  box-shadow: 0 0 40px rgba(255,255,255,0.35);
-}
-
-@keyframes glitchTop {
-  0% { clip: rect(0, 9999px, 0, 0); }
-  10% { clip: rect(0, 9999px, 100%, 0); transform: translate(-2px, -2px); }
-  20% { clip: rect(0, 9999px, 0, 0); transform: translate(0,0); }
-}
-
-@keyframes glitchBottom {
-  0% { clip: rect(0, 9999px, 0, 0); }
-  10% { clip: rect(0, 9999px, 100%, 0); transform: translate(2px, 2px); }
-  20% { clip: rect(0, 9999px, 0, 0); transform: translate(0,0); }
-}
-
-@media (max-width: 768px) {
-  .music-section {
-    grid-template-columns: 1fr;
-  }
-}
-</style>
-
 </head>
+
 <body>
-  <div class="glitch-background"></div>
-  <div class="floaters"></div>
+  <div class="glitch-background" aria-hidden="true"></div>
+  <div class="glitch-overlay" aria-hidden="true"></div>
+  <div class="floaters" aria-hidden="true"></div>
 
   <div class="container">
     <h1>tending sands</h1>
+
     <img src="assets/images/cover.png" alt="tending sands cover" class="cover">
 
     <p class="bio">
@@ -301,49 +358,52 @@
     </p>
 
     <iframe src="https://audiomack.com//embed/_tendingsands/song/68c645cdac316" scrolling="no" width="100%" height="252" frameborder="0" title="Bullish"></iframe>
-    <section class="music-section">
-<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;max-width:100%;border:2px solid #0ff;box-shadow:0 0 20px #0ff, 0 0 40px #0ff;">
-  <iframe 
-    src="https://www.youtube.com/embed/1aikSMtUYHQ" 
-    title="A Truce (The Art of War Section One)" 
-    frameborder="0" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-    allowfullscreen
-    style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;">
-  </iframe>
-</div>
-  </div>
 
-  <div class="music-embed">
-    <h2 class="glitch" data-text="Peace on the Other Side">Peace on the Other Side</h2>
-    <div class="embed-container">
-      <iframe src="https://audiomack.com//embed/tending-sands-1/song/peace-on-the-other-side" 
-        scrolling="no" 
-        width="100%" 
-        height="350" 
-        frameborder="0" 
-        title="Peace on the Other Side"></iframe>
-    </div>
-  
-</section>
-    <section id="music">
-      <h2>music</h2>
-      <p>listen on:</p>
-      <div class="links">
-        <a href="https://audiomack.com/_tendingsands/album/fickle-little-beasts" target="_blank">audiomack</a>
-        <a href="https://music.apple.com/us/artist/tending-sands/1623597740" target="_blank">apple music</a>
-        <a href="https://tidal.com/browse/artist/38458482" target="_blank">tidal</a>
-        <a href="https://music.amazon.com/artists/B0B132B2TR/tending-sands" target="_blank">amazon</a>
-        <a href="https://www.qobuz.com/us-en/interpreter/tending-sands/14089052" target="_blank">qobuz</a>
+    <section class="music-section" aria-label="video and embeds">
+      <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;max-width:100%;border:2px solid #0ff;box-shadow:0 0 20px #0ff, 0 0 40px #0ff;border-radius:8px;">
+        <iframe 
+          src="https://www.youtube.com/embed/1aikSMtUYHQ" 
+          title="A Truce (The Art of War Section One)" 
+          frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          allowfullscreen
+          style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;">
+        </iframe>
       </div>
 
-<div id="paypal-container-6WGY8NCK78VWL"></div>
-<script>
-  paypal.HostedButtons({
-    hostedButtonId: "6WGY8NCK78VWL",
-  }).render("#paypal-container-6WGY8NCK78VWL")
-</script>
+      <div>
+        <div class="music-embed" style="text-align:left;">
+          <h2 class="glitch" data-text="Peace on the Other Side">Peace on the Other Side</h2>
+          <div class="embed-container" style="padding: 0.5rem;">
+            <iframe src="https://audiomack.com//embed/tending-sands-1/song/peace-on-the-other-side" 
+              scrolling="no" 
+              width="100%" 
+              height="350" 
+              frameborder="0" 
+              title="Peace on the Other Side"></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
 
+    <section id="music" style="width:100%;max-width:980px;">
+      <h2 style="color:#fff;margin-top:0.5rem;">music</h2>
+      <p style="margin-top:0.25rem;margin-bottom:0.75rem;">listen on:</p>
+
+      <div class="links" role="navigation" aria-label="music links">
+        <a href="https://audiomack.com/_tendingsands/album/fickle-little-beasts" target="_blank" rel="noopener noreferrer">audiomack</a>
+        <a href="https://music.apple.com/us/artist/tending-sands/1623597740" target="_blank" rel="noopener noreferrer">apple music</a>
+        <a href="https://tidal.com/browse/artist/38458482" target="_blank" rel="noopener noreferrer">tidal</a>
+        <a href="https://music.amazon.com/artists/B0B132B2TR/tending-sands" target="_blank" rel="noopener noreferrer">amazon</a>
+        <a href="https://www.qobuz.com/us-en/interpreter/tending-sands/14089052" target="_blank" rel="noopener noreferrer">qobuz</a>
+      </div>
+
+      <div id="paypal-container-6WGY8NCK78VWL" style="margin-top:1rem;"></div>
+      <script>
+        paypal.HostedButtons({
+          hostedButtonId: "6WGY8NCK78VWL"
+        }).render("#paypal-container-6WGY8NCK78VWL");
+      </script>
     </section>
 
     <footer>
@@ -352,37 +412,111 @@
   </div>
 
   <script>
-    // desktop mouse interaction
-    document.addEventListener("mousemove", e => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 30;
-      const y = (e.clientY / window.innerHeight - 0.5) * 30;
-      document.querySelector(".glitch-background").style.transform = `translate(${x}px, ${y}px)`;
-    });
+    // -- Interaction & enhanced glitch behaviours --
+    (function(){
+      const bg = document.querySelector(".glitch-background");
+      const overlay = document.querySelector(".glitch-overlay");
+      const floaters = document.querySelector(".floaters");
+      const cover = document.querySelector(".cover");
 
-    // mobile tilt interaction
-    window.addEventListener("deviceorientation", e => {
-      const x = e.gamma / 3;
-      const y = e.beta / 3;
-      document.querySelector(".glitch-background").style.transform = `translate(${x}px, ${y}px)`;
-    });
+      // mouse parallax for desktop
+      document.addEventListener("mousemove", e => {
+        const rx = (e.clientX / window.innerWidth - 0.5) * 30;
+        const ry = (e.clientY / window.innerHeight - 0.5) * 30;
+        const tx = rx * 0.6;
+        const ty = ry * 0.4;
+        bg.style.transform = `translate(${tx}px, ${ty}px)`;
+        overlay.style.transform = `translate(${tx * 0.6}px, ${ty * 0.6}px) rotate(${rx * 0.02}deg)`;
+      }, { passive: true });
 
-    // cover glitch on click
-    const cover = document.querySelector(".cover");
-    cover.addEventListener("click", () => {
-      cover.classList.add("active");
-      setTimeout(() => cover.classList.remove("active"), 400);
-    });
+      // device tilt & tip support (stronger effect when device is tipped)
+      function handleOrientation(event) {
+        // gamma: left-to-right tilt, beta: front-to-back
+        const gamma = event.gamma || 0;
+        const beta = event.beta || 0;
+        // amplify small tilts so 'tipping' the device is obvious
+        const tx = Math.max(-30, Math.min(30, gamma * 1.2));
+        const ty = Math.max(-30, Math.min(30, beta * 1.0 - 10));
+        bg.style.transform = `translate(${tx}px, ${ty}px)`;
+        overlay.style.transform = `translate(${tx * 0.6}px, ${ty * 0.6}px) rotate(${tx * 0.02}deg)`;
+        // subtle color shift based on tilt
+        overlay.style.filter = `hue-rotate(${tx * 0.7}deg) saturate(${1 + Math.abs(ty)/120})`;
+      }
 
-    // generate floaters
-    const floaterContainer = document.querySelector(".floaters");
-    for (let i = 0; i < 20; i++) {
-      const f = document.createElement("div");
-      f.className = "floater";
-      f.style.left = Math.random() * 100 + "vw";
-      f.style.animationDuration = (8 + Math.random() * 8) + "s";
-      f.style.width = f.style.height = (5 + Math.random() * 20) + "px";
-      floaterContainer.appendChild(f);
-    }
+      window.addEventListener("deviceorientation", handleOrientation, true);
+
+      // fallback: device motion (to catch quick 'tip' gestures)
+      window.addEventListener("devicemotion", e => {
+        const ag = e.accelerationIncludingGravity || {};
+        const ax = ag.x || 0;
+        const ay = ag.y || 0;
+        // small quick shakes cause burst glitches
+        if (Math.abs(ax) > 12 || Math.abs(ay) > 12) {
+          triggerBurst();
+        }
+      }, { passive: true });
+
+      // cover click/tap glitch
+      cover.addEventListener("click", () => {
+        cover.classList.add("active");
+        setTimeout(() => cover.classList.remove("active"), 600);
+      });
+
+      // generate floaters with variety
+      for (let i = 0; i < 28; i++) {
+        const f = document.createElement("div");
+        f.className = "floater";
+        if (i % 3 === 0) f.classList.add('alt');
+        if (i % 5 === 0) f.classList.add('alt2');
+        const size = (5 + Math.random() * 26);
+        f.style.left = (Math.random() * 110) + "vw";
+        f.style.top = (Math.random() * 110) + "vh";
+        f.style.width = f.style.height = size + "px";
+        f.style.opacity = 0.6 * Math.random() + 0.1;
+        f.style.animationDuration = (6 + Math.random() * 14) + "s";
+        f.style.animationDelay = (Math.random() * -12) + "s";
+        floaters.appendChild(f);
+      }
+
+      // burst glitch effect: quick background shake + color pulse
+      function triggerBurst() {
+        bg.style.transition = "transform 150ms ease-out";
+        bg.style.transform += " translateY(-4px)";
+        overlay.style.transition = "filter 300ms ease, transform 300ms ease";
+        overlay.style.filter = "hue-rotate(45deg) saturate(1.4)";
+        setTimeout(() => {
+          bg.style.transform = bg.style.transform.replace(" translateY(-4px)", "");
+          overlay.style.filter = "";
+          bg.style.transition = "";
+          overlay.style.transition = "";
+        }, 300);
+      }
+
+      // subtle periodic random bursts so it never feels static
+      setInterval(() => {
+        if (Math.random() > 0.85) triggerBurst();
+      }, 2500);
+
+      // accessibility: allow keyboard to pulse cover
+      cover.tabIndex = 0;
+      cover.addEventListener("keyup", e => {
+        if (e.key === "Enter" || e.key === " ") {
+          cover.classList.add("active");
+          setTimeout(() => cover.classList.remove("active"), 600);
+        }
+      });
+
+      // ensure if device doesn't support orientation events we still get subtle movement via scroll
+      let lastScroll = 0;
+      window.addEventListener('scroll', () => {
+        const s = window.scrollY || window.pageYOffset;
+        const dy = s - lastScroll;
+        bg.style.transform = `translateY(${Math.min(30, Math.max(-30, -s * 0.03))}px)`;
+        lastScroll = s;
+      }, { passive: true });
+
+    })();
   </script>
 </body>
 </html>
+
