@@ -212,6 +212,105 @@
       color: #666;
     }
   </style>
+  <section class="music-section">
+  <div class="music-embed">
+    <h2 class="glitch" data-text="Fickle Little Beasts">Fickle Little Beasts</h2>
+    <div class="embed-container">
+      <iframe src="https://audiomack.com//embed/_tendingsands/album/fickle-little-beasts" 
+        scrolling="no" 
+        width="100%" 
+        height="350" 
+        frameborder="0" 
+        title="Fickle Little Beasts"></iframe>
+    </div>
+  </div>
+
+  <div class="music-embed">
+    <h2 class="glitch" data-text="Peace on the Other Side">Peace on the Other Side</h2>
+    <div class="embed-container">
+      <iframe src="https://audiomack.com//embed/tending-sands-1/song/peace-on-the-other-side" 
+        scrolling="no" 
+        width="100%" 
+        height="350" 
+        frameborder="0" 
+        title="Peace on the Other Side"></iframe>
+    </div>
+  </div>
+</section>
+
+<style>
+.music-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  width: 90%;
+  max-width: 1200px;
+  margin: 3rem auto;
+}
+
+.music-embed h2 {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 1.5rem;
+  color: #fff;
+  margin-bottom: 1rem;
+  position: relative;
+  text-transform: uppercase;
+}
+
+.music-embed h2.glitch:before,
+.music-embed h2.glitch:after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  clip: rect(0, 900px, 0, 0);
+}
+
+.music-embed h2.glitch:before {
+  animation: glitchTop 2s infinite linear alternate-reverse;
+  color: #f0f;
+  top: -2px;
+}
+
+.music-embed h2.glitch:after {
+  animation: glitchBottom 2s infinite linear alternate-reverse;
+  color: #0ff;
+  top: 2px;
+}
+
+.embed-container {
+  border: 2px solid #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(255,255,255,0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.embed-container:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 40px rgba(255,255,255,0.35);
+}
+
+@keyframes glitchTop {
+  0% { clip: rect(0, 9999px, 0, 0); }
+  10% { clip: rect(0, 9999px, 100%, 0); transform: translate(-2px, -2px); }
+  20% { clip: rect(0, 9999px, 0, 0); transform: translate(0,0); }
+}
+
+@keyframes glitchBottom {
+  0% { clip: rect(0, 9999px, 0, 0); }
+  10% { clip: rect(0, 9999px, 100%, 0); transform: translate(2px, 2px); }
+  20% { clip: rect(0, 9999px, 0, 0); transform: translate(0,0); }
+}
+
+@media (max-width: 768px) {
+  .music-section {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
 </head>
 <body>
   <div class="glitch-background"></div>
