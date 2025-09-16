@@ -982,7 +982,7 @@
 
  
 
-  <script>
+ <script>
   (function(){
     const bg = document.querySelector(".glitch-background");
     const overlay = document.querySelector(".glitch-overlay");
@@ -1024,11 +1024,64 @@
       setTimeout(() => cover.classList.remove("active"), 600);
     });
 
-    // spawn floating glitch blocks
     for (let i = 0; i < 28; i++) {
       const f = document.createElement("div");
       f.className = "floater";
-      if (i % 3 ===
+      if (i % 3 === 0) f.classList.add('alt');
+      if (i % 5 === 0) f.classList.add('alt2');
+      const size = (5 + Math.random() * 26);
+      f.style.left = (Math.random() * 110) + "vw";
+      f.style.top = (Math.random() * 110) + "vh";
+      f.style.width = f.style.height = size + "px";
+      f.style.opacity = 0.6 * Math.random() + 0.1;
+      f.style.animationDuration = (6 + Math.random() * 14) + "s";
+      f.style.animationDelay = (Math.random() * -12) + "s";
+      f.addEventListener("click", () => {
+        f.style.transform = "scale(2)";
+        f.style.opacity = "0.9";
+        setTimeout(() => {
+          f.style.transform = "";
+          f.style.opacity = "";
+        }, 500);
+      });
+      floaters.appendChild(f);
+    }
+
+    function triggerBurst() {
+      bg.style.transition = "transform 150ms ease-out";
+      bg.style.transform += " translateY(-4px)";
+      overlay.style.transition = "filter 300ms ease, transform 300ms ease";
+      overlay.style.filter = "hue-rotate(45deg) saturate(1.4)";
+      setTimeout(() => {
+        bg.style.transform = bg.style.transform.replace(" translateY(-4px)", "");
+        overlay.style.filter = "";
+        bg.style.transition = "";
+        overlay.style.transition = "";
+      }, 300);
+    }
+
+    setInterval(() => {
+      if (Math.random() > 0.85) triggerBurst();
+    }, 2500);
+
+    cover.tabIndex = 0;
+    cover.addEventListener("keyup", e => {
+      if (e.key === "Enter" || e.key === " ") {
+        cover.classList.add("active");
+        setTimeout(() => cover.classList.remove("active"), 600);
+      }
+    });
+
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+      const s = window.scrollY || window.pageYOffset;
+      const dy = s - lastScroll;
+      bg.style.transform = `translateY(${Math.min(30, Math.max(-30, -s * 0.03))}px)`;
+      lastScroll = s;
+    }, { passive: true });
+
+  })();
+</script>
 
 
 </body>
