@@ -10,6 +10,8 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <script src="https://www.paypalobjects.com/ncp/cart/cart.js" data-merchant-id="F5CD6CGRXHRH8"></script>
+
   <title>tending sands</title>
   
 <script 
@@ -808,7 +810,10 @@
     hostedButtonId: "4RYMSEDARWDG4",
   }).render("#paypal-container-4RYMSEDARWDG4")
 </script>
-
+<paypal-cart-button data-id="pp-view-cart"></paypal-cart-button>
+<script>
+  cartPaypal.Cart({ id: "pp-view-cart" })
+</script>
 
     </section>
 
