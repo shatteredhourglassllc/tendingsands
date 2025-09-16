@@ -405,14 +405,6 @@
         }).render("#paypal-container-6WGY8NCK78VWL");
       </script>
     </section>
-<div class="button-row">
-  <!-- Existing button (leave as-is) -->
-  <a href="https://www.paypal.com/donate/?hosted_button_id=YOUR_EXISTING_ID" class="glitch-button" target="_blank" data-text="Support">Support</a>
-
-  <!-- New button -->
-  <a href="https://py.pl/8JZCOySirGA" class="glitch-button" target="_blank" data-text="Tip Jar">Tip Jar</a>
-</div>
-
 <style>
 .button-row {
   display: flex;
@@ -494,14 +486,12 @@
   </div>
 
   <script>
-    // -- Interaction & enhanced glitch behaviours --
     (function(){
       const bg = document.querySelector(".glitch-background");
       const overlay = document.querySelector(".glitch-overlay");
       const floaters = document.querySelector(".floaters");
       const cover = document.querySelector(".cover");
 
-      // mouse parallax for desktop
       document.addEventListener("mousemove", e => {
         const rx = (e.clientX / window.innerWidth - 0.5) * 30;
         const ry = (e.clientY / window.innerHeight - 0.5) * 30;
@@ -511,7 +501,6 @@
         overlay.style.transform = `translate(${tx * 0.6}px, ${ty * 0.6}px) rotate(${rx * 0.02}deg)`;
       }, { passive: true });
 
-      // device tilt & tip support (stronger effect when device is tipped)
       function handleOrientation(event) {
         // gamma: left-to-right tilt, beta: front-to-back
         const gamma = event.gamma || 0;
@@ -527,7 +516,6 @@
 
       window.addEventListener("deviceorientation", handleOrientation, true);
 
-      // fallback: device motion (to catch quick 'tip' gestures)
       window.addEventListener("devicemotion", e => {
         const ag = e.accelerationIncludingGravity || {};
         const ax = ag.x || 0;
@@ -538,13 +526,11 @@
         }
       }, { passive: true });
 
-      // cover click/tap glitch
       cover.addEventListener("click", () => {
         cover.classList.add("active");
         setTimeout(() => cover.classList.remove("active"), 600);
       });
 
-      // generate floaters with variety
       for (let i = 0; i < 28; i++) {
         const f = document.createElement("div");
         f.className = "floater";
@@ -560,7 +546,6 @@
         floaters.appendChild(f);
       }
 
-      // burst glitch effect: quick background shake + color pulse
       function triggerBurst() {
         bg.style.transition = "transform 150ms ease-out";
         bg.style.transform += " translateY(-4px)";
@@ -574,12 +559,12 @@
         }, 300);
       }
 
-      // subtle periodic random bursts so it never feels static
+
       setInterval(() => {
         if (Math.random() > 0.85) triggerBurst();
       }, 2500);
 
-      // accessibility: allow keyboard to pulse cover
+      
       cover.tabIndex = 0;
       cover.addEventListener("keyup", e => {
         if (e.key === "Enter" || e.key === " ") {
@@ -588,7 +573,6 @@
         }
       });
 
-      // ensure if device doesn't support orientation events we still get subtle movement via scroll
       let lastScroll = 0;
       window.addEventListener('scroll', () => {
         const s = window.scrollY || window.pageYOffset;
@@ -597,7 +581,7 @@
         lastScroll = s;
       }, { passive: true });
 
-    })();
+   
   </script>
 </body>
 </html>
