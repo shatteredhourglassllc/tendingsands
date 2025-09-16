@@ -983,199 +983,53 @@
  
 
   <script>
+  (function(){
+    const bg = document.querySelector(".glitch-background");
+    const overlay = document.querySelector(".glitch-overlay");
+    const floaters = document.querySelector(".floaters");
+    const cover = document.querySelector(".cover");
 
-    (function(){
+    document.addEventListener("mousemove", e => {
+      const rx = (e.clientX / window.innerWidth - 0.5) * 30;
+      const ry = (e.clientY / window.innerHeight - 0.5) * 30;
+      const tx = rx * 0.6;
+      const ty = ry * 0.4;
+      bg.style.transform = `translate(${tx}px, ${ty}px)`;
+      overlay.style.transform = `translate(${tx * 0.6}px, ${ty * 0.6}px) rotate(${rx * 0.02}deg)`;
+    }, { passive: true });
 
-      const bg = document.querySelector(".glitch-background");
+    function handleOrientation(event) {
+      const gamma = event.gamma || 0;
+      const beta = event.beta || 0;
+      const tx = Math.max(-30, Math.min(30, gamma * 1.2));
+      const ty = Math.max(-30, Math.min(30, beta * 1.0 - 10));
+      bg.style.transform = `translate(${tx}px, ${ty}px)`;
+      overlay.style.transform = `translate(${tx * 0.6}px, ${ty * 0.6}px) rotate(${tx * 0.02}deg)`;
+      overlay.style.filter = `hue-rotate(${tx * 0.7}deg) saturate(${1 + Math.abs(ty)/120})`;
+    }
 
-      const overlay = document.querySelector(".glitch-overlay");
+    window.addEventListener("deviceorientation", handleOrientation, true);
 
-      const floaters = document.querySelector(".floaters");
-
-      const cover = document.querySelector(".cover");
-
- 
-
-      document.addEventListener("mousemove", e => {
-
-        const rx = (e.clientX / window.innerWidth - 0.5) * 30;
-
-        const ry = (e.clientY / window.innerHeight - 0.5) * 30;
-
-        const tx = rx * 0.6;
-
-        const ty = ry * 0.4;
-
-        bg.style.transform = `translate(${tx}px, ${ty}px)`;
-
-        overlay.style.transform = `translate(${tx * 0.6}px, ${ty * 0.6}px) rotate(${rx * 0.02}deg)`;
-
-      }, { passive: true });
-
- 
-
-      function handleOrientation(event) {
-
-        // gamma: left-to-right tilt, beta: front-to-back
-
-        const gamma = event.gamma || 0;
-
-        const beta = event.beta || 0;
-
-        // amplify small tilts so 'tipping' the device is obvious
-
-        const tx = Math.max(-30, Math.min(30, gamma * 1.2));
-
-        const ty = Math.max(-30, Math.min(30, beta * 1.0 - 10));
-
-        bg.style.transform = `translate(${tx}px, ${ty}px)`;
-
-        overlay.style.transform = `translate(${tx * 0.6}px, ${ty * 0.6}px) rotate(${tx * 0.02}deg)`;
-
-        // subtle color shift based on tilt
-
-        overlay.style.filter = `hue-rotate(${tx * 0.7}deg) saturate(${1 + Math.abs(ty)/120})`;
-
+    window.addEventListener("devicemotion", e => {
+      const ag = e.accelerationIncludingGravity || {};
+      const ax = ag.x || 0;
+      const ay = ag.y || 0;
+      if (Math.abs(ax) > 12 || Math.abs(ay) > 12) {
+        triggerBurst();
       }
+    }, { passive: true });
+
+    cover.addEventListener("click", () => {
+      cover.classList.add("active");
+      setTimeout(() => cover.classList.remove("active"), 600);
+    });
+
+    // spawn floating glitch blocks
+    for (let i = 0; i < 28; i++) {
+      const f = document.createElement("div");
+      f.className = "floater";
+      if (i % 3 ===
 
- 
-
-      window.addEventListener("deviceorientation", handleOrientation, true);
-
- 
-
-      window.addEventListener("devicemotion", e => {
-
-        const ag = e.accelerationIncludingGravity || {};
-
-        const ax = ag.x || 0;
-
-        const ay = ag.y || 0;
-
-
-        if (Math.abs(ax) > 12 || Math.abs(ay) > 12) {
-
-          triggerBurst();
-
-        }
-
-      }, { passive: true });
-
- 
-
-      cover.addEventListener("click", () => {
-
-        cover.classList.add("active");
-
-        setTimeout(() => cover.classList.remove("active"), 600);
-
-      });
-
- 
-
-      for (let i = 0; i < 28; i++) {
-
-        const f = document.createElement("div");
-
-        f.className = "floater";
-
-        if (i % 3 === 0) f.classList.add('alt');
-
-        if (i % 5 === 0) f.classList.add('alt2');
-
-        const size = (5 + Math.random() * 26);
-
-        f.style.left = (Math.random() * 110) + "vw";
-
-        f.style.top = (Math.random() * 110) + "vh";
-
-        f.style.width = f.style.height = size + "px";
-
-        f.style.opacity = 0.6 * Math.random() + 0.1;
-
-        f.style.animationDuration = (6 + Math.random() * 14) + "s";
-
-        f.style.animationDelay = (Math.random() * -12) + "s";
-
-        floaters.appendChild(f);
-
-      }
-
- 
-
-      function triggerBurst() {
-
-        bg.style.transition = "transform 150ms ease-out";
-
-        bg.style.transform += " translateY(-4px)";
-
-        overlay.style.transition = "filter 300ms ease, transform 300ms ease";
-
-        overlay.style.filter = "hue-rotate(45deg) saturate(1.4)";
-
-        setTimeout(() => {
-
-          bg.style.transform = bg.style.transform.replace(" translateY(-4px)", "");
-
-          overlay.style.filter = "";
-
-          bg.style.transition = "";
-
-          overlay.style.transition = "";
-
-        }, 300);
-
-      }
-
- 
-
- 
-
-      setInterval(() => {
-
-        if (Math.random() > 0.85) triggerBurst();
-
-      }, 2500);
-
- 
-
-     
-
-      cover.tabIndex = 0;
-
-      cover.addEventListener("keyup", e => {
-
-        if (e.key === "Enter" || e.key === " ") {
-
-          cover.classList.add("active");
-
-          setTimeout(() => cover.classList.remove("active"), 600);
-
-        }
-
-      });
-
- 
-
-      let lastScroll = 0;
-
-      window.addEventListener('scroll', () => {
-
-        const s = window.scrollY || window.pageYOffset;
-
-        const dy = s - lastScroll;
-
-        bg.style.transform = `translateY(${Math.min(30, Math.max(-30, -s * 0.03))}px)`;
-
-        lastScroll = s;
-
-      }, { passive: true });
-
- 
-
-  
-
-  </script>
 
 </body>
 
