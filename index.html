@@ -11,6 +11,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>tending sands</title>
+  
+<script 
+2
+  src="https://www.paypal.com/sdk/js?client-id=BAAM2CfgNNrCfFM5IPyfHzpKYu4bfj_wE3tbtNilt3RWRCICzg1UbEdL8Abl119ytrnLkPde9mZLoAZpsI&components=hosted-buttons&enable-funding=venmo&currency=USD">
+3
+</script>
 
  
 
@@ -791,7 +797,13 @@
         <a href="https://www.qobuz.com/us-en/interpreter/tending-sands/14089052" target="_blank" rel="noopener noreferrer">qobuz</a>
 
       </div>
-
+      
+<div id="paypal-container-6WGY8NCK78VWL"></div>
+<script>
+  paypal.HostedButtons({
+    hostedButtonId: "6WGY8NCK78VWL",
+  }).render("#paypal-container-6WGY8NCK78VWL")
+</script>
 <paypal-cart-button data-id="pp-view-cart"></paypal-cart-button>
 
 <script>
@@ -1040,7 +1052,6 @@
 
         const ay = ag.y || 0;
 
-        // small quick shakes cause burst glitches
 
         if (Math.abs(ax) > 12 || Math.abs(ay) > 12) {
 
