@@ -102,7 +102,7 @@
 </head>
 <body>
   <div class="album" id="album">
-    <img src="A_promotional_album_cover_for_the_album_titled_&quot;PR.png" alt="Pressed Album Cover">
+    <img src="cover.png" alt="Pressed Album Cover">
     <div class="overlay">
       <h1>Pressed</h1>
       <h2>by Tending Sands</h2>
