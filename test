@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tending Sands – Pressed</title>
+<style>
+  :root {
+    --blue: #3aa9ff;
+    --red: #ff2a2a;
+    --black: #0a0a0a;
+    --white: #f4f4f4;
+  }
+
+  body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle at center, var(--black) 20%, #000 100%);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    perspective: 1000px;
+  }
+
+  .album {
+    position: relative;
+    width: 80vw;
+    max-width: 400px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 0 60px rgba(58, 169, 255, 0.4);
+    transform-style: preserve-3d;
+    transition: transform 0.2s ease-out;
+  }
+
+  .album img {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: contrast(1.1) saturate(1.2);
+  }
+
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent, rgba(0,0,0,0.7));
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2em;
+  }
+
+  h1 {
+    font-size: 2rem;
+    margin: 0;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, var(--blue), var(--red));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  h2 {
+    font-size: 1rem;
+    font-weight: 300;
+    margin-top: 0.5em;
+    opacity: 0.8;
+  }
+
+  .cta {
+    margin-top: 1.5em;
+    padding: 0.8em 1.6em;
+    border: 1px solid var(--blue);
+    background: rgba(255,255,255,0.05);
+    color: var(--white);
+    border-radius: 50px;
+    text-decoration: none;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+  }
+
+  .cta:hover {
+    background: var(--blue);
+    color: var(--black);
+    box-shadow: 0 0 20px var(--blue);
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .album {
+    animation: float 6s ease-in-out infinite;
+  }
+</style>
+</head>
+<body>
+  <div class="album" id="album">
+    <img src="A_promotional_album_cover_for_the_album_titled_&quot;PR.png" alt="Pressed Album Cover">
+    <div class="overlay">
+      <h1>Pressed</h1>
+      <h2>by Tending Sands</h2>
+      <a href="https://tendingsands.vercel.app" class="cta">Listen Now</a>
+    </div>
+  </div>
+
+  <script>
+    const album = document.getElementById('album');
+    window.addEventListener('deviceorientation', (e) => {
+      const x = e.gamma / 10;
+      const y = e.beta / 20;
+      album.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      const x = (window.innerWidth / 2 - e.pageX) / 30;
+      const y = (window.innerHeight / 2 - e.pageY) / 30;
+      album.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+    });
+  </script>
+</body>
+</html>
