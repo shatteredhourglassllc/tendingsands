@@ -1,10 +1,13 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tending Sands</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html,body { height: 100%; }
+    html, body { height: 100%; }
     body {
       font-family: 'Share Tech Mono', monospace;
       color: #fff;
@@ -15,6 +18,8 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
+
+    /* Glitch background & overlay */
     .glitch-background {
       position: fixed;
       inset: 0;
@@ -44,7 +49,11 @@
       opacity: 0.7;
       animation: overlayShift 8s infinite linear;
     }
-    .glitch-overlay::after { animation-duration: 10s; mix-blend-mode: overlay; opacity: 0.5; }
+    .glitch-overlay::after {
+      animation-duration: 10s;
+      mix-blend-mode: overlay;
+      opacity: 0.5;
+    }
     @keyframes overlayShift {
       0% { transform: translateX(0) skewX(0); }
       50% { transform: translateX(-6%) skewX(-2deg); }
@@ -57,6 +66,8 @@
       75% { transform: translateY(-6px); }
       100% { transform: translateY(0); }
     }
+
+    /* Floaters */
     .floaters {
       position: fixed;
       top: 0; left: 0;
@@ -81,6 +92,8 @@
       from { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 1; }
       to { transform: translateY(-120vh) translateX(50px) rotate(90deg); opacity: 0; }
     }
+
+    /* Container */
     .container {
       max-width: 980px;
       margin: 0 auto;
@@ -95,6 +108,8 @@
       justify-content: flex-start;
       gap: 1rem;
     }
+
+    /* Cover image */
     img.cover {
       width: 100%;
       max-width: 520px;
@@ -110,6 +125,7 @@
     }
     img.cover:active { transform: scale(0.995); }
     img.cover.active { animation: coverGlitch 0.5s steps(3, end); }
+
     @keyframes glitchPulse {
       0%, 90%, 100% { transform: none; filter: drop-shadow(0 0 20px #0ff); }
       92% { transform: translate(-3px, 2px) skew(-5deg); filter: hue-rotate(20deg) drop-shadow(0 0 30px #f0f); }
@@ -122,6 +138,8 @@
       50% { transform: translate(-3px, 1px); filter: hue-rotate(15deg) drop-shadow(0 0 25px #ff0); }
       100% { transform: none; filter: drop-shadow(0 0 20px #0ff); }
     }
+
+    /* Heading */
     h1 {
       font-size: clamp(1.8rem, 3.5vw, 2.5rem);
       color: #0ff;
@@ -164,6 +182,58 @@
       15% { clip: rect(100px, 900px, 160px, 0); transform: none; }
       100% { clip: rect(0, 900px, 0, 0); transform: translate(0,0); }
     }
+
+    /* Telegram button */
+    .ts-tele-btn {
+      display: inline-block;
+      padding: 14px 28px;
+      border: 2px solid #00f0ff;
+      color: #00f0ff;
+      text-decoration: none;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1rem;
+      letter-spacing: 1px;
+      border-radius: 6px;
+      transition: 0.25s ease;
+      background: rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(6px);
+    }
+    .ts-tele-btn:hover {
+      background: #00f0ff;
+      color: #000;
+      box-shadow: 0 0 18px #00f0ff;
+      transform: translateY(-2px);
+    }
+    @media (max-width: 600px) {
+      .ts-tele-btn {
+        width: 100%;
+        text-align: center;
+        padding: 16px;
+        font-size: 1.1rem;
+      }
+    }
+
+    /* Visitor counter */
+    #ts-visitor-counter {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 6px 12px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.9rem;
+      color: #00f0ff;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid #00f0ff33;
+      border-radius: 4px;
+      backdrop-filter: blur(4px);
+      opacity: 0.75;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+    #ts-visitor-counter:hover {
+      opacity: 1;
+    }
+
     footer {
       margin-top: 2rem;
       font-size: 0.9rem;
@@ -173,67 +243,15 @@
       text-align: center;
       padding-bottom: 2rem;
     }
-    .contact-button {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 12px 26px;
-      background: linear-gradient(90deg,#0ff,#f0f);
-      color: #000;
-      font-weight: bold;
-      text-decoration: none;
-      border-radius: 8px;
-      box-shadow: 0 0 25px #0ff, 0 0 50px #f0f;
-      transition: all 0.3s ease;
-    }
-    .contact-button:hover {
-      background: #fff;
-      color: #0ff;
-      transform: translateY(-3px);
-      box-shadow: 0 0 40px #0ff, 0 0 70px #f0f;
-    }
   </style>
 </head>
 <body>
   <div class="glitch-background"></div>
   <div class="glitch-overlay"></div>
   <div class="floaters"></div>
- 
 
- <div class="container">
- <a href="https://t.me/tendingsands" target="_blank" class="ts-tele-btn">Listen on Telegram</a>
-
-<style>
-  .ts-tele-btn {
-    display: inline-block;
-    padding: 14px 28px;
-    border: 2px solid #00f0ff;
-    color: #00f0ff;
-    text-decoration: none;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 1rem;
-    letter-spacing: 1px;
-    border-radius: 6px;
-    transition: 0.25s ease;
-    background: rgba(0, 0, 0, 0.35);
-    backdrop-filter: blur(6px);
-  }
-
-  .ts-tele-btn:hover {
-    background: #00f0ff;
-    color: #000;
-    box-shadow: 0 0 18px #00f0ff;
-    transform: translateY(-2px);
-  }
-
-  @media (max-width: 600px) {
-    .ts-tele-btn {
-      width: 100%;
-      text-align: center;
-      padding: 16px;
-      font-size: 1.1rem;
-    }
-  }
-</style>
+  <div class="container">
+    <a href="https://t.me/tendingsands" target="_blank" class="ts-tele-btn">Listen on Telegram</a>
 
     <h1>tending sands</h1>
     <img src="assets/images/cover.png" alt="tending sands cover" class="cover">
@@ -242,53 +260,28 @@
       1989—crafts music that mirrors the shifting sands of his environment. His compositions blend ambient textures,
       industrial rhythms, and experimental soundscapes, creating a genre-defying auditory experience.
     </p> 
-<iframe src="https://embed.tidal.com/tracks/475598232" width="500" height="120" allow="encrypted-media; fullscreen; clipboard-write https://embed.tidal.com; web-share" sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox" style="color-scheme: dark" title="TIDAL Embed Player" />
-  </div>
-<div id="ts-visitor-counter">
-  <span id="visitor-number">...</span> visitors
-</div>
 
-<style>
-  #visitors.js {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    padding: 6px 12px;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.9rem;
-    color: #00f0ff;
-    background: rgba(0, 0, 0, 0.35);
-    border: 1px solid #00f0ff33;
-    border-radius: 4px;
-    backdrop-filter: blur(4px);
-    opacity: 0.75;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-  }
-
-  #visitors:hover {
-    opacity: 1;
-  }
-</style>
-
-<script>
-fetch('/api/visitors.js')
-  .then(res => res.json())
-  .then(data => {
-    document.getElementById('visitor-number').textContent = data.count;
-  });
-</script>
-
- <footer>&copy; 2025 jeramy kendell hoffman all rights reserved.</footer>
+    <iframe src="https://embed.tidal.com/tracks/475598232" width="500" height="120" allow="encrypted-media; fullscreen; clipboard-write https://embed.tidal.com; web-share" sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox" style="color-scheme: dark" title="TIDAL Embed Player"></iframe>
   </div>
 
+  <!-- Visitor counter -->
+  <div id="ts-visitor-counter">
+    <span id="visitor-number">522</span> visitors
+  </div>
+
+  <footer>&copy; 2025 jeramy kendell hoffman all rights reserved.</footer>
+
+  <!-- Visitor counter script -->
   <script>
-  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-</script>
-<script defer src="/_vercel/insights/script.js"></script>
+    fetch('/api/visitors')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('visitor-number').textContent = data.count;
+      })
+      .catch(err => console.error('Visitor counter error:', err));
+  </script>
 
-  
-  <meta property="twitter:image" content="https://github.com/shatteredhourglassllc/tendingsands/blob/257852f7e7a9c22cf201dbe89cda3282c6d52f87/cover.png">
+  <!-- Glitch & floaters script -->
   <script>
     (function(){
       const bg = document.querySelector(".glitch-background");
@@ -315,15 +308,7 @@ fetch('/api/visitors.js')
         overlay.style.transform = `translate(${tx * 0.5}px, ${ty * 0.5}px) rotate(${tilt * 1.2}deg)`;
         overlay.style.filter = `hue-rotate(${tx * 1.5}deg) saturate(${1 + Math.abs(ty)/80})`;
       }
-
       window.addEventListener("deviceorientation", handleOrientation, true);
-
-      window.addEventListener("devicemotion", e => {
-        const ag = e.accelerationIncludingGravity || {};
-        const ax = ag.x || 0;
-        const ay = ag.y || 0;
-        if (Math.abs(ax) > 11 || Math.abs(ay) > 11) triggerBurst();
-      }, { passive: true });
 
       cover.addEventListener("click", () => {
         cover.classList.add("active");
@@ -335,7 +320,7 @@ fetch('/api/visitors.js')
         f.className = "floater";
         if (i % 3 === 0) f.classList.add('alt');
         if (i % 5 === 0) f.classList.add('alt2');
-        const size = (5 + Math.random() * 26);
+        const size = 5 + Math.random() * 26;
         f.style.left = (Math.random() * 110) + "vw";
         f.style.top = (Math.random() * 110) + "vh";
         f.style.width = f.style.height = size + "px";
