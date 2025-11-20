@@ -249,7 +249,7 @@
 </div>
 
 <style>
-  #ts-visitors {
+  #visitors.js {
     position: fixed;
     bottom: 20px;
     right: 20px;
@@ -266,13 +266,13 @@
     pointer-events: none;
   }
 
-  #ts-visitors:hover {
+  #visitors:hover {
     opacity: 1;
   }
 </style>
 
 <script>
-fetch('/api/ts-visitors')
+fetch('/api/visitors.js')
   .then(res => res.json())
   .then(data => {
     document.getElementById('visitor-number').textContent = data.count;
