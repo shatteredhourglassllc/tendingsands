@@ -244,6 +244,40 @@
     </p> 
 <iframe src="https://embed.tidal.com/tracks/475598232" width="500" height="120" allow="encrypted-media; fullscreen; clipboard-write https://embed.tidal.com; web-share" sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox" style="color-scheme: dark" title="TIDAL Embed Player" />
   </div>
+<div id="ts-visitor-counter">
+  <span id="visitor-number">...</span> visitors
+</div>
+
+<style>
+  #ts-visitor-counter {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 6px 12px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.9rem;
+    color: #00f0ff;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid #00f0ff33;
+    border-radius: 4px;
+    backdrop-filter: blur(4px);
+    opacity: 0.75;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  #ts-visitor-counter:hover {
+    opacity: 1;
+  }
+</style>
+
+<script>
+fetch('/api/visitors')
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById('visitor-number').textContent = data.count;
+  });
+</script>
 
  <footer>&copy; 2025 jeramy kendell hoffman all rights reserved.</footer>
   </div>
