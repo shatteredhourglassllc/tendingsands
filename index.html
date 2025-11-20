@@ -19,7 +19,6 @@
       -moz-osx-font-smoothing: grayscale;
     }
 
-    /* Glitch background & overlay */
     .glitch-background {
       position: fixed;
       inset: 0;
@@ -93,7 +92,6 @@
       to { transform: translateY(-120vh) translateX(50px) rotate(90deg); opacity: 0; }
     }
 
-    /* Container */
     .container {
       max-width: 980px;
       margin: 0 auto;
@@ -109,7 +107,7 @@
       gap: 1rem;
     }
 
-    /* Cover image */
+    
     img.cover {
       width: 100%;
       max-width: 520px;
@@ -139,7 +137,6 @@
       100% { transform: none; filter: drop-shadow(0 0 20px #0ff); }
     }
 
-    /* Heading */
     h1 {
       font-size: clamp(1.8rem, 3.5vw, 2.5rem);
       color: #0ff;
@@ -167,7 +164,6 @@
     @keyframes glitchTop { 0%{clip:rect(0,900px,0,0);transform:translate(0,0);} 5%{clip:rect(10px,900px,50px,0);transform:translate(-3px,-2px);} 10%{clip:rect(85px,900px,140px,0);transform:translate(3px,2px);} 15%{clip:rect(50px,900px,85px,0);transform:none;} 100%{clip:rect(0,900px,0,0);transform:translate(0,0);} }
     @keyframes glitchBottom { 0%{clip:rect(0,900px,0,0);transform:translate(0,0);} 5%{clip:rect(140px,900px,200px,0);transform:translate(3px,2px);} 10%{clip:rect(200px,900px,260px,0);transform:translate(-3px,-2px);} 15%{clip:rect(100px,900px,160px,0);transform:none;} 100%{clip:rect(0,900px,0,0);transform:translate(0,0);} }
 
-    /* Telegram button */
     .ts-tele-btn {
       display: inline-block;
       padding: 14px 28px;
@@ -197,8 +193,7 @@
       }
     }
 
-    /* Visitor counter */
-    #ts-visitor-counter {
+    #ts-visitor-counter.js {
       position: fixed;
       bottom: 20px;
       right: 20px;
@@ -214,7 +209,7 @@
       transition: opacity 0.3s ease;
       pointer-events: none;
     }
-    #ts-visitor-counter:hover { opacity: 1; }
+    #ts-visitor-counter.js:hover { opacity: 1; }
 
     footer {
       margin-top: 2rem;
@@ -255,7 +250,6 @@
 
   <footer>&copy; 2025 jeramy kendell hoffman all rights reserved.</footer>
 
-  <!-- Visitor counter script -->
   <script>
     fetch('/api/visitors')
       .then(res => res.json())
@@ -265,7 +259,6 @@
       .catch(err => console.warn('Visitor counter fallback active:', err));
   </script>
 
-  <!-- Glitch & floaters script -->
   <script>
     (function(){
       const bg = document.querySelector(".glitch-background");
