@@ -154,6 +154,135 @@
       </div>
     </div>
   </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+  body {
+    background: #000;
+    font-family: 'Share Tech Mono', monospace;
+    color: #fff;
+  }
+
+  .press-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 280px;
+    margin-top: 40px;
+    position: relative;
+  }
+
+  .glitch-btn {
+    position: relative;
+    padding: 16px 24px;
+    border: 1px solid #444;
+    background: #000;
+    color: #fff;
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: 0.25s ease;
+    box-shadow: 0 0 12px rgba(255,255,255,0.05);
+    overflow: hidden;
+  }
+
+  .glitch-btn:hover {
+    background: #0a0a0a;
+    border-color: #fff;
+    box-shadow: 0 0 18px rgba(255,255,255,0.25);
+  }
+
+  /* RGB split ghost layers */
+  .glitch-btn::before,
+  .glitch-btn::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    padding: 16px 24px;
+    pointer-events: none;
+    opacity: 0;
+    mix-blend-mode: difference;
+    transition: 0.2s ease;
+  }
+
+  .glitch-btn::before {
+    color: #f00;
+    transform: translate(2px, 0);
+  }
+
+  .glitch-btn::after {
+    color: #0ff;
+    transform: translate(-2px, 0);
+  }
+
+  .glitch-btn:hover::before,
+  .glitch-btn:hover::after {
+    opacity: 0.6;
+  }
+
+  /* subtle pulse */
+  @keyframes pulse {
+    0% { box-shadow: 0 0 8px rgba(255,255,255,0.05); }
+    50% { box-shadow: 0 0 14px rgba(255,255,255,0.15); }
+    100% { box-shadow: 0 0 8px rgba(255,255,255,0.05); }
+  }
+
+  .glitch-btn {
+    animation: pulse 3s infinite ease-in-out;
+  }
+
+  /* reactive tilt */
+  .tilt-wrap {
+    perspective: 600px;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="press-buttons">
+
+  <div class="tilt-wrap">
+    <a href="https://artists.landr.com/ts-pressed-1"
+       class="glitch-btn"
+       data-text="PRESSED — DISC 1">
+      PRESSED — DISC 1
+    </a>
+  </div>
+
+  <div class="tilt-wrap">
+    <a href="https://artists.landr.com/ts-pressed-2"
+       class="glitch-btn"
+       data-text="PRESSED — DISC 2">
+      PRESSED — DISC 2
+    </a>
+  </div>
+
+</div>
+
+<script>
+  // Mouse-reactive tilt
+  document.querySelectorAll('.tilt-wrap').forEach(box => {
+    const btn = box.querySelector('.glitch-btn');
+
+    box.addEventListener('mousemove', (e) => {
+      const rect = box.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width/2;
+      const y = e.clientY - rect.top - rect.height/2;
+      btn.style.transform = `rotateX(${-y/15}deg) rotateY(${x/15}deg)`;
+    });
+
+    box.addEventListener('mouseleave', () => {
+      btn.style.transform = 'rotateX(0deg) rotateY(0deg)';
+    });
+  });
+</script>
+
+</body>
+</html>
 
   <script>
     // Mouse parallax
