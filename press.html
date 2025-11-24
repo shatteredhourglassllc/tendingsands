@@ -3,262 +3,213 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tending Sands</title>
+  <title>Tending Sands – The Pressed Press Release</title>
+
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { height: 100%; }
+
     body {
       font-family: 'Share Tech Mono', monospace;
       color: #fff;
       background: #000;
       overflow-x: hidden;
-      position: relative;
       line-height: 1.8;
       -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
     }
 
-    .glitch-background {
+    /* Reactive background */
+    .motion-bg {
       position: fixed;
       inset: 0;
+      z-index: -1;
       background:
-        repeating-linear-gradient(to bottom, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 2px),
-        linear-gradient(180deg, rgba(0,0,0,0.85), rgba(0,0,0,0.95));
-      animation: glitchMove 1.8s infinite linear;
+        radial-gradient(circle at center, rgba(80,80,150,0.12), transparent 70%),
+        repeating-linear-gradient(to bottom, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 2px);
+      transition: transform 0.2s ease-out;
       pointer-events: none;
-      z-index: -4;
-      transition: transform 0.12s ease-out;
-      will-change: transform;
-    }
-    .glitch-overlay {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: -3;
-      mix-blend-mode: screen;
-    }
-    .glitch-overlay::before,
-    .glitch-overlay::after {
-      content: "";
-      position: absolute;
-      top: -10%; left: -10%; right: -10%; bottom: -10%;
-      background: linear-gradient(120deg, rgba(0,255,255,0.06), rgba(240,0,255,0.04), rgba(255,255,0,0.03));
-      filter: blur(30px);
-      opacity: 0.7;
-      animation: overlayShift 8s infinite linear;
-    }
-    .glitch-overlay::after {
-      animation-duration: 10s;
-      mix-blend-mode: overlay;
-      opacity: 0.5;
-    }
-
-    @keyframes overlayShift {
-      0% { transform: translateX(0) skewX(0); }
-      50% { transform: translateX(-6%) skewX(-2deg); }
-      100% { transform: translateX(0) skewX(0); }
-    }
-    @keyframes glitchMove {
-      0% { transform: translateY(0); }
-      25% { transform: translateY(-6px); }
-      50% { transform: translateY(-12px); }
-      75% { transform: translateY(-6px); }
-      100% { transform: translateY(0); }
-    }
-
-    .floaters {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      overflow: hidden;
-      pointer-events: none;
-      z-index: -2;
-    }
-
-    .floater {
-      position: absolute;
-      width: 20px; height: 20px;
-      background: rgba(0,255,255,0.12);
-      animation: drift 10s infinite linear;
-      mix-blend-mode: screen;
-      border-radius: 3px;
-      box-shadow: 0 0 8px rgba(0,255,255,0.12), 0 0 18px rgba(240,0,255,0.04);
-      will-change: transform, opacity;
-    }
-
-    .floater.alt { background: rgba(240,0,255,0.09); }
-    .floater.alt2 { background: rgba(255,255,0,0.08); }
-
-    @keyframes drift {
-      from { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 1; }
-      to { transform: translateY(-120vh) translateX(50px) rotate(90deg); opacity: 0; }
     }
 
     .container {
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 2.5rem 1.25rem;
-      text-align: center;
-      position: relative;
-      z-index: 1;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 1rem;
+      width: 90%;
+      max-width: 900px;
+      margin: 80px auto;
+      padding: 20px;
+      background: rgba(0,0,0,0.45);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      box-shadow:
+        0 0 20px rgba(120,120,255,0.2),
+        inset 0 0 20px rgba(255,255,255,0.05);
+      backdrop-filter: blur(4px);
+      transform-style: preserve-3d;
     }
 
-    img.cover {
-      width: 100%;
-      max-width: 520px;
-      margin: 1.5rem auto;
-      display: block;
-      filter: drop-shadow(0 0 20px #0ff);
-      animation: glitchPulse 6s infinite;
-      cursor: pointer;
-      border-radius: 6px;
-      transition: transform 0.25s ease;
-      will-change: transform, filter;
-      border: 1px solid rgba(255,255,255,0.04);
-    }
-
-    @keyframes glitchPulse {
-      0%, 90%, 100% { transform: none; filter: drop-shadow(0 0 20px #0ff); }
-      92% { transform: translate(-3px, 2px) skew(-5deg); filter: hue-rotate(20deg) drop-shadow(0 0 30px #f0f); }
-      94% { transform: translate(3px, -2px) skew(5deg); filter: hue-rotate(-20deg) drop-shadow(0 0 30px #0ff); }
-      96% { transform: translate(-2px, 1px); filter: hue-rotate(10deg) drop-shadow(0 0 25px #ff0); }
+    .container:hover {
+      transform: translateZ(10px);
     }
 
     h1 {
-      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
-      color: #0ff;
-      position: relative;
-      text-shadow: 0 0 5px #0ff, 0 0 15px #0ff;
-      margin-bottom: 0.5rem;
-      animation: textGlitch 3s infinite;
-      letter-spacing: 0.06em;
-    }
-
-    .ts-tele-btn {
-      display: inline-block;
-      padding: 14px 28px;
-      border: 2px solid #00f0ff;
-      color: #00f0ff;
-      text-decoration: none;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 1rem;
-      letter-spacing: 1px;
-      border-radius: 6px;
-      transition: 0.25s ease;
-      background: rgba(0, 0, 0, 0.35);
-      backdrop-filter: blur(6px);
-    }
-    .ts-tele-btn:hover {
-      background: #00f0ff;
-      color: #000;
-      box-shadow: 0 0 18px #00f0ff;
-      transform: translateY(-2px);
-    }
-
-    .press-buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      width: 280px;
-      margin: 60px auto 40px;
-    }
-
-    .glitch-btn {
-      position: relative;
-      padding: 16px 24px;
-      border: 1px solid #444;
-      background: #000;
-      color: #fff;
-      text-decoration: none;
-      letter-spacing: 1px;
-      transition: 0.25s ease;
-      box-shadow: 0 0 12px rgba(255,255,255,0.05);
-      overflow: hidden;
-    }
-
-    .glitch-btn:hover {
-      background: #0a0a0a;
-      border-color: #fff;
-      box-shadow: 0 0 18px rgba(255,255,255,0.25);
-    }
-
-    .glitch-btn::before,
-    .glitch-btn::after {
-      content: attr(data-text);
-      position: absolute;
-      inset: 0;
-      padding: inherit;
-      pointer-events: none;
-      opacity: 0;
-      mix-blend-mode: difference;
-      transition: 0.2s ease;
-    }
-
-    .glitch-btn::before { color: #f00; transform: translate(2px,0); }
-    .glitch-btn::after  { color: #0ff; transform: translate(-2px,0); }
-
-    .glitch-btn:hover::before,
-    .glitch-btn:hover::after {
-      opacity: 0.35;
-    }
-
-    footer {
-      margin-top: 2rem;
-      font-size: 0.9rem;
-      color: #999;
-      opacity: 0.9;
-      width: 100%;
+      font-size: 2.2rem;
+      margin-bottom: 20px;
       text-align: center;
-      padding-bottom: 2rem;
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px rgba(120,120,255,0.4);
+    }
+
+    p { margin-bottom: 18px; }
+
+    .press-image-block {
+      margin-top: 60px;
+      text-align: center;
+    }
+
+    .press-box {
+      margin-bottom: 40px;
+      padding: 20px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(0,0,0,0.3);
+      border-radius: 10px;
+      box-shadow:
+        0 0 12px rgba(120,120,255,0.15),
+        inset 0 0 15px rgba(255,255,255,0.04);
+      transition: transform 0.25s ease-out, box-shadow 0.25s ease-out;
+      transform-style: preserve-3d;
+    }
+
+    .press-box:hover {
+      transform: translateZ(15px) scale(1.02);
+      box-shadow:
+        0 0 22px rgba(150,150,255,0.26),
+        inset 0 0 25px rgba(255,255,255,0.08);
+    }
+
+    .press-box img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .container { margin-top: 50px; padding: 15px; }
+      h1 { font-size: 1.7rem; }
     }
   </style>
 </head>
 
 <body>
-  <div class="glitch-background"></div>
-  <div class="glitch-overlay"></div>
-  <div class="floaters"></div>
+
+  <div class="motion-bg" id="motion-bg"></div>
 
   <div class="container">
-    <a href="https://t.me/tendingsands" target="_blank" class="ts-tele-btn">Listen on Telegram</a>
-    <a href="press.html" class="ts-tele-btn">Press Release</a>
+    <h1>TENDING SANDS — THE PRESSED PRESS RELEASE</h1>
 
-    <h1>tending sands</h1>
-
-    <img src="assets/images/cover.png" alt="tending sands cover" class="cover">
-
-    <p class="bio">
-      Emerging from the arid landscapes of Apple Valley, California, Tending Sands—born Jeramy Kendell Hoffman on January 8,
-      1989—crafts music that mirrors the shifting sands of his environment. His compositions blend ambient textures,
-      industrial rhythms, and experimental soundscapes, creating a genre-defying auditory experience.
+    <p>
+      “Pressed” arrives like a flare in a blackout — an alt-pop electronic confession,
+      produced and sculpted by Jeramy Kendell Hoffman. The record splits itself into
+      two discs: one heartbeat, two chambers, both pumping a signal through the static.
     </p>
 
-    <iframe src="https://audiomack.com//embed/tending-sands-1/album/pressed-corrupted-data-repository-1" scrolling="yes" width="100%" height="900" frameborder="0"></iframe>
-    <iframe src="https://audiomack.com//embed/tending-sands-1/album/pressed-corrupted-data-repository-2" scrolling="yes" width="100%" height="900" frameborder="0"></iframe>
+    <p>
+      This release marks a shift: sharper edges, deeper wounds, brighter sparks.
+      It’s the kind of album that doesn’t ask for permission — it simply breathes
+      on its own, and the world adjusts around it.
+    </p>
 
-    <iframe src="https://embed.tidal.com/tracks/475906627" width="500" height="120" allow="encrypted-media; fullscreen; clipboard-write https://embed.tidal.com; web-share" sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox" style="color-scheme: light dark"></iframe>
+    <p>
+      Tending Sands characteristically shapes commentary and catharsis into one
+      continuous pressure wave — a mirror held to the darker corners of modern
+      culture, yet unmistakably luminous in its defiance.
+    </p>
+<div style="text-align:center; margin: 40px 0;">
+  <a href="https://tendingsands.vercel.app" 
+     style="
+       display: inline-block;
+       padding: 14px 32px;
+       font-family: 'Share Tech Mono', monospace;
+       font-size: 16px;
+       color: #fff;
+       background-color: #1a1a1a;
+       border: 2px solid #fff;
+       text-decoration: none;
+       transition: all 0.3s ease;
+       box-shadow: 0 0 0px #fff;
+     "
+     onmouseover="this.style.backgroundColor='#fff'; this.style.color='#1a1a1a'; this.style.boxShadow='0 0 20px #fff, 0 0 40px #fff';"
+     onmouseout="this.style.backgroundColor='#1a1a1a'; this.style.color='#fff'; this.style.boxShadow='0 0 0px #fff';">
+    listen to new album on official website
+  </a>
 
-    <div class="press-buttons">
-      <a href="https://tendingsands.vercel.app" class="glitch-btn" data-text="Official Site">Official Site</a>
-      <a href="press.html" class="glitch-btn" data-text="Press Release">Press Release</a>
+  <a href="https://artists.landr.com/ts-pressed-1" 
+     style="
+       display: inline-block;
+       padding: 14px 32px;
+       font-family: 'Share Tech Mono', monospace;
+       font-size: 16px;
+       color: #fff;
+       background-color: #1a1a1a;
+       border: 2px solid #fff;
+       text-decoration: none;
+       transition: all 0.3s ease;
+       box-shadow: 0 0 0px #fff;
+       margin-left: 10px;
+     "
+     onmouseover="this.style.backgroundColor='#fff'; this.style.color='#1a1a1a'; this.style.boxShadow='0 0 20px #fff, 0 0 40px #fff';"
+     onmouseout="this.style.backgroundColor='#1a1a1a'; this.style.color='#fff'; this.style.boxShadow='0 0 0px #fff';">
+    listen on LANDR 1
+  </a>
 
-      <!-- *** NEW BUTTONS YOU REQUESTED *** -->
-      <a href="https://artists.landr.com/ts-pressed-1" class="glitch-btn" data-text="Pressed Disc 1">Pressed Disc 1</a>
-      <a href="https://artists.landr.com/ts-pressed-2" class="glitch-btn" data-text="Pressed Disc 2">Pressed Disc 2</a>
+  <a href="https://artists.landr.com/ts-pressed-2" 
+     style="
+       display: inline-block;
+       padding: 14px 32px;
+       font-family: 'Share Tech Mono', monospace;
+       font-size: 16px;
+       color: #fff;
+       background-color: #1a1a1a;
+       border: 2px solid #fff;
+       text-decoration: none;
+       transition: all 0.3s ease;
+       box-shadow: 0 0 0px #fff;
+       margin-left: 10px;
+     "
+     onmouseover="this.style.backgroundColor='#fff'; this.style.color='#1a1a1a'; this.style.boxShadow='0 0 20px #fff, 0 0 40px #fff';"
+     onmouseout="this.style.backgroundColor='#1a1a1a'; this.style.color='#fff'; this.style.boxShadow='0 0 0px #fff';">
+    listen on LANDR 2
+  </a>
+</div>
+
+
+    <div class="press-image-block">
+      <div class="press-box">
+        <img src="/assets/images/cover2.png" alt="Pressed Cover Art">
+      </div>
+
+      <div class="press-box">
+        <img src="/assets/images/photo1.png" alt="Tending Sands Photo">
+      </div>
     </div>
-
   </div>
 
-  <footer>
-    © 2025 Jeramy Kendell Hoffman
-  </footer>
+  <script>
+    // Mouse parallax
+    const bg = document.getElementById("motion-bg");
+    document.addEventListener("mousemove", (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 10;
+      const y = (e.clientY / window.innerHeight - 0.5) * 10;
+      bg.style.transform = `translate(${x}px, ${y}px)`;
+    });
+
+    // Device tilt
+    window.addEventListener("deviceorientation", (e) => {
+      const x = e.gamma / 5;
+      const y = e.beta / 5;
+      bg.style.transform = `translate(${x}px, ${y}px)`;
+    });
+  </script>
 
 </body>
 </html>
