@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tending Sands – Spiritual Guidance Booking</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; font-family: 'Share Tech Mono', monospace; color: #fff; background: #000; -webkit-font-smoothing: antialiased; line-height: 1.8; }
+
+    /* Reactive background */
+    .motion-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(circle at center, rgba(0,255,255,0.06), transparent 70%),
+        repeating-linear-gradient(to bottom, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 2px);
+      transition: transform 0.2s ease-out;
+      pointer-events: none;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 900px;
+      margin: 80px auto;
+      padding: 30px;
+      background: rgba(0,0,0,0.45);
+      border: 1px solid rgba(0,255,255,0.1);
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,255,255,0.2), inset 0 0 15px rgba(0,255,255,0.05);
+      backdrop-filter: blur(4px);
+      transform-style: preserve-3d;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 25px;
+      text-align: center;
+      letter-spacing: 2px;
+      color: #0ff;
+      text-shadow: 0 0 12px #0ff, 0 0 20px #0ff;
+    }
+
+    p { margin-bottom: 18px; }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 16px 36px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 16px;
+      color: #fff;
+      background-color: #1a1a1a;
+      border: 2px solid #0ff;
+      text-decoration: none;
+      border-radius: 6px;
+      cursor: pointer;
+      box-shadow: 0 0 12px #0ff, 0 0 25px #0ff inset;
+      animation: neonGlow 1.8s ease-in-out infinite alternate;
+      transition: transform 0.2s ease;
+    }
+
+    .cta-btn:hover {
+      background-color: #0ff;
+      color: #000;
+      box-shadow: 0 0 20px #0ff, 0 0 40px #0ff inset;
+      transform: translateY(-2px);
+    }
+
+    @keyframes neonGlow {
+      0% { box-shadow: 0 0 8px #0ff, 0 0 20px #0ff inset; }
+      50% { box-shadow: 0 0 18px #0ff, 0 0 35px #0ff inset; }
+      100% { box-shadow: 0 0 12px #0ff, 0 0 25px #0ff inset; }
+    }
+
+    .instructions {
+      color: #ccc;
+      font-size: 0.9rem;
+      max-width: 600px;
+      margin: 0 auto 24px auto;
+      line-height: 1.4;
+    }
+
+    .press-image-block {
+      margin-top: 60px;
+      text-align: center;
+    }
+
+    .press-box {
+      margin-bottom: 40px;
+      padding: 20px;
+      border: 1px solid rgba(0,255,255,0.08);
+      background: rgba(0,0,0,0.3);
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(0,255,255,0.15), inset 0 0 10px rgba(0,255,255,0.05);
+      transition: transform 0.25s ease-out, box-shadow 0.25s ease-out;
+    }
+
+    .press-box:hover {
+      transform: translateZ(15px) scale(1.02);
+      box-shadow: 0 0 22px rgba(0,255,255,0.3), inset 0 0 18px rgba(0,255,255,0.1);
+    }
+
+    .press-box img { width: 100%; height: auto; border-radius: 8px; }
+
+    @media (max-width: 600px) {
+      .container { margin-top: 50px; padding: 20px; }
+      h1 { font-size: 1.8rem; }
+      .cta-btn { width: 100%; text-align: center; padding: 18px; font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="motion-bg" id="motion-bg"></div>
+
+  <div class="container">
+    <h1>Spiritual Guidance Booking</h1>
+
+    <p>
+      Receive a 30-minute one-on-one spiritual guidance session from Jeramy Kendell Hoffman of Tending Sands.  
+      Each session is designed to explore your questions, help you gain clarity, and provide personalized guidance rooted in faith and prophetic insight.
+    </p>
+
+    <p class="instructions">
+      Click the “Book Now” button below. Your email client will open with a template. Please fill in:  
+      <strong>Name, Contact Email, Telegram (if any), Session Option, and a short description (max 3 sentences) of what you hope to achieve and what you value from this guidance.</strong>
+    </p>
+
+    <div style="text-align:center; margin: 40px 0;">
+      <a href="mailto:tendingsands@outlook.com?subject=Spiritual%20Guidance%20Booking&body=Name:%0D%0AContact%20Email:%0D%0ATelegram:%0D%0ASession%20Option:%0D%0AGoals%20or%20Intentions:%20%28max%203%20sentences%29"
+         class="cta-btn">
+        Book Now
+      </a>
+    </div>
+
+    <div class="press-image-block">
+      <div class="press-box">
+        <img src="/assets/images/meditation1.png" alt="Spiritual Guidance Illustration">
+      </div>
+      <div class="press-box">
+        <img src="/assets/images/meditation2.png" alt="Reflection Scene">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Mouse parallax
+    const bg = document.getElementById("motion-bg");
+    document.addEventListener("mousemove", (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 10;
+      const y = (e.clientY / window.innerHeight - 0.5) * 10;
+      bg.style.transform = `translate(${x}px, ${y}px)`;
+    });
+
+    // Device tilt
+    window.addEventListener("deviceorientation", (e) => {
+      const x = e.gamma / 5;
+      const y = e.beta / 5;
+      bg.style.transform = `translate(${x}px, ${y}px)`;
+    });
+  </script>
+
+</body>
+</html>
