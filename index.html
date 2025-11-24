@@ -53,7 +53,6 @@
       mix-blend-mode: overlay;
       opacity: 0.5;
     }
-
     @keyframes overlayShift {
       0% { transform: translateX(0) skewX(0); }
       50% { transform: translateX(-6%) skewX(-2deg); }
@@ -75,7 +74,6 @@
       pointer-events: none;
       z-index: -2;
     }
-
     .floater {
       position: absolute;
       width: 20px; height: 20px;
@@ -86,10 +84,8 @@
       box-shadow: 0 0 8px rgba(0,255,255,0.12), 0 0 18px rgba(240,0,255,0.04);
       will-change: transform, opacity;
     }
-
     .floater.alt { background: rgba(240,0,255,0.09); }
     .floater.alt2 { background: rgba(255,255,0,0.08); }
-
     @keyframes drift {
       from { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 1; }
       to { transform: translateY(-120vh) translateX(50px) rotate(90deg); opacity: 0; }
@@ -110,6 +106,7 @@
       gap: 1rem;
     }
 
+    
     img.cover {
       width: 100%;
       max-width: 520px;
@@ -123,12 +120,20 @@
       will-change: transform, filter;
       border: 1px solid rgba(255,255,255,0.04);
     }
+    img.cover:active { transform: scale(0.995); }
+    img.cover.active { animation: coverGlitch 0.5s steps(3, end); }
 
     @keyframes glitchPulse {
       0%, 90%, 100% { transform: none; filter: drop-shadow(0 0 20px #0ff); }
       92% { transform: translate(-3px, 2px) skew(-5deg); filter: hue-rotate(20deg) drop-shadow(0 0 30px #f0f); }
       94% { transform: translate(3px, -2px) skew(5deg); filter: hue-rotate(-20deg) drop-shadow(0 0 30px #0ff); }
       96% { transform: translate(-2px, 1px); filter: hue-rotate(10deg) drop-shadow(0 0 25px #ff0); }
+    }
+    @keyframes coverGlitch {
+      0% { transform: translate(-2px, -2px); filter: hue-rotate(30deg) drop-shadow(0 0 30px #f0f); }
+      25% { transform: translate(2px, 2px); filter: hue-rotate(-30deg) drop-shadow(0 0 30px #0ff); }
+      50% { transform: translate(-3px, 1px); filter: hue-rotate(15deg) drop-shadow(0 0 25px #ff0); }
+      100% { transform: none; filter: drop-shadow(0 0 20px #0ff); }
     }
 
     h1 {
@@ -140,6 +145,23 @@
       animation: textGlitch 3s infinite;
       letter-spacing: 0.06em;
     }
+    h1::before, h1::after {
+      content: "tending sands";
+      position: absolute;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      color: #f0f;
+      clip: rect(0, 900px, 0, 0);
+      pointer-events: none;
+      opacity: 0.9;
+    }
+    h1::before { animation: glitchTop 2.5s infinite linear alternate-reverse; transform-origin: left top; }
+    h1::after { color: #0ff; animation: glitchBottom 3s infinite linear alternate-reverse; transform-origin: left bottom; }
+
+    @keyframes textGlitch { 0%,100%{text-shadow:0 0 5px #0ff,0 0 15px #0ff;} 48%{text-shadow:0 0 2px #f0f,0 0 8px #0ff;} 50%{text-shadow:0 0 15px #ff0,0 0 30px #f0f;} 52%{text-shadow:0 0 2px #0ff,0 0 8px #f0f;} }
+    @keyframes glitchTop { 0%{clip:rect(0,900px,0,0);transform:translate(0,0);} 5%{clip:rect(10px,900px,50px,0);transform:translate(-3px,-2px);} 10%{clip:rect(85px,900px,140px,0);transform:translate(3px,2px);} 15%{clip:rect(50px,900px,85px,0);transform:none;} 100%{clip:rect(0,900px,0,0);transform:translate(0,0);} }
+    @keyframes glitchBottom { 0%{clip:rect(0,900px,0,0);transform:translate(0,0);} 5%{clip:rect(140px,900px,200px,0);transform:translate(3px,2px);} 10%{clip:rect(200px,900px,260px,0);transform:translate(-3px,-2px);} 15%{clip:rect(100px,900px,160px,0);transform:none;} 100%{clip:rect(0,900px,0,0);transform:translate(0,0);} }
 
     .ts-tele-btn {
       display: inline-block;
@@ -161,53 +183,13 @@
       box-shadow: 0 0 18px #00f0ff;
       transform: translateY(-2px);
     }
-
-    /* NEW PRESS BUTTON STYLES (cleaned + integrated) */
-    .press-buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      width: 280px;
-      margin: 60px auto 40px;
-    }
-
-    .glitch-btn {
-      position: relative;
-      padding: 16px 24px;
-      border: 1px solid #444;
-      background: #000;
-      color: #fff;
-      text-decoration: none;
-      letter-spacing: 1px;
-      transition: 0.25s ease;
-      box-shadow: 0 0 12px rgba(255,255,255,0.05);
-      overflow: hidden;
-    }
-
-    .glitch-btn:hover {
-      background: #0a0a0a;
-      border-color: #fff;
-      box-shadow: 0 0 18px rgba(255,255,255,0.25);
-    }
-
-    .glitch-btn::before,
-    .glitch-btn::after {
-      content: attr(data-text);
-      position: absolute;
-      inset: 0;
-      padding: inherit;
-      pointer-events: none;
-      opacity: 0;
-      mix-blend-mode: difference;
-      transition: 0.2s ease;
-    }
-
-    .glitch-btn::before { color: #f00; transform: translate(2px,0); }
-    .glitch-btn::after  { color: #0ff; transform: translate(-2px,0); }
-
-    .glitch-btn:hover::before,
-    .glitch-btn:hover::after {
-      opacity: 0.35;
+    @media (max-width: 600px) {
+      .ts-tele-btn {
+        width: 100%;
+        text-align: center;
+        padding: 16px;
+        font-size: 1.1rem;
+      }
     }
 
     footer {
@@ -221,42 +203,106 @@
     }
   </style>
 </head>
-
 <body>
   <div class="glitch-background"></div>
   <div class="glitch-overlay"></div>
   <div class="floaters"></div>
-
+  
   <div class="container">
     <a href="https://t.me/tendingsands" target="_blank" class="ts-tele-btn">Listen on Telegram</a>
     <a href="press.html" class="ts-tele-btn">Press Release</a>
+    <a href="https://artists.landr.com/ts-pressed-1" target="_blank" class="ts-tele-btn">Listen on LANDR 1</a>
+    <a href="https://artists.landr.com/ts-pressed-2" target="_blank" class="ts-tele-btn">Listen on LANDR 2</a>
 
     <h1>tending sands</h1>
-
     <img src="assets/images/cover.png" alt="tending sands cover" class="cover">
 
     <p class="bio">
       Emerging from the arid landscapes of Apple Valley, California, Tending Sands—born Jeramy Kendell Hoffman on January 8,
       1989—crafts music that mirrors the shifting sands of his environment. His compositions blend ambient textures,
       industrial rhythms, and experimental soundscapes, creating a genre-defying auditory experience.
-    </p>
-
-    <iframe src="https://audiomack.com//embed/tending-sands-1/album/pressed-corrupted-data-repository-1" scrolling="yes" width="100%" height="900" frameborder="0"></iframe>
-    <iframe src="https://audiomack.com//embed/tending-sands-1/album/pressed-corrupted-data-repository-2" scrolling="yes" width="100%" height="900" frameborder="0"></iframe>
-
-    <iframe src="https://embed.tidal.com/tracks/475906627" width="500" height="120" allow="encrypted-media; fullscreen; clipboard-write https://embed.tidal.com; web-share" sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox" style="color-scheme: light dark"></iframe>
-
-    <!-- CLEANED + PROPERLY PLACED NEW PRESS BUTTONS -->
-    <div class="press-buttons">
-      <a href="https://tendingsands.vercel.app" class="glitch-btn" data-text="Official Site">Official Site</a>
-      <a href="press.html" class="glitch-btn" data-text="Press Release">Press Release</a>
-    </div>
-
+    </p> 
+    <iframe src="https://audiomack.com//embed/tending-sands-1/album/pressed-corrupted-data-repository-1" scrolling="yes" width="100%" height="900" frameborder="0" title="Pressed (Corrupted Data Repository 1)"></iframe>
+    <iframe src="https://audiomack.com//embed/tending-sands-1/album/pressed-corrupted-data-repository-2" scrolling="yes" width="100%" height="900" frameborder="0" title="Pressed (Corrupted Data Repository 2)"></iframe>
+    <iframe src="https://embed.tidal.com/tracks/475906627" width="500" height="120" allow="encrypted-media; fullscreen; clipboard-write https://embed.tidal.com; web-share" sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox" style="color-scheme: light dark" title="TIDAL Embed Player"></iframe>
   </div>
 
-  <footer>
-    © 2025 Jeramy Kendell Hoffman // Tending Sands
-  </footer>
+  <footer>&copy; 2025 jeramy kendell hoffman all rights reserved.</footer>
 
+  <script>
+    fetch('/api/visitors')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('visitor-number').textContent = data.count;
+      })
+      .catch(err => console.warn('Visitor counter fallback active:', err));
+  </script>
+
+  <script>
+    (function(){
+      const bg = document.querySelector(".glitch-background");
+      const overlay = document.querySelector(".glitch-overlay");
+      const floaters = document.querySelector(".floaters");
+      const cover = document.querySelector(".cover");
+
+      document.addEventListener("mousemove", e => {
+        const rx = (e.clientX / window.innerWidth - 0.5) * 30;
+        const ry = (e.clientY / window.innerHeight - 0.5) * 30;
+        const tx = rx * 0.6;
+        const ty = ry * 0.4;
+        bg.style.transform = `translate(${tx}px, ${ty}px)`;
+        overlay.style.transform = `translate(${tx * 0.6}px, ${ty * 0.6}px) rotate(${rx * 0.02}deg)`;
+      }, { passive: true });
+
+      function handleOrientation(event) {
+        const gamma = event.gamma || 0;
+        const beta = event.beta || 0;
+        const tx = Math.max(-30, Math.min(30, gamma * 1.5));
+        const ty = Math.max(-30, Math.min(30, beta * 1.2 - 10));
+        const tilt = tx * 0.02;
+        bg.style.transform = `translate(${tx}px, ${ty}px) rotate(${tilt}deg) scale(${1 + Math.abs(tx)/300})`;
+        overlay.style.transform = `translate(${tx * 0.5}px, ${ty * 0.5}px) rotate(${tilt * 1.2}deg)`;
+        overlay.style.filter = `hue-rotate(${tx * 1.5}deg) saturate(${1 + Math.abs(ty)/80})`;
+      }
+      window.addEventListener("deviceorientation", handleOrientation, true);
+
+      cover.addEventListener("click", () => {
+        cover.classList.add("active");
+        setTimeout(() => cover.classList.remove("active"), 600);
+      });
+
+      for (let i = 0; i < 28; i++) {
+        const f = document.createElement("div");
+        f.className = "floater";
+        if (i % 3 === 0) f.classList.add('alt');
+        if (i % 5 === 0) f.classList.add('alt2');
+        const size = 5 + Math.random() * 26;
+        f.style.left = (Math.random() * 110) + "vw";
+        f.style.top = (Math.random() * 110) + "vh";
+        f.style.width = f.style.height = size + "px";
+        f.style.opacity = 0.6 * Math.random() + 0.1;
+        f.style.animationDuration = (6 + Math.random() * 14) + "s";
+        f.style.animationDelay = (Math.random() * -12) + "s";
+        floaters.appendChild(f);
+      }
+
+      function triggerBurst() {
+        bg.style.transition = "transform 150ms ease-out";
+        bg.style.transform += " translateY(-4px)";
+        overlay.style.transition = "filter 300ms ease, transform 300ms ease";
+        overlay.style.filter = "hue-rotate(45deg) saturate(1.4)";
+        setTimeout(() => {
+          bg.style.transform = bg.style.transform.replace(" translateY(-4px)", "");
+          overlay.style.filter = "";
+          bg.style.transition = "";
+          overlay.style.transition = "";
+        }, 300);
+      }
+
+      setInterval(() => {
+        if (Math.random() > 0.85) triggerBurst();
+      }, 2500);
+    
+  </script>
 </body>
 </html>
