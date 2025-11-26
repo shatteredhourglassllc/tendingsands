@@ -228,14 +228,23 @@
 <iframe src="https://audiomack.com//embed/tending-sands/album/pressed" scrolling="yes" width="100%" height="1500" frameborder="0" title="Pressed"></iframe>  
   <footer>&copy; 2025 jeramy kendell hoffman all rights reserved.</footer>
 
-  <script>
-    fetch('/api/visitors')
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById('visitor-number').textContent = data.count;
-      })
-      .catch(err => console.warn('Visitor counter fallback active:', err));
-  </script>
+  <script async
+  src="https://js.stripe.com/v3/buy-button.js">
+</script>
+<script async
+  src="https://js.stripe.com/v3/buy-button.js">
+</script>
+
+<stripe-buy-button
+  buy-button-id="buy_btn_1SXfi0Jq8DlzCBVahZvmTAkN"
+  publishable-key="pk_live_51SX94BJq8DlzCBVaaApyWUnYKfGETL0XT09zOxMXQIVgmozb3cwJcOJYJCgCogI2QldPT0VOeKJUjYPEhoyKtiHr00T8YKR0GS"
+>
+</stripe-buy-button>
+<stripe-buy-button
+  buy-button-id="buy_btn_1SXffRJq8DlzCBVa182foHjx"
+  publishable-key="pk_live_51SX94BJq8DlzCBVaaApyWUnYKfGETL0XT09zOxMXQIVgmozb3cwJcOJYJCgCogI2QldPT0VOeKJUjYPEhoyKtiHr00T8YKR0GS"
+>
+</stripe-buy-button>
 <script async
   src="https://js.stripe.com/v3/buy-button.js">
 </script>
