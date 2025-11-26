@@ -5,169 +5,319 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tending Sands</title>
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
-
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
+    html, body { height: 100%; }
     body {
       font-family: 'Share Tech Mono', monospace;
+      color: #fff;
       background: #000;
-      color: #c8c8ff;
       overflow-x: hidden;
-      height: 100vh;
       position: relative;
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    /* --- ANGULAR GRID BACKGROUND --- */
-    .grid {
+    .glitch-background {
       position: fixed;
       inset: 0;
       background:
-        linear-gradient(90deg, rgba(120,0,255,0.15) 1px, transparent 1px),
-        linear-gradient(0deg, rgba(0,170,255,0.15) 1px, transparent 1px);
-      background-size: 60px 60px;
-      opacity: 0.08;
+        repeating-linear-gradient(to bottom, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 2px),
+        linear-gradient(180deg, rgba(0,0,0,0.85), rgba(0,0,0,0.95));
+      animation: glitchMove 1.8s infinite linear;
+      pointer-events: none;
       z-index: -4;
-      transform: translateZ(0);
-      transition: transform 0.15s ease-out;
+      transition: transform 0.12s ease-out;
       will-change: transform;
     }
-
-    /* --- SHARP ANGULAR NEON SHARDS --- */
-    .shards {
+    .glitch-overlay {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: -3;
-    }
-
-    .shard {
-      position: absolute;
-      width: 0;
-      height: 0;
-      border-left: 40px solid transparent;
-      border-right: 40px solid transparent;
-      border-bottom: 120px solid rgba(130,0,255,0.25);
-      filter: drop-shadow(0 0 15px #5200ff);
-      transform: rotate(var(--r)) translateY(var(--y));
-      animation: shardFloat 9s infinite ease-in-out;
-      opacity: 0.45;
-    }
-
-    @keyframes shardFloat {
-      0% { transform: rotate(var(--r)) translateY(0); }
-      50% { transform: rotate(calc(var(--r) + 12deg)) translateY(-40px); }
-      100% { transform: rotate(var(--r)) translateY(0); }
-    }
-
-    /* --- TOUCH REACTIVE PULSE --- */
-    .touch-pulse {
-      position: fixed;
-      width: 140px;
-      height: 140px;
-      pointer-events: none;
-      border-radius: 50%;
-      background: radial-gradient(rgba(100,0,255,0.4), transparent 70%);
       mix-blend-mode: screen;
-      transform: translate(-50%, -50%);
-      opacity: 0;
-      transition: opacity 0.2s ease-out;
-      z-index: 5;
+    }
+    .glitch-overlay::before,
+    .glitch-overlay::after {
+      content: "";
+      position: absolute;
+      top: -10%; left: -10%; right: -10%; bottom: -10%;
+      background: linear-gradient(120deg, rgba(0,255,255,0.06), rgba(240,0,255,0.04), rgba(255,255,0,0.03));
+      filter: blur(30px);
+      opacity: 0.7;
+      animation: overlayShift 8s infinite linear;
+    }
+    .glitch-overlay::after {
+      animation-duration: 10s;
+      mix-blend-mode: overlay;
+      opacity: 0.5;
+    }
+    @keyframes overlayShift {
+      0% { transform: translateX(0) skewX(0); }
+      50% { transform: translateX(-6%) skewX(-2deg); }
+      100% { transform: translateX(0) skewX(0); }
+    }
+    @keyframes glitchMove {
+      0% { transform: translateY(0); }
+      25% { transform: translateY(-6px); }
+      50% { transform: translateY(-12px); }
+      75% { transform: translateY(-6px); }
+      100% { transform: translateY(0); }
     }
 
-    /* --- CONTENT CONTAINER --- */
-    .content {
-      position: relative;
-      z-index: 2;
-      text-align: center;
-      max-width: 900px;
-      padding: 4rem 1.25rem;
+    .floaters {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: -2;
+    }
+    .floater {
+      position: absolute;
+      width: 20px; height: 20px;
+      background: rgba(0,255,255,0.12);
+      animation: drift 10s infinite linear;
+      mix-blend-mode: screen;
+      border-radius: 3px;
+      box-shadow: 0 0 8px rgba(0,255,255,0.12), 0 0 18px rgba(240,0,255,0.04);
+      will-change: transform, opacity;
+    }
+    .floater.alt { background: rgba(240,0,255,0.09); }
+    .floater.alt2 { background: rgba(255,255,0,0.08); }
+    @keyframes drift {
+      from { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 1; }
+      to { transform: translateY(-120vh) translateX(50px) rotate(90deg); opacity: 0; }
+    }
+
+    .container {
+      max-width: 980px;
       margin: 0 auto;
+      padding: 2.5rem 1.25rem;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 1rem;
+    }
+
+    img.cover {
+      width: 100%;
+      max-width: 520px;
+      margin: 1.5rem auto;
+      display: block;
+      filter: drop-shadow(0 0 20px #0ff);
+      animation: glitchPulse 6s infinite;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: transform 0.25s ease;
+      will-change: transform, filter;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+    img.cover:active { transform: scale(0.995); }
+    img.cover.active { animation: coverGlitch 0.5s steps(3, end); }
+
+    @keyframes glitchPulse {
+      0%, 90%, 100% { transform: none; filter: drop-shadow(0 0 20px #0ff); }
+      92% { transform: translate(-3px, 2px) skew(-5deg); filter: hue-rotate(20deg) drop-shadow(0 0 30px #f0f); }
+      94% { transform: translate(3px, -2px) skew(5deg); filter: hue-rotate(-20deg) drop-shadow(0 0 30px #0ff); }
+      96% { transform: translate(-2px, 1px); filter: hue-rotate(10deg) drop-shadow(0 0 25px #ff0); }
+    }
+    @keyframes coverGlitch {
+      0% { transform: translate(-2px, -2px); filter: hue-rotate(30deg) drop-shadow(0 0 30px #f0f); }
+      25% { transform: translate(2px, 2px); filter: hue-rotate(-30deg) drop-shadow(0 0 30px #0ff); }
+      50% { transform: translate(-3px, 1px); filter: hue-rotate(15deg) drop-shadow(0 0 25px #ff0); }
+      100% { transform: none; filter: drop-shadow(0 0 20px #0ff); }
     }
 
     h1 {
-      font-size: clamp(2rem, 5vw, 3.2rem);
-      color: #7f5eff;
-      text-shadow: 0 0 12px #7f5eff, 0 0 25px #00bbff;
-      margin-bottom: 1.4rem;
-      letter-spacing: 0.08em;
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      color: #0ff;
+      position: relative;
+      text-shadow: 0 0 5px #0ff, 0 0 15px #0ff;
+      margin-bottom: 0.5rem;
+      animation: textGlitch 3s infinite;
+      letter-spacing: 0.06em;
     }
-
-    p {
-      font-size: 1.1rem;
-      line-height: 1.9;
+    h1::before, h1::after {
+      content: "tending sands";
+      position: absolute;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      color: #f0f;
+      clip: rect(0, 900px, 0, 0);
+      pointer-events: none;
       opacity: 0.9;
     }
+    h1::before { animation: glitchTop 2.5s infinite linear alternate-reverse; transform-origin: left top; }
+    h1::after { color: #0ff; animation: glitchBottom 3s infinite linear alternate-reverse; transform-origin: left bottom; }
 
-    /* --- COVER IMAGE --- */
-    .cover {
-      width: 100%;
-      max-width: 500px;
-      margin: 2rem auto;
-      display: block;
+    @keyframes textGlitch { 0%,100%{text-shadow:0 0 5px #0ff,0 0 15px #0ff;} 48%{text-shadow:0 0 2px #f0f,0 0 8px #0ff;} 50%{text-shadow:0 0 15px #ff0,0 0 30px #f0f;} 52%{text-shadow:0 0 2px #0ff,0 0 8px #f0f;} }
+    @keyframes glitchTop { 0%{clip:rect(0,900px,0,0);transform:translate(0,0);} 5%{clip:rect(10px,900px,50px,0);transform:translate(-3px,-2px);} 10%{clip:rect(85px,900px,140px,0);transform:translate(3px,2px);} 15%{clip:rect(50px,900px,85px,0);transform:none;} 100%{clip:rect(0,900px,0,0);transform:translate(0,0);} }
+    @keyframes glitchBottom { 0%{clip:rect(0,900px,0,0);transform:translate(0,0);} 5%{clip:rect(140px,900px,200px,0);transform:translate(3px,2px);} 10%{clip:rect(200px,900px,260px,0);transform:translate(-3px,-2px);} 15%{clip:rect(100px,900px,160px,0);transform:none;} 100%{clip:rect(0,900px,0,0);transform:translate(0,0);} }
+
+    .ts-tele-btn {
+      display: inline-block;
+      padding: 14px 28px;
+      border: 2px solid #00f0ff;
+      color: #00f0ff;
+      text-decoration: none;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1rem;
+      letter-spacing: 1px;
       border-radius: 6px;
-      border: 2px solid rgba(120,0,255,0.25);
-      box-shadow: 0 0 25px rgba(120,0,255,0.45);
-      transition: transform 0.2s ease-out, filter 0.2s ease-out;
+      transition: 0.25s ease;
+      background: rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(6px);
+    }
+    .ts-tele-btn:hover {
+      background: #00f0ff;
+      color: #000;
+      box-shadow: 0 0 18px #00f0ff;
+      transform: translateY(-2px);
+    }
+    @media (max-width: 600px) {
+      .ts-tele-btn {
+        width: 100%;
+        text-align: center;
+        padding: 16px;
+        font-size: 1.1rem;
+      }
     }
 
-    .cover:hover {
-      transform: translateY(-5px) scale(1.02);
-      filter: drop-shadow(0 0 20px #00aaff);
+    footer {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #999;
+      opacity: 0.9;
+      width: 100%;
+      text-align: center;
+      padding-bottom: 2rem;
+    }
+
+    .bio {
+      max-width: 720px;
+      margin: 1rem auto;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #ccc;
     }
   </style>
 </head>
-
 <body>
+  <div class="glitch-background"></div>
+  <div class="glitch-overlay"></div>
+  <div class="floaters"></div>
 
-  <!-- BACKGROUND GRID -->
-  <div class="grid"></div>
+  <div class="container">
+    <a href="https://buy.stripe.com/aFaeVeaQA5EEaTY6DB9k400" target="_blank" class="ts-tele-btn">Buy the 2-disc digipak</a>
+    <a href="press.html" class="ts-tele-btn">Press Release</a>
+    <a href="https://artists.landr.com/ts-pressed-1" target="_blank" class="ts-tele-btn">Listen to Pressed disk 1</a>
+    <a href="https://artists.landr.com/ts-pressed-2" target="_blank" class="ts-tele-btn">Listen to Pressed disk 2</a>
+    <a href="connect.html" class="ts-tele-btn">Illuminate Your Path — Book a Spiritual Guidance Session</a>
 
-  <!-- MOVING SHARDS -->
-  <div class="shards">
-    <!-- You can duplicate these to add more shards -->
-    <div class="shard" style="--r:12deg; --y:0; top:25%; left:18%;"></div>
-    <div class="shard" style="--r:-32deg; --y:20px; top:55%; left:72%;"></div>
-    <div class="shard" style="--r:8deg; --y:10px; top:75%; left:40%;"></div>
+    <h1>tending sands</h1>
+    <img src="assets/images/cover.png" alt="tending sands cover" class="cover">
+
+    <p class="bio">
+      Emerging from the arid landscapes of Apple Valley, California, Tending Sands—born Jeramy Kendell Hoffman on January 8,
+      1989—crafts music that mirrors the shifting sands of his environment. His compositions blend ambient textures,
+      industrial rhythms, and experimental soundscapes, creating a genre-defying auditory experience.
+    </p> 
   </div>
 
-  <!-- TOUCH REACTIVE ELEMENT -->
-  <div class="touch-pulse"></div>
+  <iframe src="https://audiomack.com//embed/tending-sands/album/pressed" scrolling="yes" width="100%" height="1500" frameborder="0" title="Pressed"></iframe>  
 
-  <!-- MAIN CONTENT -->
-  <div class="content">
-    <h1>Tending Sands</h1>
-    <img src="cover.jpg" alt="" class="cover">
+  <footer>&copy; 2025 jeramy kendell hoffman all rights reserved.</footer>
 
-    
-  </div>
+  <script async src="https://js.stripe.com/v3/buy-button.js"></script>
 
-  <!-- INTERACTIVITY JS -->
+  <stripe-buy-button
+    buy-button-id="buy_btn_1SXfi0Jq8DlzCBVahZvmTAkN"
+    publishable-key="pk_live_51SX94BJq8DlzCBVaaApyWUnYKfGETL0XT09zOxMXQIVgmozb3cwJcOJYJCgCogI2QldPT0VOeKJUjYPEhoyKtiHr00T8YKR0GS"
+  ></stripe-buy-button>
+
+  <stripe-buy-button
+    buy-button-id="buy_btn_1SXffRJq8DlzCBVa182foHjx"
+    publishable-key="pk_live_51SX94BJq8DlzCBVaaApyWUnYKfGETL0XT09zOxMXQIVgmozb3cwJcOJYJCgCogI2QldPT0VOeKJUjYPEhoyKtiHr00T8YKR0GS"
+  ></stripe-buy-button>
+
+  <stripe-buy-button
+    buy-button-id="buy_btn_1SXfWuJq8DlzCBVasqBaATHx"
+    publishable-key="pk_live_51SX94BJq8DlzCBVaaApyWUnYKfGETL0XT09zOxMXQIVgmozb3cwJcOJYJCgCogI2QldPT0VOeKJUjYPEhoyKtiHr00T8YKR0GS"
+  ></stripe-buy-button>
+
   <script>
-    const grid = document.querySelector('.grid');
-    const pulse = document.querySelector('.touch-pulse');
+    (function(){
+      const bg = document.querySelector(".glitch-background");
+      const overlay = document.querySelector(".glitch-overlay");
+      const floaters = document.querySelector(".floaters");
+      const cover = document.querySelector(".cover");
 
-    /* MOBILE TILT PARALLAX */
-    window.addEventListener('deviceorientation', (event) => {
-      const x = event.gamma;
-      const y = event.beta;
+      document.addEventListener("mousemove", e => {
+        const rx = (e.clientX / window.innerWidth - 0.5) * 30;
+        const ry = (e.clientY / window.innerHeight - 0.5) * 30;
+        const tx = rx * 0.6;
+        const ty = ry * 0.4;
+        bg.style.transform = `translate(${tx}px, ${ty}px)`;
+        overlay.style.transform = `translate(${tx * 0.6}px, ${ty * 0.6}px) rotate(${rx * 0.02}deg)`;
+      }, { passive: true });
 
-      if (x && y) {
-        const moveX = x * 0.6;
-        const moveY = y * 0.6;
-        grid.style.transform = `translate(${moveX}px, ${moveY}px)`;
+      function handleOrientation(event) {
+        const gamma = event.gamma || 0;
+        const beta = event.beta || 0;
+        const tx = Math.max(-30, Math.min(30, gamma * 1.5));
+        const ty = Math.max(-30, Math.min(30, beta * 1.2 - 10));
+        const tilt = tx * 0.02;
+        bg.style.transform = `translate(${tx}px, ${ty}px) rotate(${tilt}deg) scale(${1 + Math.abs(tx)/300})`;
+        overlay.style.transform = `translate(${tx * 0.5}px, ${ty * 0.5}px) rotate(${tilt * 1.2}deg)`;
+        overlay.style.filter = `hue-rotate(${tx * 1.5}deg) saturate(${1 + Math.abs(ty)/80})`;
       }
-    });
+      window.addEventListener("deviceorientation", handleOrientation, true);
 
-    /* TOUCH REACTIVE PULSE */
-    window.addEventListener('touchstart', (e) => {
-      const t = e.touches[0];
-      pulse.style.left = `${t.clientX}px`;
-      pulse.style.top = `${t.clientY}px`;
-      pulse.style.opacity = 1;
-      setTimeout(() => pulse.style.opacity = 0, 250);
-    });
+      cover.addEventListener("click", () => {
+        cover.classList.add("active");
+        setTimeout(() => cover.classList.remove("active"), 600);
+      });
+
+      for (let i = 0; i < 28; i++) {
+        const f = document.createElement("div");
+        f.className = "floater";
+        if (i % 3 === 0) f.classList.add('alt');
+        if (i % 5 === 0) f.classList.add('alt2');
+        const size = 5 + Math.random() * 26;
+        f.style.left = (Math.random() * 110) + "vw";
+        f.style.top = (Math.random() * 110) + "vh";
+        f.style.width = f.style.height = size + "px";
+        f.style.opacity = 0.6 * Math.random() + 0.1;
+        f.style.animationDuration = (6 + Math.random() * 14) + "s";
+        f.style.animationDelay = (Math.random() * -12) + "s";
+        floaters.appendChild(f);
+      }
+
+      function triggerBurst() {
+        bg.style.transition = "transform 150ms ease-out";
+        bg.style.transform += " translateY(-4px)";
+        overlay.style.transition = "filter 300ms ease, transform 300ms ease";
+        overlay.style.filter = "hue-rotate(45deg) saturate(1.4)";
+        setTimeout(() => {
+          bg.style.transform = bg.style.transform.replace(" translateY(-4px)", "");
+          overlay.style.filter = "";
+          bg.style.transition = "";
+          overlay.style.transition = "";
+        }, 300);
+      }
+
+      setInterval(() => {
+        if (Math.random() > 0.85) triggerBurst();
+      }, 2500);
+    })();
   </script>
-
 </body>
 </html>
