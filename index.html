@@ -236,7 +236,15 @@
       })
       .catch(err => console.warn('Visitor counter fallback active:', err));
   </script>
+<script async
+  src="https://js.stripe.com/v3/buy-button.js">
+</script>
 
+<stripe-buy-button
+  buy-button-id="buy_btn_1SXfWuJq8DlzCBVasqBaATHx"
+  publishable-key="pk_live_51SX94BJq8DlzCBVaaApyWUnYKfGETL0XT09zOxMXQIVgmozb3cwJcOJYJCgCogI2QldPT0VOeKJUjYPEhoyKtiHr00T8YKR0GS"
+>
+</stripe-buy-button>
   <script>
     (function(){
       const bg = document.querySelector(".glitch-background");
