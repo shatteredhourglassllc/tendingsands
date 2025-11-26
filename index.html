@@ -10,8 +10,8 @@
     html, body { height: 100%; }
     body {
       font-family: 'Share Tech Mono', monospace;
-      color: #fff;
-      background: #000;
+      color: #e0f7ff;
+      background: linear-gradient(160deg, #000014, #0a0a0a, #000014);
       overflow-x: hidden;
       position: relative;
       line-height: 1.8;
@@ -23,46 +23,49 @@
       position: fixed;
       inset: 0;
       background:
-        repeating-linear-gradient(to bottom, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 2px),
-        linear-gradient(180deg, rgba(0,0,0,0.85), rgba(0,0,0,0.95));
-      animation: glitchMove 1.8s infinite linear;
+        repeating-linear-gradient(to bottom, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 3px),
+        radial-gradient(circle at 30% 20%, rgba(0,255,255,0.05), transparent 50%),
+        linear-gradient(180deg, rgba(0,0,0,0.9), rgba(0,0,20,0.95));
+      animation: glitchMove 2s infinite linear;
       pointer-events: none;
       z-index: -4;
       transition: transform 0.12s ease-out;
       will-change: transform;
     }
+
     .glitch-overlay {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: -3;
-      mix-blend-mode: screen;
+      mix-blend-mode: overlay;
     }
     .glitch-overlay::before,
     .glitch-overlay::after {
       content: "";
       position: absolute;
-      top: -10%; left: -10%; right: -10%; bottom: -10%;
-      background: linear-gradient(120deg, rgba(0,255,255,0.06), rgba(240,0,255,0.04), rgba(255,255,0,0.03));
-      filter: blur(30px);
+      top: -15%; left: -15%; right: -15%; bottom: -15%;
+      background: linear-gradient(135deg, rgba(0,255,255,0.08), rgba(255,0,255,0.05), rgba(255,255,0,0.05));
+      filter: blur(40px);
       opacity: 0.7;
-      animation: overlayShift 8s infinite linear;
+      animation: overlayShift 10s infinite linear;
     }
     .glitch-overlay::after {
-      animation-duration: 10s;
+      animation-duration: 12s;
       mix-blend-mode: overlay;
       opacity: 0.5;
     }
+
     @keyframes overlayShift {
       0% { transform: translateX(0) skewX(0); }
-      50% { transform: translateX(-6%) skewX(-2deg); }
+      50% { transform: translateX(-8%) skewX(-3deg); }
       100% { transform: translateX(0) skewX(0); }
     }
     @keyframes glitchMove {
       0% { transform: translateY(0); }
-      25% { transform: translateY(-6px); }
-      50% { transform: translateY(-12px); }
-      75% { transform: translateY(-6px); }
+      25% { transform: translateY(-10px); }
+      50% { transform: translateY(-20px); }
+      75% { transform: translateY(-10px); }
       100% { transform: translateY(0); }
     }
 
@@ -76,25 +79,26 @@
     }
     .floater {
       position: absolute;
-      width: 20px; height: 20px;
-      background: rgba(0,255,255,0.12);
-      animation: drift 10s infinite linear;
+      width: 16px; height: 16px;
+      background: rgba(0,255,255,0.15);
+      animation: drift 12s infinite linear;
       mix-blend-mode: screen;
-      border-radius: 3px;
-      box-shadow: 0 0 8px rgba(0,255,255,0.12), 0 0 18px rgba(240,0,255,0.04);
+      border-radius: 4px;
+      box-shadow: 0 0 14px rgba(0,255,255,0.18), 0 0 28px rgba(255,0,255,0.05);
       will-change: transform, opacity;
     }
-    .floater.alt { background: rgba(240,0,255,0.09); }
-    .floater.alt2 { background: rgba(255,255,0,0.08); }
+    .floater.alt { background: rgba(255,0,255,0.12); }
+    .floater.alt2 { background: rgba(255,255,0,0.1); }
+
     @keyframes drift {
       from { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 1; }
-      to { transform: translateY(-120vh) translateX(50px) rotate(90deg); opacity: 0; }
+      to { transform: translateY(-120vh) translateX(60px) rotate(90deg); opacity: 0; }
     }
 
     .container {
       max-width: 980px;
       margin: 0 auto;
-      padding: 2.5rem 1.25rem;
+      padding: 3rem 1.25rem;
       text-align: center;
       position: relative;
       z-index: 1;
@@ -103,7 +107,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      gap: 1rem;
+      gap: 1.5rem;
     }
 
     img.cover {
@@ -111,84 +115,49 @@
       max-width: 520px;
       margin: 1.5rem auto;
       display: block;
-      filter: drop-shadow(0 0 20px #0ff);
-      animation: glitchPulse 6s infinite;
+      filter: drop-shadow(0 0 25px #0ff) drop-shadow(0 0 35px #f0f);
+      animation: glitchPulse 5s infinite;
       cursor: pointer;
-      border-radius: 6px;
+      border-radius: 8px;
       transition: transform 0.25s ease;
-      will-change: transform, filter;
-      border: 1px solid rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
     }
-    img.cover:active { transform: scale(0.995); }
-    img.cover.active { animation: coverGlitch 0.5s steps(3, end); }
 
     @keyframes glitchPulse {
-      0%, 90%, 100% { transform: none; filter: drop-shadow(0 0 20px #0ff); }
-      92% { transform: translate(-3px, 2px) skew(-5deg); filter: hue-rotate(20deg) drop-shadow(0 0 30px #f0f); }
-      94% { transform: translate(3px, -2px) skew(5deg); filter: hue-rotate(-20deg) drop-shadow(0 0 30px #0ff); }
-      96% { transform: translate(-2px, 1px); filter: hue-rotate(10deg) drop-shadow(0 0 25px #ff0); }
-    }
-    @keyframes coverGlitch {
-      0% { transform: translate(-2px, -2px); filter: hue-rotate(30deg) drop-shadow(0 0 30px #f0f); }
-      25% { transform: translate(2px, 2px); filter: hue-rotate(-30deg) drop-shadow(0 0 30px #0ff); }
-      50% { transform: translate(-3px, 1px); filter: hue-rotate(15deg) drop-shadow(0 0 25px #ff0); }
-      100% { transform: none; filter: drop-shadow(0 0 20px #0ff); }
+      0%, 90%, 100% { transform: none; filter: drop-shadow(0 0 25px #0ff) drop-shadow(0 0 35px #f0f); }
+      92% { transform: translate(-4px, 3px) skew(-6deg); filter: hue-rotate(30deg) drop-shadow(0 0 40px #f0f); }
+      94% { transform: translate(4px, -3px) skew(6deg); filter: hue-rotate(-30deg) drop-shadow(0 0 40px #0ff); }
+      96% { transform: translate(-2px, 1px); filter: hue-rotate(15deg) drop-shadow(0 0 30px #ff0); }
     }
 
     h1 {
-      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      font-size: clamp(1.8rem, 4vw, 3rem);
       color: #0ff;
-      position: relative;
-      text-shadow: 0 0 5px #0ff, 0 0 15px #0ff;
+      text-shadow: 0 0 8px #0ff, 0 0 25px #0ff, 0 0 40px #f0f;
       margin-bottom: 0.5rem;
       animation: textGlitch 3s infinite;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
     }
-    h1::before, h1::after {
-      content: "tending sands";
-      position: absolute;
-      left: 0;
-      width: 100%;
-      overflow: hidden;
-      color: #f0f;
-      clip: rect(0, 900px, 0, 0);
-      pointer-events: none;
-      opacity: 0.9;
-    }
-    h1::before { animation: glitchTop 2.5s infinite linear alternate-reverse; transform-origin: left top; }
-    h1::after { color: #0ff; animation: glitchBottom 3s infinite linear alternate-reverse; transform-origin: left bottom; }
-
-    @keyframes textGlitch { 0%,100%{text-shadow:0 0 5px #0ff,0 0 15px #0ff;} 48%{text-shadow:0 0 2px #f0f,0 0 8px #0ff;} 50%{text-shadow:0 0 15px #ff0,0 0 30px #f0f;} 52%{text-shadow:0 0 2px #0ff,0 0 8px #f0f;} }
-    @keyframes glitchTop { 0%{clip:rect(0,900px,0,0);transform:translate(0,0);} 5%{clip:rect(10px,900px,50px,0);transform:translate(-3px,-2px);} 10%{clip:rect(85px,900px,140px,0);transform:translate(3px,2px);} 15%{clip:rect(50px,900px,85px,0);transform:none;} 100%{clip:rect(0,900px,0,0);transform:translate(0,0);} }
-    @keyframes glitchBottom { 0%{clip:rect(0,900px,0,0);transform:translate(0,0);} 5%{clip:rect(140px,900px,200px,0);transform:translate(3px,2px);} 10%{clip:rect(200px,900px,260px,0);transform:translate(-3px,-2px);} 15%{clip:rect(100px,900px,160px,0);transform:none;} 100%{clip:rect(0,900px,0,0);transform:translate(0,0);} }
 
     .ts-tele-btn {
       display: inline-block;
-      padding: 14px 28px;
+      padding: 16px 32px;
       border: 2px solid #00f0ff;
       color: #00f0ff;
       text-decoration: none;
       font-family: 'Share Tech Mono', monospace;
       font-size: 1rem;
-      letter-spacing: 1px;
-      border-radius: 6px;
+      letter-spacing: 1.1px;
+      border-radius: 8px;
       transition: 0.25s ease;
-      background: rgba(0, 0, 0, 0.35);
-      backdrop-filter: blur(6px);
+      background: rgba(0, 0, 20, 0.5);
+      backdrop-filter: blur(8px);
     }
     .ts-tele-btn:hover {
-      background: #00f0ff;
+      background: #ff00ff;
       color: #000;
-      box-shadow: 0 0 18px #00f0ff;
-      transform: translateY(-2px);
-    }
-    @media (max-width: 600px) {
-      .ts-tele-btn {
-        width: 100%;
-        text-align: center;
-        padding: 16px;
-        font-size: 1.1rem;
-      }
+      box-shadow: 0 0 20px #ff00ff, 0 0 40px #0ff;
+      transform: translateY(-2px) scale(1.02);
     }
 
     footer {
@@ -235,89 +204,5 @@
   <iframe src="https://audiomack.com//embed/tending-sands/album/pressed" scrolling="yes" width="100%" height="1500" frameborder="0" title="Pressed"></iframe>  
 
   <footer>&copy; 2025 jeramy kendell hoffman all rights reserved.</footer>
-
-  <script async src="https://js.stripe.com/v3/buy-button.js"></script>
-
-  <stripe-buy-button
-    buy-button-id="buy_btn_1SXfi0Jq8DlzCBVahZvmTAkN"
-    publishable-key="pk_live_51SX94BJq8DlzCBVaaApyWUnYKfGETL0XT09zOxMXQIVgmozb3cwJcOJYJCgCogI2QldPT0VOeKJUjYPEhoyKtiHr00T8YKR0GS"
-  ></stripe-buy-button>
-
-  <stripe-buy-button
-    buy-button-id="buy_btn_1SXffRJq8DlzCBVa182foHjx"
-    publishable-key="pk_live_51SX94BJq8DlzCBVaaApyWUnYKfGETL0XT09zOxMXQIVgmozb3cwJcOJYJCgCogI2QldPT0VOeKJUjYPEhoyKtiHr00T8YKR0GS"
-  ></stripe-buy-button>
-
-  <stripe-buy-button
-    buy-button-id="buy_btn_1SXfWuJq8DlzCBVasqBaATHx"
-    publishable-key="pk_live_51SX94BJq8DlzCBVaaApyWUnYKfGETL0XT09zOxMXQIVgmozb3cwJcOJYJCgCogI2QldPT0VOeKJUjYPEhoyKtiHr00T8YKR0GS"
-  ></stripe-buy-button>
-
-  <script>
-    (function(){
-      const bg = document.querySelector(".glitch-background");
-      const overlay = document.querySelector(".glitch-overlay");
-      const floaters = document.querySelector(".floaters");
-      const cover = document.querySelector(".cover");
-
-      document.addEventListener("mousemove", e => {
-        const rx = (e.clientX / window.innerWidth - 0.5) * 30;
-        const ry = (e.clientY / window.innerHeight - 0.5) * 30;
-        const tx = rx * 0.6;
-        const ty = ry * 0.4;
-        bg.style.transform = `translate(${tx}px, ${ty}px)`;
-        overlay.style.transform = `translate(${tx * 0.6}px, ${ty * 0.6}px) rotate(${rx * 0.02}deg)`;
-      }, { passive: true });
-
-      function handleOrientation(event) {
-        const gamma = event.gamma || 0;
-        const beta = event.beta || 0;
-        const tx = Math.max(-30, Math.min(30, gamma * 1.5));
-        const ty = Math.max(-30, Math.min(30, beta * 1.2 - 10));
-        const tilt = tx * 0.02;
-        bg.style.transform = `translate(${tx}px, ${ty}px) rotate(${tilt}deg) scale(${1 + Math.abs(tx)/300})`;
-        overlay.style.transform = `translate(${tx * 0.5}px, ${ty * 0.5}px) rotate(${tilt * 1.2}deg)`;
-        overlay.style.filter = `hue-rotate(${tx * 1.5}deg) saturate(${1 + Math.abs(ty)/80})`;
-      }
-      window.addEventListener("deviceorientation", handleOrientation, true);
-
-      cover.addEventListener("click", () => {
-        cover.classList.add("active");
-        setTimeout(() => cover.classList.remove("active"), 600);
-      });
-
-      for (let i = 0; i < 28; i++) {
-        const f = document.createElement("div");
-        f.className = "floater";
-        if (i % 3 === 0) f.classList.add('alt');
-        if (i % 5 === 0) f.classList.add('alt2');
-        const size = 5 + Math.random() * 26;
-        f.style.left = (Math.random() * 110) + "vw";
-        f.style.top = (Math.random() * 110) + "vh";
-        f.style.width = f.style.height = size + "px";
-        f.style.opacity = 0.6 * Math.random() + 0.1;
-        f.style.animationDuration = (6 + Math.random() * 14) + "s";
-        f.style.animationDelay = (Math.random() * -12) + "s";
-        floaters.appendChild(f);
-      }
-
-      function triggerBurst() {
-        bg.style.transition = "transform 150ms ease-out";
-        bg.style.transform += " translateY(-4px)";
-        overlay.style.transition = "filter 300ms ease, transform 300ms ease";
-        overlay.style.filter = "hue-rotate(45deg) saturate(1.4)";
-        setTimeout(() => {
-          bg.style.transform = bg.style.transform.replace(" translateY(-4px)", "");
-          overlay.style.filter = "";
-          bg.style.transition = "";
-          overlay.style.transition = "";
-        }, 300);
-      }
-
-      setInterval(() => {
-        if (Math.random() > 0.85) triggerBurst();
-      }, 2500);
-    })();
-  </script>
 </body>
 </html>
