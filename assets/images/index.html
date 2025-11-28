@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tending Sands</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      font-family: 'Share Tech Mono', monospace;
+      color: #e0f7ff;
+      background: linear-gradient(160deg, #000014, #0a0a0a, #000014);
+      overflow-x: hidden;
+      position: relative;
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .glitch-background {
+      position: fixed;
+      inset: 0;
+      background:
+        repeating-linear-gradient(to bottom, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 3px),
+        radial-gradient(circle at 30% 20%, rgba(0,255,255,0.05), transparent 50%),
+        linear-gradient(180deg, rgba(0,0,0,0.9), rgba(0,0,20,0.95));
+      animation: glitchMove 2s infinite linear;
+      pointer-events: none;
+      z-index: -4;
+      transition: transform 0.12s ease-out;
+      will-change: transform;
+    }
+
+    .glitch-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -3;
+      mix-blend-mode: overlay;
+    }
+    .glitch-overlay::before,
+    .glitch-overlay::after {
+      content: "";
+      position: absolute;
+      top: -15%; left: -15%; right: -15%; bottom: -15%;
+      background: linear-gradient(135deg, rgba(0,255,255,0.08), rgba(255,0,255,0.05), rgba(255,255,0,0.05));
+      filter: blur(40px);
+      opacity: 0.7;
+      animation: overlayShift 10s infinite linear;
+    }
+    .glitch-overlay::after {
+      animation-duration: 12s;
+      mix-blend-mode: overlay;
+      opacity: 0.5;
+    }
+
+    @keyframes overlayShift {
+      0% { transform: translateX(0) skewX(0); }
+      50% { transform: translateX(-8%) skewX(-3deg); }
+      100% { transform: translateX(0) skewX(0); }
+    }
+    @keyframes glitchMove {
+      0% { transform: translateY(0); }
+      25% { transform: translateY(-10px); }
+      50% { transform: translateY(-20px); }
+      75% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+
+    .floaters {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: -2;
+    }
+    .floater {
+      position: absolute;
+      width: 16px; height: 16px;
+      background: rgba(0,255,255,0.15);
+      animation: drift 12s infinite linear;
+      mix-blend-mode: screen;
+      border-radius: 4px;
+      box-shadow: 0 0 14px rgba(0,255,255,0.18), 0 0 28px rgba(255,0,255,0.05);
+      will-change: transform, opacity;
+    }
+    .floater.alt { background: rgba(255,0,255,0.12); }
+    .floater.alt2 { background: rgba(255,255,0,0.1); }
+
+    @keyframes drift {
+      from { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 1; }
+      to { transform: translateY(-120vh) translateX(60px) rotate(90deg); opacity: 0; }
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 3rem 1.25rem;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 1.5rem;
+    }
+
+    img.cover {
+      width: 100%;
+      max-width: 520px;
+      margin: 1.5rem auto;
+      display: block;
+      filter: drop-shadow(0 0 25px #0ff) drop-shadow(0 0 35px #f0f);
+      animation: glitchPulse 5s infinite;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: transform 0.25s ease;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    @keyframes glitchPulse {
+      0%, 90%, 100% { transform: none; filter: drop-shadow(0 0 25px #0ff) drop-shadow(0 0 35px #f0f); }
+      92% { transform: translate(-4px, 3px) skew(-6deg); filter: hue-rotate(30deg) drop-shadow(0 0 40px #f0f); }
+      94% { transform: translate(4px, -3px) skew(6deg); filter: hue-rotate(-30deg) drop-shadow(0 0 40px #0ff); }
+      96% { transform: translate(-2px, 1px); filter: hue-rotate(15deg) drop-shadow(0 0 30px #ff0); }
+    }
+
+    h1 {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      color: #0ff;
+      text-shadow: 0 0 8px #0ff, 0 0 25px #0ff, 0 0 40px #f0f;
+      margin-bottom: 0.5rem;
+      animation: textGlitch 3s infinite;
+      letter-spacing: 0.08em;
+    }
+
+    .ts-tele-btn {
+      display: inline-block;
+      padding: 16px 32px;
+      border: 2px solid #00f0ff;
+      color: #00f0ff;
+      text-decoration: none;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1rem;
+      letter-spacing: 1.1px;
+      border-radius: 8px;
+      transition: 0.25s ease;
+      background: rgba(0, 0, 20, 0.5);
+      backdrop-filter: blur(8px);
+    }
+    .ts-tele-btn:hover {
+      background: #ff00ff;
+      color: #000;
+      box-shadow: 0 0 20px #ff00ff, 0 0 40px #0ff;
+      transform: translateY(-2px) scale(1.02);
+    }
+
+    footer {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #999;
+      opacity: 0.9;
+      width: 100%;
+      text-align: center;
+      padding-bottom: 2rem;
+    }
+
+    .bio {
+      max-width: 720px;
+      margin: 1rem auto;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="glitch-background"></div>
+  <div class="glitch-overlay"></div>
+  <div class="floaters"></div>
+
+  <div class="container">
+    <a href="https://buy.stripe.com/aFaeVeaQA5EEaTY6DB9k400" target="_blank" class="ts-tele-btn">Buy the 2-disc digipak</a>
+    <a href="press.html" class="ts-tele-btn">Press Release</a>
+    <a href="https://artists.landr.com/ts-pressed-1" target="_blank" class="ts-tele-btn">Listen to Pressed disk 1</a>
+    <a href="https://artists.landr.com/ts-pressed-2" target="_blank" class="ts-tele-btn">Listen to Pressed disk 2</a>
+    <a href="connect.html" class="ts-tele-btn">Illuminate Your Path — Book Spiritual Guidance-limited slots</a>
+
+    <h1>tending sands</h1>
+    <img src="assets/images/cover.png" alt="tending sands cover" class="cover">
+
+    <p class="bio">
+      Emerging from the arid landscapes of Apple Valley, California, Tending Sands—born Jeramy Kendell Hoffman on January 8,
+      1989—crafts music that mirrors the shifting sands of his environment. His compositions blend ambient textures,
+      industrial rhythms, and experimental soundscapes, creating a genre-defying auditory experience.
+    </p> 
+  
+  </div>
+  
+  <iframe src="https://audiomack.com//embed/tending-sands/album/pressed" scrolling="yes" width="100%" height="1500" frameborder="0" title="Pressed"></iframe>  
+<iframe src="https://audiomack.com//embed/jerbearhoffman/song/i-hate-this-fucking-place-instrumental-version" scrolling="no" width="100%" height="252" frameborder="0" title="I hate this fucking place (Instrumental Version)"></iframe>
+<iframe src="https://embed.tidal.com/tracks/340100522" width="500" height="120" allow="encrypted-media; fullscreen; clipboard-write https://embed.tidal.com; web-share" sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox" style="color-scheme: light dark" title="TIDAL Embed Player" />  <footer>&copy; 2025 jeramy kendell hoffman all rights reserved.</footer>
+
+  <!-- Stripe Buy Buttons at the bottom -->
+  <stripe-buy-button
+    buy-button-id="buy_btn_1SXfi0Jq8DlzCBVahZvmTAkN"
+    publishable-key="pk_live_51SX94BJq8DlzCBVaaApyWUnYKfGETL0XT09zOxMXQIVgmozb3cwJcOJYJCgCogI2QldPT0VOeKJUjYPEhoyKtiHr00T8YKR0GS"
+  ></stripe-buy-button>
+
+  <stripe-buy-button
+    buy-button-id="buy_btn_1SXffRJq8DlzCBVa182foHjx"
+    publishable-key="pk_live_51SX94BJq8DlzCBVaaApyWUnYKfGETL0XT09zOxMXQIVgmozb3cwJcOJYJCgCogI2QldPT0VOeKJUjYPEhoyKtiHr00T8YKR0GS"
+  ></stripe-buy-button>
+
+  <stripe-buy-button
+    buy-button-id="buy_btn_1SXfWuJq8DlzCBVasqBaATHx"
+    publishable-key="pk_live_51SX94BJq8DlzCBVaaApyWUnYKfGETL0XT09zOxMXQIVgmozb3cwJcOJYJCgCogI2QldPT0VOeKJUjYPEhoyKtiHr00T8YKR0GS"
+  ></stripe-buy-button>
+
+  <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+
+</body>
+</html>
