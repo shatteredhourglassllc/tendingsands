@@ -208,6 +208,8 @@
       position: relative;
       overflow: hidden;
       will-change: transform;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
     .ts-btn::before{
       content:"";
@@ -306,6 +308,8 @@
       transition: transform .25s ease, filter .25s ease;
       cursor: pointer;
       background: rgba(0,0,0,0.12);
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
     img.cover:hover{
       transform: translateY(-3px) scale(1.01);
@@ -450,6 +454,7 @@
     .tilt{
       transform: translate3d(0,0,0);
       will-change: transform;
+      transform-style: preserve-3d;
     }
 
     @media (prefers-reduced-motion: reduce){
@@ -475,11 +480,11 @@
         </div>
         <div class="pulse-meter" aria-hidden="true"></div>
         <div class="nav-actions">
-          <a href="https://buy.stripe.com/aFaeVeaQA5EEaTY6DB9k400" target="_blank" class="ts-btn primary">Buy the 2-disc digipak</a>
+          <a href="https://buy.stripe.com/aFaeVeaQA5EEaTY6DB9k400" target="_blank" class="ts-btn primary" rel="noopener noreferrer">Buy the 2-disc digipak</a>
           <a href="press.html" class="ts-btn">Press Release</a>
-          <a href="https://artists.landr.com/ts-pressed-1" target="_blank" class="ts-btn">Listen: Pressed (disk 1)</a>
-          <a href="https://artists.landr.com/ts-pressed-2" target="_blank" class="ts-btn">Listen: Pressed (disk 2)</a>
-          <a href="https://manifold.xyz/@tendingsands/id/4094353648" target="_blank" class="ts-btn">Music NFTs</a>
+          <a href="https://artists.landr.com/ts-pressed-1" target="_blank" class="ts-btn" rel="noopener noreferrer">Listen: Pressed (disk 1)</a>
+          <a href="https://artists.landr.com/ts-pressed-2" target="_blank" class="ts-btn" rel="noopener noreferrer">Listen: Pressed (disk 2)</a>
+          <a href="https://manifold.xyz/@tendingsands/id/4094353648" target="_blank" class="ts-btn" rel="noopener noreferrer">Music NFTs</a>
         </div>
       </div>
     </div>
@@ -508,11 +513,10 @@
             industrial rhythms, and experimental soundscapes, creating a genre-defying auditory experience.
           </p>
         </div>
-    <div class="panel-inner">
-        <iframe src="https://embed.tidal.com/albums/428306463" width="500" height="800" allow="encrypted-media; fullscreen; clipboard-write https://embed.tidal.com; web-share" sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox" style="color-scheme: dark dark" title="TIDAL Embed Player" />
-    </div>
-        </section>
-    </div>
+        <div class="panel-inner">
+          <iframe src="https://embed.tidal.com/albums/428306463" width="500" height="800" allow="encrypted-media; fullscreen; clipboard-write https://embed.tidal.com; web-share" sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox" style="color-scheme: dark dark" title="TIDAL Embed Player"></iframe>
+        </div>
+      </section>
 
       <section class="panel tilt" id="listen">
         <div class="panel-inner">
@@ -521,11 +525,13 @@
             <div class="embed-wrap">
               <iframe src="https://audiomack.com//embed/jerbearhoffman/song/interlude" scrolling="no" height="252" frameborder="0" title="Interlude"></iframe>
             </div>
-            
+
             <div class="embed-wrap">
-<iframe src="https://embed.tidal.com/albums/480191957" width="500" height="680" allow="encrypted-media; fullscreen; clipboard-write https://embed.tidal.com; web-share" sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox" style="color-scheme: dark dark" title="TIDAL Embed Player" />             </div>
-              <div class="embed-wrap">
-               <iframe src="https://audiomack.com//embed/jerbearhoffman/song/mr-mr" scrolling="no" width="100%" height="252" frameborder="0" title="Mr. Mr."></iframe>
+              <iframe src="https://embed.tidal.com/albums/480191957" width="500" height="680" allow="encrypted-media; fullscreen; clipboard-write https://embed.tidal.com; web-share" sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox" style="color-scheme: dark dark" title="TIDAL Embed Player"></iframe>
+            </div>
+
+            <div class="embed-wrap">
+              <iframe src="https://audiomack.com//embed/jerbearhoffman/song/mr-mr" scrolling="no" width="100%" height="252" frameborder="0" title="Mr. Mr."></iframe>
             </div>
           </div>
         </div>
@@ -592,14 +598,25 @@
         const hy = clamp(y, -1, 1);
 
         // Background drift (very gentle)
-        haze.style.transform = `translate3d(${hx * 18}px, ${hy * 12}px, 0)`;
-        lines.style.transform = `translate3d(${hx * -22}px, ${hy * -16}px, 0) scale(1.02)`;
+        if (haze) haze.style.transform = `translate3d(${hx * 18}px, ${hy * 12}px, 0)`;
+        if (lines) lines.style.transform = `translate3d(${hx * -22}px, ${hy * -16}px, 0) scale(1.02)`;
 
         // Card micro-tilt
         tiltEls.forEach((el, i) => {
           const t = 2.2 + i * 0.25;
           el.style.transform = `translate3d(0,0,0) rotateX(${hy * -t}deg) rotateY(${hx * t}deg)`;
         });
+      }
+
+      function surgeAt(clientX, clientY){
+        // Creates a brief "touch bloom" by moving each button's radial glow origin.
+        const px = (clientX / window.innerWidth) * 100;
+        const py = (clientY / window.innerHeight) * 100;
+        document.documentElement.style.setProperty('--touch-x', px + '%');
+        document.documentElement.style.setProperty('--touch-y', py + '%');
+        document.body.classList.add('touch-surge');
+        clearTimeout(window.__tsSurgeT);
+        window.__tsSurgeT = setTimeout(() => document.body.classList.remove('touch-surge'), 180);
       }
 
       // Mouse
@@ -610,13 +627,45 @@
         applyParallax(mx, my);
       }, { passive: true });
 
-      // Device orientation (mobile)
-      window.addEventListener('deviceorientation', (e) => {
-        if (e.beta == null || e.gamma == null) return;
-        const x = clamp(e.gamma / 25, -1, 1);
-        const y = clamp(e.beta / 25, -1, 1);
+      // Touch embellishments: subtle surge + “press glow” without changing content
+      window.addEventListener('touchstart', (e) => {
+        const t = e.touches && e.touches[0];
+        if (!t) return;
+        surgeAt(t.clientX, t.clientY);
+      }, { passive: true });
+
+      window.addEventListener('touchmove', (e) => {
+        const t = e.touches && e.touches[0];
+        if (!t) return;
+        const x = (t.clientX / window.innerWidth) * 2 - 1;
+        const y = (t.clientY / window.innerHeight) * 2 - 1;
         applyParallax(x, y);
       }, { passive: true });
+
+      // Device orientation (mobile) — request permission on iOS when needed
+      async function enableTiltIfNeeded(){
+        try{
+          if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function'){
+            const askOnceKey = 'ts_tilt_perm_asked';
+            if (sessionStorage.getItem(askOnceKey)) return; // don’t nag in same session
+            sessionStorage.setItem(askOnceKey, '1');
+            const res = await DeviceOrientationEvent.requestPermission();
+            if (res !== 'granted') return;
+          }
+          window.addEventListener('deviceorientation', (e) => {
+            if (e.beta == null || e.gamma == null) return;
+            const x = clamp(e.gamma / 25, -1, 1);
+            const y = clamp(e.beta / 25, -1, 1);
+            applyParallax(x, y);
+          }, { passive: true });
+        }catch(_e){
+          // silently ignore
+        }
+      }
+
+      // Trigger permission request only after a user gesture (tap/click)
+      window.addEventListener('click', enableTiltIfNeeded, { once: true, passive: true });
+      window.addEventListener('touchend', enableTiltIfNeeded, { once: true, passive: true });
 
       // Cover art click: quick “surge” pulse
       const cover = document.getElementById('coverArt');
@@ -625,7 +674,28 @@
           cover.style.transform = 'translateY(-2px) scale(1.03)';
           setTimeout(() => cover.style.transform = '', 180);
         });
+        cover.addEventListener('touchend', () => {
+          cover.style.transform = 'translateY(-2px) scale(1.03)';
+          setTimeout(() => cover.style.transform = '', 180);
+        }, { passive: true });
       }
+
+      // Add a very subtle touch shimmer to buttons on mobile (no content changes)
+      const btns = document.querySelectorAll('.ts-btn');
+      btns.forEach((b) => {
+        b.addEventListener('touchstart', () => b.classList.add('is-pressed'), { passive: true });
+        b.addEventListener('touchend', () => b.classList.remove('is-pressed'), { passive: true });
+        b.addEventListener('touchcancel', () => b.classList.remove('is-pressed'), { passive: true });
+      });
+
+      // Inject tiny CSS hooks for touch surge (keeps theme; no layout changes)
+      const style = document.createElement('style');
+      style.textContent = `
+        .ts-btn.is-pressed{ border-color: rgba(255,138,0,0.35); box-shadow: 0 18px 70px rgba(0,0,0,0.62), 0 0 40px rgba(255,138,0,0.12); }
+        body.touch-surge .street-haze{ filter: saturate(1.05) contrast(1.02); }
+        body.touch-surge .speedlines{ opacity: 0.62; }
+      `;
+      document.head.appendChild(style);
 
       // Initial
       applyParallax(0, 0);
