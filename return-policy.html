@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tending Sands — Return Policy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    :root{
+      --ink:#07090f;
+      --night:#05060a;
+      --fog:rgba(255,255,255,0.06);
+      --ice:#b8f7ff;
+      --neon:#00e5ff;
+      --ember:#ff8a00;
+      --violet:#b100ff;
+      --card:rgba(7,10,18,0.55);
+      --card2:rgba(7,10,18,0.38);
+      --stroke:rgba(0,229,255,0.25);
+      --stroke2:rgba(177,0,255,0.18);
+      --shadow: 0 18px 50px rgba(0,0,0,0.55);
+      --radius: 18px;
+    }
+
+    body{
+      font-family: 'Share Tech Mono', monospace;
+      color: #e8fbff;
+      background: radial-gradient(1200px 800px at 20% 10%, rgba(0,229,255,0.08), transparent 55%),
+                  radial-gradient(900px 650px at 80% 30%, rgba(177,0,255,0.08), transparent 60%),
+                  linear-gradient(160deg, #000014, #07070a, #000014);
+      overflow-x: hidden;
+      position: relative;
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Subtle scanlines */
+    .glitch-background{
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        repeating-linear-gradient(to bottom,
+          rgba(255,255,255,0.03) 0px,
+          rgba(255,255,255,0.03) 1px,
+          transparent 2px,
+          transparent 6px
+        ),
+        radial-gradient(900px 650px at 50% 20%, rgba(0,229,255,0.06), transparent 60%),
+        radial-gradient(900px 650px at 50% 80%, rgba(255,138,0,0.04), transparent 60%);
+      mix-blend-mode: screen;
+      opacity: 0.55;
+      animation: drift 10s ease-in-out infinite;
+    }
+
+    @keyframes drift{
+      0%,100% { transform: translate3d(0,0,0); }
+      50% { transform: translate3d(0,-10px,0); }
+    }
+
+    /* Floating noise specks */
+    .specks{
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.25;
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(184,247,255,0.22) 0 1px, transparent 2px),
+        radial-gradient(circle at 70% 40%, rgba(0,229,255,0.18) 0 1px, transparent 2px),
+        radial-gradient(circle at 35% 75%, rgba(177,0,255,0.18) 0 1px, transparent 2px),
+        radial-gradient(circle at 85% 80%, rgba(255,138,0,0.15) 0 1px, transparent 2px);
+      background-size: 420px 420px, 520px 520px, 620px 620px, 720px 720px;
+      animation: speckMove 14s linear infinite;
+    }
+    @keyframes speckMove{
+      0% { transform: translate3d(0,0,0); }
+      100% { transform: translate3d(-30px, -20px, 0); }
+    }
+
+    /* Container */
+    .wrap{
+      min-height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 36px 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Card */
+    .card{
+      width: min(860px, 100%);
+      background: linear-gradient(180deg, var(--card), var(--card2));
+      border: 1px solid rgba(0,229,255,0.18);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      padding: 28px 22px;
+      position: relative;
+      overflow: hidden;
+      transform: translate3d(0,0,0);
+    }
+
+    .card:before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: conic-gradient(from 180deg at 50% 50%,
+        rgba(0,229,255,0.0),
+        rgba(0,229,255,0.22),
+        rgba(177,0,255,0.18),
+        rgba(255,138,0,0.14),
+        rgba(0,229,255,0.0)
+      );
+      filter: blur(20px);
+      opacity: 0.55;
+      transform: translate3d(0,0,0);
+      animation: halo 9s linear infinite;
+      pointer-events:none;
+    }
+    @keyframes halo{
+      0% { transform: rotate(0deg) scale(1.05); }
+      100% { transform: rotate(360deg) scale(1.05); }
+    }
+
+    .card-inner{
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Top bar / nav */
+    .top{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 14px;
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .brand{
+      display:flex;
+      flex-direction: column;
+      gap: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+    .brand .name{
+      font-size: 14px;
+      opacity: 0.9;
+      color: var(--ice);
+      text-shadow: 0 0 18px rgba(0,229,255,0.18);
+    }
+    .brand .sub{
+      font-size: 11px;
+      opacity: 0.7;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,229,255,0.28);
+      background: linear-gradient(180deg, rgba(0,229,255,0.10), rgba(0,0,0,0.22));
+      color: #eaffff;
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      will-change: transform;
+    }
+    .btn:hover{
+      transform: translateY(-2px);
+      border-color: rgba(177,0,255,0.28);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.55);
+    }
+    .btn:active{
+      transform: translateY(0px) scale(0.98);
+    }
+
+    /* Content */
+    h1{
+      font-size: clamp(22px, 3.4vw, 34px);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      text-shadow: 0 0 26px rgba(0,229,255,0.14);
+    }
+
+    .policy{
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 16px 16px;
+      background: rgba(0,0,0,0.22);
+      backdrop-filter: blur(6px);
+    }
+
+    .policy p{
+      font-size: 14px;
+      opacity: 0.95;
+    }
+
+    .policy .rule{
+      margin-top: 10px;
+      padding: 12px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(0,229,255,0.18);
+      background: linear-gradient(180deg, rgba(0,229,255,0.06), rgba(0,0,0,0.18));
+    }
+
+    .rule strong{
+      color: var(--ice);
+      text-shadow: 0 0 16px rgba(0,229,255,0.18);
+      font-weight: 700;
+    }
+
+    footer{
+      margin-top: 16px;
+      opacity: 0.75;
+      font-size: 12px;
+      display:flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    footer span{
+      white-space: nowrap;
+    }
+
+    /* Motion / parallax for mobile + pointer */
+    .tilt{
+      transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translate3d(0,0,0);
+      transition: transform 120ms ease;
+      will-change: transform;
+    }
+
+    @media (max-width: 520px){
+      .card{ padding: 22px 16px; }
+      .top{ flex-direction: column; align-items: flex-start; }
+      .btn{ width: 100%; }
+      footer{ justify-content: flex-start; }
+    }
+
+    /* Reduced motion respect */
+    @media (prefers-reduced-motion: reduce){
+      .glitch-background, .specks, .card:before{ animation: none !important; }
+      .tilt{ transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="glitch-background"></div>
+  <div class="specks"></div>
+
+  <main class="wrap">
+    <section class="card tilt" id="tiltCard" aria-label="Return Policy Card">
+      <div class="card-inner">
+        <div class="top">
+          <div class="brand">
+            <div class="name">Tending Sands</div>
+            <div class="sub">Return Policy</div>
+          </div>
+
+          <!-- optional: link back to your homepage -->
+          <a class="btn" href="./" aria-label="Back to site">Back</a>
+        </div>
+
+        <h1>Return Policy</h1>
+
+        <div class="policy">
+          <p>
+            We only offer exchanges within 60 days for items damaged in shipping.
+          </p>
+
+          <div class="rule">
+            <p><strong>Exchanges only:</strong> within 60 days, damaged in shipping items.</p>
+          </div>
+        </div>
+
+        <footer>
+          <span>© <span id="year"></span> Tending Sands</span>
+          <span>Simple. Clear. Final.</span>
+        </footer>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // tilt / motion (pointer + mobile device orientation)
+    (function () {
+      const card = document.getElementById('tiltCard');
+      if (!card) return;
+
+      const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
+
+      function setTilt(rx, ry){
+        card.style.setProperty('--rx', rx + 'deg');
+        card.style.setProperty('--ry', ry + 'deg');
+      }
+
+      // Pointer tilt
+      function onMove(e){
+        if (prefersReduced) return;
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width;
+        const y = (e.clientY - rect.top) / rect.height;
+
+        const ry = clamp((x - 0.5) * 10, -6, 6);
+        const rx = clamp(-(y - 0.5) * 10, -6, 6);
+
+        setTilt(rx, ry);
+      }
+
+      function resetTilt(){
+        setTilt(0, 0);
+      }
+
+      window.addEventListener('mousemove', onMove, { passive: true });
+      window.addEventListener('mouseleave', resetTilt, { passive: true });
+
+      // Mobile device orientation tilt
+      function onOrientation(ev){
+        if (prefersReduced) return;
+        const beta = ev.beta;  // x (front/back) [-180,180]
+        const gamma = ev.gamma; // y (left/right) [-90,90]
+        if (beta == null || gamma == null) return;
+
+        const rx = clamp((beta - 20) * 0.12, -6, 6);
+        const ry = clamp(gamma * 0.14, -6, 6);
+        setTilt(rx, ry);
+      }
+
+      // iOS requires permission in some contexts
+      async function enableIOSPermission(){
+        try{
+          if (typeof DeviceOrientationEvent !== 'undefined' &&
+              typeof DeviceOrientationEvent.requestPermission === 'function') {
+            const res = await DeviceOrientationEvent.requestPermission();
+            if (res === 'granted') window.addEventListener('deviceorientation', onOrientation, true);
+          } else {
+            window.addEventListener('deviceorientation', onOrientation, true);
+          }
+        } catch (e) {
+          // silently ignore
+        }
+      }
+
+      // Try to enable on first touch
+      window.addEventListener('touchstart', enableIOSPermission, { once: true, passive: true });
+    })();
+  </script>
+</body>
+</html>
