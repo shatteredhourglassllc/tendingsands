@@ -1,0 +1,9 @@
+<script async
+  src="https://js.stripe.com/v3/buy-button.js">
+</script>
+
+<stripe-buy-button
+  buy-button-id="buy_btn_1ShesqQtJ7NXcHsAiuTkA9vF"
+  publishable-key="pk_test_51SX94JQtJ7NXcHsARFXm6jMbWChV3v4XDSR5IyRWsCom3JJJu8DS4GDMwJo9YMQZ97LRFNM0pY7r9Xa3LFl9qgQM00CLlRHTRq"
+>
+</stripe-buy-button>
