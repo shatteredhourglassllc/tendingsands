@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Tending Sands — Manifold Profile</title>
+    <style>
+      body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+      .manifold-embed {
+        width: 100%;
+        height: 100vh;
+        border: none;
+      }
+    </style>
+  </head>
+  <body>
+    <iframe
+      class="manifold-embed"
+      src="https://manifold.xyz/@tendingsands"
+      title="Tending Sands — Manifold Profile"
+      allowfullscreen
+    ></iframe>
+  </body>
+</html>
