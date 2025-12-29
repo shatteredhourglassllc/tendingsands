@@ -29,6 +29,12 @@
       --rgb: 0px;
       --scan: 0px;
       --shiver: 0px;
+
+      /* tilt vars */
+      --tx: 0deg;
+      --ty: 0deg;
+      --tz: 0px;
+      --tilt: 1;
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
@@ -46,6 +52,8 @@
       -moz-osx-font-smoothing: grayscale;
       min-height:100vh;
       position:relative;
+      perspective: 1100px;
+      transform-style: preserve-3d;
     }
 
     /* ambient layers */
@@ -83,6 +91,7 @@
         radial-gradient(800px 520px at var(--mx) var(--my), rgba(255,27,27,.10), transparent 65%),
         radial-gradient(1200px 900px at 50% 45%, rgba(0,0,0,.22), transparent 60%);
       filter: contrast(1.05);
+      transform: translate3d(calc(var(--ty)*0.45), calc(var(--tx)*0.45), 0);
     }
     .noise{
       position:fixed; inset:0;
@@ -91,6 +100,7 @@
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.78' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
       background-size: 240px 240px;
       mix-blend-mode: overlay;
+      transform: translate3d(calc(var(--ty)*0.35), calc(var(--tx)*0.35), 0);
     }
 
     /* interactive aura */
@@ -103,16 +113,59 @@
         radial-gradient(260px 260px at var(--mx) var(--my), rgba(255,27,27,.18), transparent 60%),
         radial-gradient(360px 360px at var(--mx) var(--my), rgba(255,255,255,.10), transparent 65%);
       transition: opacity .14s ease;
+      transform: translate3d(calc(var(--ty)*0.55), calc(var(--tx)*0.55), 0);
+    }
+
+    /* spectral edge shimmer */
+    .edgeglow{
+      position:fixed; inset:0;
+      pointer-events:none;
+      z-index:-5;
+      opacity:.18;
+      mix-blend-mode: screen;
+      background:
+        conic-gradient(from 180deg at var(--mx) var(--my),
+          rgba(255,27,27,.0),
+          rgba(255,27,27,.22),
+          rgba(255,255,255,.16),
+          rgba(255,27,27,.18),
+          rgba(0,0,0,0),
+          rgba(255,27,27,.18));
+      filter: blur(18px) saturate(1.1);
+      transform: translate3d(calc(var(--ty)*0.65), calc(var(--tx)*0.65), 0) scale(1.1);
+      transition: opacity .18s ease;
+    }
+
+    /* strobe flash */
+    .flash{
+      position:fixed; inset:0;
+      pointer-events:none;
+      z-index:60;
+      opacity:0;
+      background:
+        radial-gradient(900px 520px at var(--mx) var(--my), rgba(255,255,255,.20), transparent 60%),
+        radial-gradient(1200px 900px at 50% 50%, rgba(255,27,27,.14), transparent 62%);
+      mix-blend-mode: screen;
+      transform: translate3d(calc(var(--ty)*0.25), calc(var(--tx)*0.25), 0);
+    }
+    body.flashing .flash{
+      animation: flashPop .16s ease-out 1;
+    }
+    @keyframes flashPop{
+      0%{opacity:0}
+      40%{opacity:.85}
+      100%{opacity:0}
     }
 
     /* canvases */
-    #popCanvas, #glitchCanvas{
+    #popCanvas, #glitchCanvas, #sparkCanvas{
       position:fixed; inset:0;
       width:100vw; height:100vh;
       pointer-events:none;
     }
     #popCanvas{ z-index:-7; }
     #glitchCanvas{ z-index:-6; mix-blend-mode: screen; opacity:.65; }
+    #sparkCanvas{ z-index:-4; mix-blend-mode: screen; opacity:.9; }
 
     /* layout */
     .wrap{
@@ -124,6 +177,7 @@
       display:flex;
       flex-direction:column;
       gap: 1rem;
+      transform-style: preserve-3d;
     }
 
     .bar{
@@ -136,6 +190,7 @@
       backdrop-filter: blur(14px);
       box-shadow: var(--shadow);
       overflow:hidden;
+      transform-style: preserve-3d;
     }
     .bar::before{
       content:"";
@@ -145,6 +200,7 @@
         radial-gradient(900px 260px at 80% 70%, rgba(255,255,255,.10), transparent 65%);
       opacity:.95;
       pointer-events:none;
+      transform: translate3d(0,0,-1px);
     }
     .bar-in{
       position:relative;
@@ -168,6 +224,7 @@
         0 0 24px rgba(255,27,27,.18),
         0 0 22px rgba(255,255,255,.08);
       position:relative;
+      transform: translateZ(10px);
     }
     .sig::after{
       content:"";
@@ -191,7 +248,7 @@
       text-shadow:
         calc(var(--rgb)*1) 0 0 rgba(255,27,27,.20),
         calc(var(--rgb)*-1) 0 0 rgba(255,255,255,.12);
-      transform: translateX(var(--jit));
+      transform: translateX(var(--jit)) translateZ(8px);
     }
 
     .meter{
@@ -260,6 +317,16 @@
       transition: opacity .14s ease;
       transform: translateY(var(--scan));
     }
+    .btn::after{
+      content:"";
+      position:absolute; inset:0;
+      pointer-events:none;
+      opacity:0;
+      background:
+        linear-gradient(90deg, rgba(255,27,27,0), rgba(255,27,27,.16), rgba(255,255,255,.10), rgba(255,27,27,0));
+      transform: translateX(-120%);
+      mix-blend-mode: screen;
+    }
     .btn:hover{
       transform: translateY(-2px);
       border-color: rgba(255,27,27,.48);
@@ -267,6 +334,11 @@
       filter: contrast(1.02);
     }
     .btn:hover::before{ opacity:1; }
+    .btn:hover::after{
+      opacity:1;
+      animation: sheen 1.05s ease-in-out infinite;
+    }
+    @keyframes sheen{ to{ transform: translateX(120%); } }
     .btn:active{ transform: translateY(0) scale(.99); }
     .btn:focus-visible{
       box-shadow: 0 0 0 2px rgba(0,0,0,.55), 0 0 0 5px rgba(255,27,27,.25), 0 24px 92px rgba(0,0,0,.68);
@@ -295,6 +367,7 @@
       box-shadow: var(--shadow);
       overflow:hidden;
       position:relative;
+      transform-style: preserve-3d;
     }
     .hero::before{
       content:"";
@@ -305,7 +378,7 @@
         repeating-linear-gradient(to bottom, rgba(255,255,255,.03) 0px, rgba(255,255,255,.03) 1px, transparent 6px);
       opacity:.92;
       pointer-events:none;
-      transform: translateY(var(--scan));
+      transform: translateY(var(--scan)) translate3d(0,0,-1px);
     }
     .hero-in{
       position:relative;
@@ -328,6 +401,7 @@
       padding: .95rem .95rem;
       position:relative;
       overflow:hidden;
+      transform: translateZ(10px);
     }
     .copy::after{
       content:"";
@@ -391,6 +465,7 @@
       touch-action: manipulation;
       aspect-ratio: 1 / 1;
       filter: contrast(1.06);
+      transform-style: preserve-3d;
     }
     .art::before{
       content:"";
@@ -403,7 +478,7 @@
       opacity:.78;
       mix-blend-mode: overlay;
       pointer-events:none;
-      transform: translateX(var(--jit)) translateY(var(--scan));
+      transform: translateX(var(--jit)) translateY(var(--scan)) translate3d(0,0,-1px);
     }
     .art::after{
       content:"SAFE IN METAL";
@@ -423,7 +498,7 @@
       box-shadow: 0 14px 60px rgba(0,0,0,.58);
       text-align:center;
       pointer-events:none;
-      transform: translateX(calc(var(--jit)*.6));
+      transform: translateX(calc(var(--jit)*.6)) translateZ(16px);
       text-shadow:
         calc(var(--rgb)*1) 0 0 rgba(255,27,27,.18),
         calc(var(--rgb)*-1) 0 0 rgba(255,255,255,.10);
@@ -450,6 +525,7 @@
       box-shadow: var(--shadow);
       overflow:hidden;
       position:relative;
+      transform-style: preserve-3d;
     }
     .panel::before{
       content:"";
@@ -460,7 +536,7 @@
         repeating-linear-gradient(90deg, rgba(255,255,255,.03) 0px, rgba(255,255,255,.03) 1px, transparent 14px);
       opacity:.85;
       pointer-events:none;
-      transform: translateX(var(--jit));
+      transform: translateX(var(--jit)) translate3d(0,0,-1px);
     }
     .panel-in{
       position:relative;
@@ -469,6 +545,7 @@
       display:flex;
       flex-direction:column;
       gap: .85rem;
+      transform: translateZ(8px);
     }
     .h2{
       display:flex; align-items:center; gap:.6rem;
@@ -511,6 +588,7 @@
       -webkit-tap-highlight-color: transparent;
       transform: translate3d(0,0,0);
       will-change: transform, filter, border-color;
+      transform-style: preserve-3d;
     }
     .tile::before{
       content:"";
@@ -521,13 +599,32 @@
         repeating-linear-gradient(90deg, rgba(255,27,27,.05) 0px, rgba(255,27,27,.05) 1px, transparent 11px);
       opacity:.85;
       pointer-events:none;
-      transform: translateX(var(--jit)) translateY(var(--scan));
+      transform: translateX(var(--jit)) translateY(var(--scan)) translate3d(0,0,-1px);
+    }
+    .tile::after{
+      content:"";
+      position:absolute;
+      inset:-3px;
+      border-radius: 18px;
+      pointer-events:none;
+      background:
+        conic-gradient(from 180deg at 50% 50%,
+          rgba(255,27,27,0),
+          rgba(255,27,27,.25),
+          rgba(255,255,255,.18),
+          rgba(255,27,27,.22),
+          rgba(0,0,0,0));
+      opacity:0;
+      filter: blur(10px);
+      mix-blend-mode: screen;
+      transition: opacity .16s ease;
     }
     .tile:hover{
       transform: translateY(-2px);
       border-color: rgba(255,27,27,.50);
       filter: contrast(1.04);
     }
+    .tile:hover::after{ opacity:.75; }
     .tile:active{ transform: translateY(0) scale(.99); }
     .tile:focus-visible{
       outline:none;
@@ -558,6 +655,7 @@
       overflow:hidden;
       box-shadow: 0 24px 92px rgba(0,0,0,.66);
       position:relative;
+      transform-style: preserve-3d;
     }
     .embed::after{
       content:"";
@@ -569,7 +667,7 @@
         radial-gradient(760px 220px at 70% 100%, rgba(255,255,255,.08), transparent 62%);
       opacity:.78;
       mix-blend-mode: overlay;
-      transform: translateY(var(--scan));
+      transform: translateY(var(--scan)) translate3d(0,0,-1px);
     }
     iframe{
       width:100%;
@@ -617,16 +715,31 @@
       transform: translateX(calc(var(--jit)*.25));
     }
 
+    /* tilt plumbing */
+    .tilt{
+      transform-style: preserve-3d;
+      will-change: transform;
+      transition: transform 120ms ease;
+    }
+    .tilt[data-tilt="1"]{
+      transform:
+        translate3d(0,0,var(--tz))
+        rotateX(var(--tx))
+        rotateY(var(--ty));
+    }
+
     /* transient glitch class */
     body.glitching .crt{ opacity:1; }
     body.glitching .aura{ opacity:.78; }
     body.glitching .noise{ opacity:.22; }
+    body.glitching .edgeglow{ opacity:.28; }
 
     @media (prefers-reduced-motion: reduce){
       .meter::before{ animation:none; }
-      .btn, .tile, .art{ transition:none; }
+      .btn, .tile, .art, .tilt{ transition:none; }
       .aura{ display:none; }
       #glitchCanvas{ display:none; }
+      #sparkCanvas{ display:none; }
     }
   </style>
 </head>
@@ -636,8 +749,11 @@
   <div class="crt" id="crt"></div>
   <div class="noise"></div>
   <div class="aura" id="aura"></div>
+  <div class="edgeglow" id="edgeglow"></div>
+  <div class="flash" id="flash"></div>
   <canvas id="popCanvas" aria-hidden="true"></canvas>
   <canvas id="glitchCanvas" aria-hidden="true"></canvas>
+  <canvas id="sparkCanvas" aria-hidden="true"></canvas>
 
   <main class="wrap">
     <header class="bar tilt" id="bar">
@@ -712,8 +828,14 @@
             <iframe src="https://audiomack.com//embed/jerbearhoffman/song/safe-in-metal-antiradio-edit"
               scrolling="no" height="252" frameborder="0" title="Safe in Metal (Antiradio Edit)"></iframe>
           </div>
-
+          
           <div class="embed popZone">
+<iframe src="https://embed.tidal.com/tracks/485518871" width="500" height="120" allow="encrypted-media; 
+  fullscreen; clipboard-write https://embed.tidal.com; web-share" sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox" style="color-scheme: light dark" title="TIDAL Embed Player" />
+            </div>
+
+         
+  <div class="embed popZone">
             <iframe src="https://audiomack.com//embed/jerbearhoffman/song/694e74ce3f283"
               scrolling="no" height="252" frameborder="0" title="Safe in Metal"></iframe>
           </div>
@@ -768,16 +890,39 @@
 
       // layers parallax
       const haze = document.getElementById('haze');
+      const edgeglow = document.getElementById('edgeglow');
       const tilts = Array.from(document.querySelectorAll('.tilt'));
       const clamp = (n,a,b)=>Math.max(a,Math.min(b,n));
+
+      // tilt state
+      let tx=0, ty=0, tz=0;
+      let targetTx=0, targetTy=0, targetTz=0;
+      let lastInputAt = performance.now();
+      let isTouching = false;
+
+      function setTiltVars(){
+        root.style.setProperty('--tx', tx.toFixed(3) + 'deg');
+        root.style.setProperty('--ty', ty.toFixed(3) + 'deg');
+        root.style.setProperty('--tz', tz.toFixed(2) + 'px');
+      }
 
       function applyParallax(nx, ny){
         const x = clamp(nx, -1, 1);
         const y = clamp(ny, -1, 1);
+
         if (haze) haze.style.transform = `translate3d(${x*18}px, ${y*12}px, 0)`;
+        if (edgeglow){
+          edgeglow.style.opacity = String(0.16 + Math.min(0.20, (Math.abs(x)+Math.abs(y))*0.10));
+        }
+
+        targetTy = x * 10;      // rotateY
+        targetTx = y * -8.5;    // rotateX
+        targetTz = (isTouching ? 8 : 5) + (Math.abs(x)+Math.abs(y))*6;
+
+        // micro depth for individual cards (still driven by shared CSS vars)
         tilts.forEach((el, i) => {
-          const k = 2.5 + i * 0.20;
-          el.style.transform = `translate3d(0,0,0) rotateX(${y * -k}deg) rotateY(${x * k}deg)`;
+          el.dataset.tilt = "1";
+          el.style.setProperty('--tilt', '1');
         });
       }
 
@@ -792,12 +937,28 @@
             const res = await DeviceOrientationEvent.requestPermission();
             if (res !== 'granted') return;
           }
+
+          let baselineBeta = null;
+          let baselineGamma = null;
+
           window.addEventListener('deviceorientation', (e) => {
             if (e.beta == null || e.gamma == null) return;
-            const nx = clamp(e.gamma / 25, -1, 1);
-            const ny = clamp(e.beta / 25, -1, 1);
+
+            if (baselineBeta === null){
+              baselineBeta = e.beta;
+              baselineGamma = e.gamma;
+            }
+
+            // relative tilt from baseline
+            const relGamma = e.gamma - baselineGamma;
+            const relBeta  = e.beta  - baselineBeta;
+
+            const nx = clamp(relGamma / 22, -1, 1);
+            const ny = clamp(relBeta / 22, -1, 1);
+
+            lastInputAt = performance.now();
             applyParallax(nx, ny);
-            microJitter(0.7);
+            microJitter(0.55);
           }, {passive:true});
         }catch(_e){}
       }
@@ -810,7 +971,7 @@
           const r = btn.getBoundingClientRect();
           const mx = (e.clientX - (r.left + r.width/2)) / (r.width/2);
           const my = (e.clientY - (r.top + r.height/2)) / (r.height/2);
-          btn.style.transform = `translate3d(${mx*6}px, ${my*5}px, 0) translateY(-2px)`;
+          btn.style.transform = `translate3d(${mx*7}px, ${my*6}px, 0) translateY(-2px)`;
         });
         btn.addEventListener('mouseleave', () => btn.style.transform = '', {passive:true});
       });
@@ -834,10 +995,13 @@
       const gCanvas = document.getElementById('glitchCanvas');
       const gCtx = gCanvas.getContext('2d', { alpha: true });
 
+      const sCanvas = document.getElementById('sparkCanvas');
+      const sCtx = sCanvas.getContext('2d', { alpha: true });
+
       let W=0,H=0,DPR=Math.max(1, Math.min(2, window.devicePixelRatio || 1));
       function resize(){
         W = window.innerWidth; H = window.innerHeight;
-        [popCanvas, gCanvas].forEach((c) => {
+        [popCanvas, gCanvas, sCanvas].forEach((c) => {
           c.width = Math.floor(W * DPR);
           c.height = Math.floor(H * DPR);
           c.style.width = W + 'px';
@@ -845,11 +1009,13 @@
         });
         popCtx.setTransform(DPR,0,0,DPR,0,0);
         gCtx.setTransform(DPR,0,0,DPR,0,0);
+        sCtx.setTransform(DPR,0,0,DPR,0,0);
       }
       resize();
       window.addEventListener('resize', resize);
 
       const particles = [];
+      const sparks = [];
       function rand(a,b){ return a + Math.random()*(b-a); }
       function pick(arr){ return arr[(Math.random()*arr.length)|0]; }
       const palette = [
@@ -884,6 +1050,22 @@
           life: 22,
           c: pick(palette)
         });
+
+        // electric sparks
+        const sc = Math.floor(rand(6, 12) * power);
+        for (let i=0;i<sc;i++){
+          const a = rand(-Math.PI*0.15, Math.PI*1.15);
+          const s = rand(8, 20) * power;
+          sparks.push({
+            x, y,
+            vx: Math.cos(a)*s,
+            vy: Math.sin(a)*s,
+            life: rand(10, 18),
+            w: rand(1.2, 2.6),
+            a: rand(0.55, 0.95),
+            c: (Math.random()<0.55) ? 'rgba(255,255,255,1)' : 'rgba(255,27,27,1)'
+          });
+        }
       }
 
       // glitch shader-ish: draws scan bars + rgb offset streaks
@@ -939,6 +1121,43 @@
         gCtx.globalCompositeOperation = 'source-over';
       }
 
+      function drawSparks(){
+        sCtx.clearRect(0,0,W,H);
+        if (sparks.length === 0) return;
+
+        sCtx.globalCompositeOperation = 'lighter';
+        for (let i=sparks.length-1; i>=0; i--){
+          const s = sparks[i];
+          s.life -= 1;
+          if (s.life <= 0){
+            sparks.splice(i,1);
+            continue;
+          }
+          s.x += s.vx;
+          s.y += s.vy;
+          s.vx *= 0.86;
+          s.vy *= 0.86;
+
+          const alpha = Math.max(0, Math.min(1, (s.life/18))) * s.a;
+          sCtx.lineWidth = s.w;
+
+          // jagged bolt
+          sCtx.beginPath();
+          sCtx.strokeStyle = s.c.replace('1)', alpha.toFixed(3)+')');
+          const segs = 4 + ((Math.random()*3)|0);
+          let px = s.x, py = s.y;
+          sCtx.moveTo(px, py);
+          for (let k=0; k<segs; k++){
+            const nx = px + rand(-18, 18);
+            const ny = py + rand(-10, 20);
+            sCtx.lineTo(nx, ny);
+            px = nx; py = ny;
+          }
+          sCtx.stroke();
+        }
+        sCtx.globalCompositeOperation = 'source-over';
+      }
+
       // micro jitter vars
       function microJitter(scale=1){
         const jit = (Math.random()*2 - 1) * 2.4 * scale;
@@ -965,8 +1184,39 @@
         heavyGlitch._t = setTimeout(() => body.classList.remove('glitching'), 160);
       }
 
-      // animate particles + glitch
+      function flash(){
+        if (prefersReduced) return;
+        body.classList.add('flashing');
+        clearTimeout(flash._t);
+        flash._t = setTimeout(()=> body.classList.remove('flashing'), 180);
+      }
+
+      // animate particles + glitch + sparks + tilt smoothing
       function tick(){
+        // tilt smoothing back to neutral if no input
+        const now = performance.now();
+        const idle = now - lastInputAt;
+
+        // ease toward targets
+        const ease = isTouching ? 0.14 : 0.10;
+        tx += (targetTx - tx) * ease;
+        ty += (targetTy - ty) * ease;
+        tz += (targetTz - tz) * ease;
+
+        // drift home if idle
+        if (idle > 900){
+          targetTx *= 0.92;
+          targetTy *= 0.92;
+          targetTz *= 0.92;
+        }
+
+        // clamp
+        tx = clamp(tx, -12, 12);
+        ty = clamp(ty, -14, 14);
+        tz = clamp(tz, 0, 18);
+
+        setTiltVars();
+
         popCtx.clearRect(0,0,W,H);
 
         for (let pass=0; pass<2; pass++){
@@ -1004,6 +1254,7 @@
         }
 
         drawGlitch();
+        drawSparks();
         requestAnimationFrame(tick);
       }
       requestAnimationFrame(tick);
@@ -1020,11 +1271,13 @@
         burst(x,y, power);
         pushGlitch(x,y, 0.7 * power);
         microJitter(0.85 * power);
+        if (Math.random() < 0.28) flash();
       }
 
       window.addEventListener('mousemove', (e) => {
         setAura(e.clientX, e.clientY);
         if (prefersReduced) return;
+        lastInputAt = performance.now();
         const nx = (e.clientX / window.innerWidth) * 2 - 1;
         const ny = (e.clientY / window.innerHeight) * 2 - 1;
         applyParallax(nx, ny);
@@ -1035,6 +1288,7 @@
         if (!t) return;
         setAura(t.clientX, t.clientY);
         if (prefersReduced) return;
+        lastInputAt = performance.now();
         const nx = (t.clientX / window.innerWidth) * 2 - 1;
         const ny = (t.clientY / window.innerHeight) * 2 - 1;
         applyParallax(nx, ny);
@@ -1049,14 +1303,19 @@
       window.addEventListener('touchstart', (e) => {
         const t = e.touches && e.touches[0];
         if (!t) return;
+        isTouching = true;
         point(t.clientX, t.clientY, 1.15);
         if (Math.random() < 0.55) heavyGlitch(1.05);
         enableTilt();
       }, {passive:true});
 
+      window.addEventListener('touchend', () => {
+        isTouching = false;
+      }, {passive:true});
+
       // pop zones more intense
       document.querySelectorAll('.popZone').forEach((el) => {
-        el.addEventListener('click', (e) => {
+        el.addEventListener('click', () => {
           const r = el.getBoundingClientRect();
           point(r.left + r.width/2, r.top + r.height/2, 1.35);
           heavyGlitch(1.05);
@@ -1084,6 +1343,7 @@
           setTimeout(()=> art.style.transform = '', 160);
           heavyGlitch(1.25);
           pushGlitch(window.innerWidth*0.5, window.innerHeight*0.42, 1.2);
+          flash();
         };
         art.addEventListener('click', pulse);
         art.addEventListener('touchend', pulse, {passive:true});
@@ -1095,6 +1355,7 @@
       // start centered
       applyParallax(0,0);
       setAura(window.innerWidth*0.5, window.innerHeight*0.45);
+      setTiltVars();
     })();
   </script>
 </body>
