@@ -7,8 +7,8 @@ const volumeSlider = document.getElementById('volume');
 const playlistContainer = document.getElementById('playlist');
 
 const tracks = [
-    {title: "You Are What You Hate", file: "music/YouAreWhatYouHate.mp3", art: "images/you_are_what_you_hate.jpg"},
-    {title: "9oijiji", file: "music/9oijiji.mp3", art: "images/9oijiji.jpg"}
+    {title: "You Are What You Hate", file: "music/You-Are-What-You-Hate.mp3", art: "images/9oijiji.png"},
+    {title: "9oijiji", file: "music/9oijiji.mp3", art: "images/9oijiji.png"}
 ];
 
 let currentTrack = 0;
