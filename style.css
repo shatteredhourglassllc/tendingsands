@@ -1,11 +1,11 @@
-/* Tending Sands dark-red theme */
+/* Tending Sands full red theme */
 body, html {
     margin: 0;
     padding: 0;
     height: 100%;
     font-family: 'Arial', sans-serif;
     background: linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 100%);
-    color: #fff;
+    color: #ff3333; /* red font everywhere */
     overflow: hidden;
     position: relative;
 }
@@ -35,7 +35,7 @@ h1 {
     text-transform: uppercase;
     letter-spacing: 3px;
     color: #ff3333;
-    text-shadow: 0 0 5px #ff3333, 0 0 15px #aa1111;
+    text-shadow: 0 0 5px #ff3333, 0 0 15px #aa1111; /* glowing red font */
 }
 
 #playlist {
@@ -71,6 +71,7 @@ h1 {
 
 .track-card .track-info {
     text-align: left;
+    color: #ff3333; /* red font on track titles */
 }
 
 .player-controls {
@@ -84,7 +85,7 @@ h1 {
 button {
     background: rgba(255,0,0,0.1);
     border: none;
-    color: #ff3333;
+    color: #ff3333; /* red font */
     font-size: 1.5em;
     padding: 10px 15px;
     border-radius: 5px;
@@ -106,7 +107,7 @@ input[type="range"] {
     margin-top: 25px;
     padding: 12px 25px;
     background: #aa1111;
-    color: #fff;
+    color: #ff3333; /* red font for buy button */
     text-decoration: none;
     border-radius: 5px;
     font-weight: bold;
@@ -116,4 +117,5 @@ input[type="range"] {
 
 .buy-album:hover {
     background: #ff3333;
+    color: #0a0a0a;
 }
