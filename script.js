@@ -1,4 +1,3 @@
-// Tending Sands Player Script
 const audio = document.getElementById('audio');
 const playBtn = document.getElementById('play');
 const nextBtn = document.getElementById('next');
@@ -7,9 +6,8 @@ const volumeSlider = document.getElementById('volume');
 const playlistContainer = document.getElementById('playlist');
 
 const tracks = [
-    {title: "Shoved a Round", file: "music/shoved_a_round.mp3", art: "images/shoved_a_round.jpg"},
-    {title: "Give Your Body to Me", file: "music/give_your_body.mp3", art: "images/give_your_body.jpg"},
-    {title: "anTiempire*", file: "music/antiempire.mp3", art: "images/antiempire.jpg"}
+    {title: "You Are What You Hate", file: "music/You Are What You Hate.mp3", art: "images/you_are_what_you_hate.jpg"},
+    {title: "9oijiji", file: "music/9oijiji.mp3", art: "images/9oijiji.jpg"}
 ];
 
 let currentTrack = 0;
