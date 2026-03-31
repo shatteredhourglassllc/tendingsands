@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="background"></div>
+    <canvas id="visualizer"></canvas>
 
     <div class="container">
         <h1>Tending Sands</h1>
@@ -20,8 +20,11 @@
             <button id="prev">&#9664;</button>
             <button id="play">&#9654;</button>
             <button id="next">&#9654;&#9654;</button>
+            <button id="shuffle">🔀</button>
             <input type="range" id="volume" min="0" max="1" step="0.01">
         </div>
+
+        <a href="https://tidal.com/album/511196643" target="_blank" class="buy-album">Buy the Album</a>
 
         <audio id="audio"></audio>
     </div>
