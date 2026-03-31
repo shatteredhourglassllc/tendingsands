@@ -1,9 +1,10 @@
+/* Linktree-inspired clean dark theme with neon accents */
 body, html {
     margin: 0;
     padding: 0;
     height: 100%;
     font-family: 'Arial', sans-serif;
-    background: #0a0a0a;
+    background: linear-gradient(135deg, #0b0c10 0%, #1f2833 100%);
     color: #fff;
     overflow: hidden;
     position: relative;
@@ -16,11 +17,11 @@ canvas#visualizer {
     width:100%;
     height:100%;
     z-index:-1;
-    background: #0a0a0a;
+    background: transparent;
 }
 
 .container {
-    max-width: 400px;
+    max-width: 450px;
     margin: 50px auto;
     text-align: center;
     z-index: 1;
@@ -29,10 +30,12 @@ canvas#visualizer {
 
 h1 {
     font-family: 'Courier New', monospace;
-    font-size: 2em;
+    font-size: 2.5em;
     margin-bottom: 30px;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
+    color: #66fcf1;
+    text-shadow: 0 0 5px #66fcf1, 0 0 10px #45a29e;
 }
 
 #playlist {
@@ -45,16 +48,18 @@ h1 {
     display: flex;
     align-items: center;
     gap: 15px;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 10px;
-    border-radius: 10px;
+    background: rgba(255,255,255,0.05);
+    padding: 12px;
+    border-radius: 12px;
     cursor: pointer;
     transition: transform 0.2s, background 0.2s;
+    border-left: 4px solid transparent;
 }
 
 .track-card:hover, .track-card.active {
     transform: scale(1.05);
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(102,252,241,0.15);
+    border-left: 4px solid #66fcf1;
 }
 
 .track-card img {
@@ -77,18 +82,19 @@ h1 {
 }
 
 button {
-    background: rgba(255,255,255,0.05);
+    background: rgba(102,252,241,0.1);
     border: none;
-    color: #fff;
+    color: #66fcf1;
     font-size: 1.5em;
     padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: background 0.2s, color 0.2s;
 }
 
 button:hover {
-    background: rgba(255,255,255,0.2);
+    background: #66fcf1;
+    color: #0b0c10;
 }
 
 input[type="range"] {
@@ -98,15 +104,17 @@ input[type="range"] {
 .buy-album {
     display: inline-block;
     margin-top: 25px;
-    padding: 10px 20px;
-    background: #ff0077;
-    color: #fff;
+    padding: 12px 25px;
+    background: #45a29e;
+    color: #0b0c10;
     text-decoration: none;
     border-radius: 5px;
     font-weight: bold;
+    font-size: 1em;
     transition: background 0.2s;
 }
 
 .buy-album:hover {
-    background: #ff3399;
+    background: #66fcf1;
+    color: #0b0c10;
 }
