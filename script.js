@@ -106,13 +106,17 @@ function draw(){
         ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
         x += barWidth + 1;
     }
+function draw(){
+    requestAnimationFrame(draw);
+    analyser.getByteFrequencyData(dataArray);
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    const barWidth = (canvas.width / bufferLength) * 2.5;
+    let x=0;
+    for(let i=0;i<bufferLength;i++){
+        const barHeight = dataArray[i]/2;
+        ctx.fillStyle = `rgba(${barHeight+150},50,50,0.8)`; // red shades
+        ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+        x += barWidth + 1;
+    }
 }
-draw();
-
-window.addEventListener('resize', ()=>{
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-});
-
-// Initialize first track
-playTrack(0);
