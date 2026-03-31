@@ -8,10 +8,10 @@ const playlistContainer = document.getElementById('playlist');
 
 // ==== Updated tracks list ====
 const tracks = [
-    {title: "You Are What You Hate", file: "music/YouAreWhatYouHate.mp3", art: "images/9oijiji.png"},
+    {title: "You Are What You Hate", file: "music/You-Are-What-You-Hate.mp3", art: "images/9oijiji.png"},
     {title: "9oijiji", file: "music/9oijiji.mp3", art: "images/9oijiji.png"},
-    {title: "A Home", file: "music/AHome.mp3", art: "images/9oijiji.png"},
-    {title: "A Mode of Being", file: "music/AModeOfBeing.mp3", art: "images/9oijiji.png"}
+    {title: "A Home", file: "music/A-Home.mp3", art: "images/9oijiji.png"},
+    {title: "A Mode of Being", file: "music/A-Mode-Of-Being.mp3", art: "images/9oijiji.png"}
 ];
 
 let currentTrack = 0;
