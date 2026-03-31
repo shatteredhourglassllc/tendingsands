@@ -14,7 +14,7 @@ const tracks = [
 let currentTrack = 0;
 let isShuffled = false;
 
-// Inject track cards
+// ==== Inject track cards ====
 tracks.forEach((track,index)=>{
     const card = document.createElement('div');
     card.className='track-card';
@@ -26,76 +26,104 @@ tracks.forEach((track,index)=>{
     playlistContainer.appendChild(card);
 });
 
+// Highlight current track
 function updateActiveCard(){
     document.querySelectorAll('.track-card').forEach((c,i)=>{
         c.classList.toggle('active', i===currentTrack);
     });
 }
 
+// ==== Play a track safely ====
 function playTrack(index){
-    currentTrack=index;
-    audio.src=tracks[currentTrack].file;
+    currentTrack = index;
+    // Stop any currently playing track
+    audio.pause();
+    audio.currentTime = 0;
+
+    audio.src = tracks[currentTrack].file;
     audio.play();
-    playBtn.innerHTML="&#10074;&#10074;";
+    playBtn.innerHTML = "&#10074;&#10074;";
     updateActiveCard();
 }
 
-playBtn.addEventListener('click',()=>{
-    if(audio.paused){audio.play();playBtn.innerHTML="&#10074;&#10074;";}
-    else{audio.pause();playBtn.innerHTML="&#9654;";}
+// ==== Control buttons ====
+playBtn.addEventListener('click', ()=>{
+    if(audio.paused){
+        audio.play();
+        playBtn.innerHTML="&#10074;&#10074;";
+    } else {
+        audio.pause();
+        playBtn.innerHTML="&#9654;";
+    }
 });
 
-nextBtn.addEventListener('click',()=>{currentTrack=(currentTrack+1)%tracks.length;playTrack(currentTrack);});
-prevBtn.addEventListener('click',()=>{currentTrack=(currentTrack-1+tracks.length)%tracks.length;playTrack(currentTrack);});
-shuffleBtn.addEventListener('click',()=>{isShuffled=!isShuffled; shuffleBtn.style.opacity=isShuffled?1:0.5;});
+nextBtn.addEventListener('click', ()=>{
+    currentTrack = (currentTrack + 1) % tracks.length;
+    playTrack(currentTrack);
+});
 
-volumeSlider.addEventListener('input',()=>{audio.volume=volumeSlider.value;});
+prevBtn.addEventListener('click', ()=>{
+    currentTrack = (currentTrack - 1 + tracks.length) % tracks.length;
+    playTrack(currentTrack);
+});
 
-audio.addEventListener('ended',()=>{
+shuffleBtn.addEventListener('click', ()=>{
+    isShuffled = !isShuffled;
+    shuffleBtn.style.opacity = isShuffled ? 1 : 0.5;
+});
+
+volumeSlider.addEventListener('input', ()=>{
+    audio.volume = volumeSlider.value;
+});
+
+// Auto-next track
+audio.addEventListener('ended', ()=>{
     if(isShuffled){
-        currentTrack=Math.floor(Math.random()*tracks.length);
+        currentTrack = Math.floor(Math.random()*tracks.length);
     } else {
-        currentTrack=(currentTrack+1)%tracks.length;
+        currentTrack = (currentTrack+1)%tracks.length;
     }
     playTrack(currentTrack);
 });
 
-// Initialize
-playTrack(0);
+// ==== Visualizer setup ====
+const canvas = document.getElementById('visualizer');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-// ===== Simple Visualizer =====
-const canvas=document.getElementById('visualizer');
-const ctx=canvas.getContext('2d');
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-
-const audioCtx=new (window.AudioContext || window.webkitAudioContext)();
-const analyser=audioCtx.createAnalyser();
-const src=audioCtx.createMediaElementSource(audio);
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+const analyser = audioCtx.createAnalyser();
+const src = audioCtx.createMediaElementSource(audio);
 src.connect(analyser);
 analyser.connect(audioCtx.destination);
-analyser.fftSize=256;
-const bufferLength=analyser.frequencyBinCount;
-const dataArray=new Uint8Array(bufferLength);
+
+analyser.fftSize = 256;
+const bufferLength = analyser.frequencyBinCount;
+const dataArray = new Uint8Array(bufferLength);
 
 function draw(){
     requestAnimationFrame(draw);
     analyser.getByteFrequencyData(dataArray);
-    ctx.fillStyle="#0a0a0a";
+
+    ctx.fillStyle = "#0a0a0a";
     ctx.fillRect(0,0,canvas.width,canvas.height);
 
-    const barWidth=(canvas.width/bufferLength)*2.5;
+    const barWidth = (canvas.width / bufferLength) * 2.5;
     let x=0;
     for(let i=0;i<bufferLength;i++){
-        const barHeight=dataArray[i]/2;
-        ctx.fillStyle=`rgb(${barHeight+100},50,150)`;
-        ctx.fillRect(x,canvas.height-barHeight,barWidth,barHeight);
-        x+=barWidth+1;
+        const barHeight = dataArray[i]/2;
+        ctx.fillStyle = `rgb(${barHeight+100},50,150)`;
+        ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+        x += barWidth + 1;
     }
 }
 draw();
 
-window.addEventListener('resize',()=>{
-    canvas.width=window.innerWidth;
-    canvas.height=window.innerHeight;
+window.addEventListener('resize', ()=>{
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 });
+
+// ==== Initialize first track ====
+playTrack(0);
