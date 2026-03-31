@@ -1,10 +1,10 @@
-/* Linktree-inspired clean dark theme with neon accents */
+/* Tending Sands dark-red theme */
 body, html {
     margin: 0;
     padding: 0;
     height: 100%;
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #0b0c10 0%, #1f2833 100%);
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 100%);
     color: #fff;
     overflow: hidden;
     position: relative;
@@ -34,8 +34,8 @@ h1 {
     margin-bottom: 30px;
     text-transform: uppercase;
     letter-spacing: 3px;
-    color: #66fcf1;
-    text-shadow: 0 0 5px #66fcf1, 0 0 10px #45a29e;
+    color: #ff3333;
+    text-shadow: 0 0 5px #ff3333, 0 0 15px #aa1111;
 }
 
 #playlist {
@@ -48,18 +48,18 @@ h1 {
     display: flex;
     align-items: center;
     gap: 15px;
-    background: rgba(255,255,255,0.05);
+    background: rgba(255,0,0,0.05);
     padding: 12px;
     border-radius: 12px;
     cursor: pointer;
-    transition: transform 0.2s, background 0.2s;
+    transition: transform 0.2s, background 0.2s, border-left 0.2s;
     border-left: 4px solid transparent;
 }
 
 .track-card:hover, .track-card.active {
     transform: scale(1.05);
-    background: rgba(102,252,241,0.15);
-    border-left: 4px solid #66fcf1;
+    background: rgba(255,0,0,0.15);
+    border-left: 4px solid #ff3333;
 }
 
 .track-card img {
@@ -82,9 +82,9 @@ h1 {
 }
 
 button {
-    background: rgba(102,252,241,0.1);
+    background: rgba(255,0,0,0.1);
     border: none;
-    color: #66fcf1;
+    color: #ff3333;
     font-size: 1.5em;
     padding: 10px 15px;
     border-radius: 5px;
@@ -93,8 +93,8 @@ button {
 }
 
 button:hover {
-    background: #66fcf1;
-    color: #0b0c10;
+    background: #ff3333;
+    color: #0a0a0a;
 }
 
 input[type="range"] {
@@ -105,8 +105,8 @@ input[type="range"] {
     display: inline-block;
     margin-top: 25px;
     padding: 12px 25px;
-    background: #45a29e;
-    color: #0b0c10;
+    background: #aa1111;
+    color: #fff;
     text-decoration: none;
     border-radius: 5px;
     font-weight: bold;
@@ -115,6 +115,5 @@ input[type="range"] {
 }
 
 .buy-album:hover {
-    background: #66fcf1;
-    color: #0b0c10;
+    background: #ff3333;
 }
